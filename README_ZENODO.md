@@ -2,19 +2,22 @@
 
 This repository uses a split license policy:
 
-- Paper artifacts in `papers/` are CC-BY 4.0.
-- Non-paper assets are review-only unless otherwise granted.
+- Public research artifacts in `papers/` and `results/` are intended for CC-BY 4.0
+  distribution in the Zenodo bundle.
+- Other non-paper repository assets outside those directories are review-only unless
+  otherwise granted.
 
 For a clean, unambiguous Zenodo record, upload a **papers-focused bundle** rather than
 auto-archiving the full repository.
 
-## Recommended Zenodo Bundle Contents
+## Recommended Zenodo Bundle Contents (CC-BY 4.0)
 
 - `papers/`
 - `results/`
 - `CITATION.cff`
 - `.zenodo.json`
 - `README_ZENODO.md`
+- `LICENSE_CC_BY_4_0.md`
 
 ## Included Paper Mapping
 
@@ -38,7 +41,8 @@ auto-archiving the full repository.
    - `license`: `cc-by-4.0`
 
 3. Upload the generated archive from `dist/zenodo/`.
-4. Confirm metadata fields from `.zenodo.json` and publish.
+4. Optional but recommended: also upload the five paper PDFs as individual files so Zenodo can preview them directly.
+5. Confirm metadata fields from `.zenodo.json` and publish.
 
 ## DOI Update Follow-Up
 

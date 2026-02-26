@@ -2,10 +2,11 @@ Copyright (c) 2025–2026 Jack Chaudier Gaffney
 
 Licensing policy for this repository:
 
-1) Paper artifacts in `papers/` are licensed under Creative Commons Attribution 4.0
-   International (CC BY 4.0). See `papers/LICENSE_CC_BY_4_0.md`.
+1) Public research artifacts in `papers/` and `results/` are licensed under
+   Creative Commons Attribution 4.0 International (CC BY 4.0). See
+   `papers/LICENSE_CC_BY_4_0.md`.
 
-2) Non-paper repository assets (for example site code, scripts, and docs outside
-   `papers/`) are provided for academic review. No permission is granted to copy,
-   modify, distribute, or create derivative works of non-paper assets without
-   explicit written consent from the author.
+2) Other repository assets outside `papers/` and `results/` (for example site code,
+   scripts, and docs) are provided for academic review. No permission is granted to
+   copy, modify, distribute, or create derivative works of those non-paper assets
+   without explicit written consent from the author.

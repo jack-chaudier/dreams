@@ -231,6 +231,26 @@ def check_zenodo_and_citation_consistency() -> None:
         any(item.get("identifier") == "https://github.com/jack-chaudier/dreams" for item in zenodo.get("related_identifiers", [])),
         "Zenodo related_identifiers must include dreams repo URL",
     )
+    relation_map = {str(item.get("identifier")): str(item.get("relation")) for item in zenodo.get("related_identifiers", [])}
+    _assert(
+        relation_map.get("https://github.com/jack-chaudier/dreams") == "isSupplementedBy",
+        "Dreams repo related identifier should use relation isSupplementedBy",
+    )
+    _assert(
+        relation_map.get("https://github.com/jack-chaudier/tropical-mcp") == "isSupplementedBy",
+        "tropical-mcp related identifier should use relation isSupplementedBy",
+    )
+    _assert(
+        relation_map.get("https://dreams-dun.vercel.app") == "isDocumentedBy",
+        "Live demo related identifier should use relation isDocumentedBy",
+    )
+
+    required_keywords = {"long-context", "memory-compression", "semantic-drift"}
+    present_keywords = {str(k).strip().lower() for k in zenodo.get("keywords", [])}
+    _assert(
+        required_keywords.issubset(present_keywords),
+        f".zenodo.json keywords must include: {sorted(required_keywords)}",
+    )
 
     creators = zenodo.get("creators", [])
     _assert(creators and isinstance(creators, list), ".zenodo.json must include at least one creator")

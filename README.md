@@ -33,7 +33,8 @@ A curated, public-facing research showcase for long-context reliability under me
 ## Licensing Split
 
 - Papers in `papers/` are released under **CC-BY 4.0** (for scholarly sharing and reuse with attribution).
-- Repository code and non-paper assets follow the root [`LICENSE`](./LICENSE).
+- Reproducibility artifacts in `results/` are also released under **CC-BY 4.0**.
+- Repository code and other non-paper assets follow the root [`LICENSE`](./LICENSE).
 
 ## Evidence Snapshot
 

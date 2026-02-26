@@ -19,17 +19,22 @@
     "tropical-algebra",
     "llm-evaluation",
     "mcp-server",
-    "large-language-models"
+    "large-language-models",
+    "long-context",
+    "memory-compression",
+    "semantic-drift",
+    "agent-reliability",
+    "retention-policy"
   ],
   "related_identifiers": [
     {
       "identifier": "https://github.com/jack-chaudier/dreams",
-      "relation": "isSupplementTo",
+      "relation": "isSupplementedBy",
       "scheme": "url"
     },
     {
       "identifier": "https://github.com/jack-chaudier/tropical-mcp",
-      "relation": "isSupplementTo",
+      "relation": "isSupplementedBy",
       "scheme": "url"
     },
     {
