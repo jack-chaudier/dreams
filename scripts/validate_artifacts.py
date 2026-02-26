@@ -168,7 +168,12 @@ def check_certificate_sync() -> None:
 
 
 def check_private_path_leaks() -> None:
-    forbidden = ["../mirage/", "/Users/jackg/mirage", "/Users/jackg/dreams/../mirage"]
+    forbidden = [
+        "../mirage/",
+        "/Users/jackg/mirage",
+        "/Users/jackg/dreams/../mirage",
+        "/absolute/path/to/",
+    ]
     for path in _iter_tracked_text_files():
         if path.resolve() == Path(__file__).resolve():
             continue

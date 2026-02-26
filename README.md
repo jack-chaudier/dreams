@@ -59,7 +59,7 @@ To keep interpretation rigorous:
 ### 1) Validate canonical MCP implementation
 
 ```bash
-cd /absolute/path/to/tropical-mcp
+cd path/to/tropical-mcp
 uv run --extra dev pytest -q
 uv build
 uv run tropical-mcp-full-validate
@@ -68,13 +68,13 @@ uv run tropical-mcp-replay \
   --policies recency,l2_guarded \
   --k 3 \
   --line-count 200 \
-  --output-dir /absolute/path/to/dreams/results/replay
+  --output-dir path/to/dreams/results/replay
 ```
 
 ### 2) Serve the showcase site
 
 ```bash
-cd /absolute/path/to/dreams/site
+cd path/to/dreams/site
 python3 -m http.server 8080
 ```
 
