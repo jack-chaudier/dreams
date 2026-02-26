@@ -1,10 +1,6 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/site/index.html" },
-    { "source": "/styles.css", "destination": "/site/styles.css" },
-    { "source": "/app.js", "destination": "/site/app.js" },
-    { "source": "/data_miragekit.json", "destination": "/site/data_miragekit.json" },
-    { "source": "/data_certificate.json", "destination": "/site/data_certificate.json" }
+    { "source": "/(.*)", "destination": "/site/$1" }
   ]
 }
