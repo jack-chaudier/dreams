@@ -40,9 +40,9 @@
   }
 
   function metricColor(value) {
-    if (value >= 0.8) return '#6db85a';
-    if (value >= 0.4) return '#d4af37';
-    return '#e05555';
+    if (value >= 0.8) return '#2d6a4f';
+    if (value >= 0.4) return '#8c6d1f';
+    return '#9b2c2c';
   }
 
   function metricClassName(key) {
@@ -187,7 +187,7 @@
       }
 
       if (m.key === 'raw_validity' && showMirageContradiction) {
-        color = '#57b8ff';
+        color = '#3a6ea5';
       }
 
       b.value.textContent = pct(val);
