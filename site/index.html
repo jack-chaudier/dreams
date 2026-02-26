@@ -3,12 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MirageKit — Mirage Research Program</title>
-    <meta name="description" content="Your context compression looks valid. It isn't. Interactive demo of the validity mirage in LLM context management." />
+    <title>MirageKit | Validity Mirage Research Showcase</title>
+    <meta name="description" content="Interactive research showcase of the validity mirage in context compression: raw validity can remain high while pivot integrity silently collapses." />
+    <meta name="author" content="Jack Chaudier Gaffney" />
+    <meta name="theme-color" content="#1e3a5f" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://dreams-dun.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MirageKit" />
+    <meta property="og:title" content="MirageKit | Validity Mirage Research Showcase" />
+    <meta property="og:description" content="Evidence-backed interactive demo: compression can preserve answerability while losing the governing pivot." />
+    <meta property="og:url" content="https://dreams-dun.vercel.app/" />
+    <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MirageKit | Validity Mirage Research Showcase" />
+    <meta name="twitter:description" content="Interactive evidence for validity mirage behavior under context compression." />
+    <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.svg" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "MirageKit",
+        "url": "https://dreams-dun.vercel.app/",
+        "description": "Research showcase for validity mirage behavior in long-context compression.",
+        "creator": {
+          "@type": "Person",
+          "name": "Jack Chaudier Gaffney"
+        }
+      }
+    </script>
   </head>
   <body>
     <header class="hero">
@@ -22,6 +50,7 @@
       <div class="hero-links stagger" style="--i:5">
         <a class="hero-link" href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">Repository <span class="link-arrow">&nearr;</span></a>
         <a class="hero-link" href="https://github.com/jack-chaudier/dreams/tree/main/papers" target="_blank" rel="noopener">Papers <span class="link-arrow">&nearr;</span></a>
+        <a class="hero-link" href="/papers/paper_00_continuous_control_structural_regularization.pdf" target="_blank" rel="noopener">Paper 00 <span class="link-arrow">&nearr;</span></a>
         <a class="hero-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">MCP Implementation <span class="link-arrow">&nearr;</span></a>
       </div>
       <p class="research-status stagger" style="--i:6">Working Papers (First Draft, 2026) &middot; Public showcase repo; full research monorepo remains private.</p>
@@ -36,18 +65,20 @@
             <span class="slider-value" id="retentionValue">100%</span>
           </div>
           <div class="slider-track-wrap">
-            <div class="slider-danger-zone"></div>
-            <input id="retentionSlider" type="range" min="20" max="100" value="100" step="1" aria-label="Retention budget percentage" />
+            <div class="slider-danger-zone" aria-hidden="true"></div>
+            <input id="retentionSlider" type="range" min="0" max="4" value="4" step="1" aria-label="Retention checkpoint index" />
           </div>
-          <div class="slider-ticks">
-            <span>20%</span>
+          <div class="slider-ticks" id="sliderTicks">
             <span>40%</span>
-            <span>60%</span>
+            <span>50%</span>
+            <span>65%</span>
             <span>80%</span>
             <span>100%</span>
           </div>
+          <p class="slider-proof">Checkpoint values are exact replay artifacts (no synthetic interpolation).</p>
           <div class="semantic-regret-row hidden" id="semanticRegret">
-            <span class="sr-label">Semantic Regret</span>
+            <span class="sr-label">Mirage Gap</span>
+            <span class="sr-meta">raw validity - pivot preservation</span>
             <span class="sr-value mono" id="semanticRegretValue" aria-live="polite">&mdash;</span>
           </div>
         </div>
@@ -85,13 +116,39 @@
         <p class="explainer" id="explainerText"></p>
       </section>
 
+      <section class="math-snapshot reveal" aria-label="Math snapshot">
+        <h3>Math Snapshot</h3>
+        <div class="math-grid">
+          <article class="math-card">
+            <h4>Core Contract</h4>
+            <p class="math-formula mono">d_pre >= k</p>
+            <p>Guarded compaction is certified safe only when the pivot retains its required predecessor depth.</p>
+          </article>
+          <article class="math-card">
+            <h4>Frontier Feasibility</h4>
+            <p class="math-formula mono">W[k] = infinity -> infeasible</p>
+            <p>If the k-slot frontier is infinite, no valid completion exists for that retained context.</p>
+          </article>
+          <article class="math-card">
+            <h4>Raw Validity</h4>
+            <p class="math-formula mono">raw = max(primary_full, decoy_full)</p>
+            <p>Answerability alone can stay high even when pivot identity has silently changed.</p>
+          </article>
+          <article class="math-card">
+            <h4>Mirage Gap</h4>
+            <p class="math-formula mono">delta = raw - pivot_preservation</p>
+            <p>Large positive gap indicates a validity mirage regime rather than true semantic stability.</p>
+          </article>
+        </div>
+      </section>
+
       <section class="deep-section reveal">
-        <button class="deep-toggle" id="deepToggle" aria-expanded="false">
+        <button class="deep-toggle" id="deepToggle" aria-expanded="false" aria-controls="deepContent">
           <span>Deep analysis &mdash; witness, certificate, key results</span>
           <span class="toggle-icon" id="toggleIcon">&#9656;</span>
         </button>
         <div class="deep-content hidden" id="deepContent">
-          <p class="deep-intro">Detailed diagnostics from the Exp58 benchmark fixture. Each claim links to its source paper.</p>
+          <p class="deep-intro">Detailed diagnostics from committed artifacts (Exp58 witness + certificate). Each claim links to source drafts.</p>
           <div class="deep-grid">
             <div class="deep-block">
               <h4>Exp58 Deterministic Witness</h4>
@@ -160,20 +217,20 @@
           <div class="headline-stats">
             <a class="stat-card stat-link" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">0</span>
-              <span class="stat-label">false positives / 11,400 instances</span>
-              <span class="stat-detail">The guard never blocked a compression that was actually safe.</span>
+              <span class="stat-label">false positives / 11,400 boundary instances</span>
+              <span class="stat-detail">In the tested regime, the guard never blocked a compression that was actually safe.</span>
               <span class="stat-source">from Paper 01 <span class="stat-arrow">&nearr;</span></span>
             </a>
             <a class="stat-card stat-link" href="/papers/paper_02_streaming_oscillation_traps.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">54.9%</span>
               <span class="stat-label">organic trap rate / 4,200 runs</span>
-              <span class="stat-detail">Streaming traces naturally enter trap dynamics without explicit adversaries.</span>
+              <span class="stat-detail">Observed as 2,306 / 4,200: traps emerge without explicit adversarial construction.</span>
               <span class="stat-source">from Paper 02 <span class="stat-arrow">&nearr;</span></span>
             </a>
             <a class="stat-card stat-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
-              <span class="stat-value mono">22%</span>
-              <span class="stat-label">silent mirage / NTSB incidents</span>
-              <span class="stat-detail">Roughly one in five incident chains keeps answerability while switching pivots.</span>
+              <span class="stat-value mono">21.95%</span>
+              <span class="stat-label">silent mirage / real incidents</span>
+              <span class="stat-detail">Wilson 95% CI [16.30%, 28.89%] in the reported real-incident sample.</span>
               <span class="stat-source">from Paper 03 <span class="stat-arrow">&nearr;</span></span>
             </a>
             <a class="stat-card stat-link" href="/papers/paper_i_tropical_algebra.pdf" target="_blank" rel="noopener">
@@ -209,6 +266,9 @@
         <a class="footer-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">MCP</a>
       </div>
       <div class="paper-badges">
+        <a class="paper-badge" href="/papers/paper_00_continuous_control_structural_regularization.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">00</span> Continuous Control (Draft) <span class="badge-arrow">&nearr;</span>
+        </a>
         <a class="paper-badge" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">
           <span class="badge-num">01</span> Absorbing States (Draft) <span class="badge-arrow">&nearr;</span>
         </a>

@@ -6,6 +6,7 @@
     { key: 'pivot_preservation_rate', label: 'Pivot Preserved' },
     { key: 'primary_full_rate', label: 'Primary Arc Survival' },
     { key: 'contract_satisfied_rate', label: 'Contract Satisfied' },
+    { key: 'token_retention_mean', label: 'Realized Token Retention' },
   ];
 
   var EXPLAINER_HIGH = 'No compression yet: both methods preserve the pivot. Only the guarded policy enforces a safety contract when pressure rises.';
@@ -15,6 +16,7 @@
 
   // DOM refs
   var slider = document.getElementById('retentionSlider');
+  var sliderTicksEl = document.getElementById('sliderTicks');
   var retentionDisplay = document.getElementById('retentionValue');
   var naiveMetricsEl = document.getElementById('naiveMetrics');
   var guardedMetricsEl = document.getElementById('guardedMetrics');
@@ -46,10 +48,6 @@
   var certificateJsonEl = document.getElementById('certificateJson');
   var semanticRegretEl = document.getElementById('semanticRegret');
   var semanticRegretValueEl = document.getElementById('semanticRegretValue');
-
-  function lerp(a, b, t) {
-    return a + (b - a) * t;
-  }
 
   function metricColor(value) {
     if (value >= 0.8) return '#065f46';
@@ -84,37 +82,6 @@
     return 'CRITICAL';
   }
 
-  function interpolate(retention, levels, policyData) {
-    if (retention <= levels[0]) {
-      var d = policyData[levelKey(levels[0])];
-      return addRawValidity(d);
-    }
-    if (retention >= levels[levels.length - 1]) {
-      var d2 = policyData[levelKey(levels[levels.length - 1])];
-      return addRawValidity(d2);
-    }
-
-    var lower, upper;
-    for (var i = 0; i < levels.length - 1; i++) {
-      if (retention >= levels[i] && retention <= levels[i + 1]) {
-        lower = levels[i];
-        upper = levels[i + 1];
-        break;
-      }
-    }
-
-    var t = (retention - lower) / (upper - lower);
-    var lData = policyData[levelKey(lower)];
-    var uData = policyData[levelKey(upper)];
-
-    var result = {};
-    var keys = ['pivot_preservation_rate', 'primary_full_rate', 'decoy_full_rate', 'contract_satisfied_rate'];
-    for (var j = 0; j < keys.length; j++) {
-      result[keys[j]] = lerp(lData[keys[j]], uData[keys[j]], t);
-    }
-    return addRawValidity(result);
-  }
-
   function addRawValidity(d) {
     var copy = {};
     for (var k in d) {
@@ -122,6 +89,14 @@
     }
     copy.raw_validity = Math.max(copy.decoy_full_rate || 0, copy.primary_full_rate || 0);
     return copy;
+  }
+
+  function getExactPoint(policyData, retention) {
+    var key = levelKey(retention);
+    if (!policyData || !policyData[key]) {
+      throw new Error('Missing policy checkpoint for retention=' + key);
+    }
+    return addRawValidity(policyData[key]);
   }
 
   function buildMetricBars(container) {
@@ -392,7 +367,8 @@
   function updateContractBadge(el, data, options) {
     var mode = options && options.mode ? options.mode : 'enforced';
     var satisfied = data.contract_satisfied_rate >= 0.5;
-    var dPre = Math.round(3 * data.primary_full_rate);
+    var kValue = options && typeof options.k === 'number' ? options.k : null;
+    var kText = kValue === null ? 'k' : 'k=' + kValue;
 
     if (mode === 'none') {
       el.className = 'contract-badge not-applicable';
@@ -402,10 +378,10 @@
 
     if (satisfied) {
       el.className = 'contract-badge satisfied';
-      el.textContent = '\u2726 Contract Satisfied \u00b7 d_pre = ' + dPre;
+      el.textContent = '\u2726 Contract Satisfied \u00b7 d_pre >= ' + kText;
     } else {
       el.className = 'contract-badge violated';
-      el.textContent = '\u2727 Contract Violated \u00b7 d_pre = ' + dPre;
+      el.textContent = '\u2727 Contract Violated \u00b7 d_pre < ' + kText;
     }
   }
 
@@ -444,10 +420,26 @@
       fetch('./data_miragekit.json'),
       fetch('./data_certificate.json'),
     ]);
+    if (!responses[0].ok || !responses[1].ok) {
+      throw new Error('Failed to fetch demo data assets');
+    }
     var mirage = await responses[0].json();
     var cert = await responses[1].json();
 
     var levels = mirage.retention_levels.slice().sort(function (a, b) { return a - b; });
+    slider.min = '0';
+    slider.max = String(Math.max(levels.length - 1, 0));
+    slider.step = '1';
+    slider.value = slider.max;
+
+    if (sliderTicksEl) {
+      sliderTicksEl.innerHTML = '';
+      for (var t = 0; t < levels.length; t++) {
+        var tick = document.createElement('span');
+        tick.textContent = pct(levels[t]);
+        sliderTicksEl.appendChild(tick);
+      }
+    }
 
     var naiveBars = buildMetricBars(naiveMetricsEl);
     var guardedBars = buildMetricBars(guardedMetricsEl);
@@ -470,9 +462,10 @@
 
     var prevMirageVisible = false;
 
-    function render(retentionPct) {
-      var retention = retentionPct / 100;
-      retentionDisplay.textContent = retentionPct + '%';
+    function render(checkpointIndex) {
+      var safeIndex = Math.max(0, Math.min(levels.length - 1, checkpointIndex));
+      var retention = levels[safeIndex];
+      retentionDisplay.textContent = pct(retention);
 
       // Color the retention display based on danger level
       if (retention < 0.5) {
@@ -481,15 +474,16 @@
         retentionDisplay.classList.remove('danger');
       }
 
-      var naive = interpolate(retention, levels, mirage.policies.recency);
-      var guarded = interpolate(retention, levels, mirage.policies.l2_guarded);
+      var naive = getExactPoint(mirage.policies.recency, retention);
+      var guarded = getExactPoint(mirage.policies.l2_guarded, retention);
+      var certK = typeof cert.k === 'number' ? cert.k : null;
 
       updateMetrics(naiveBars, naive, { highlightMirage: true, noContract: true });
       updateMetrics(guardedBars, guarded, { highlightMirage: false, noContract: false });
       updateCardState(cardNaive, naiveStatusEl, naive);
       updateCardState(cardGuarded, guardedStatusEl, guarded);
       updateContractBadge(naiveContractEl, naive, { mode: 'none' });
-      updateContractBadge(guardedContractEl, guarded, { mode: 'enforced' });
+      updateContractBadge(guardedContractEl, guarded, { mode: 'enforced', k: certK });
 
       // Mirage warning
       var shouldShowMirage = naive.pivot_preservation_rate < 0.05 && naive.raw_validity > 0.9;
@@ -507,13 +501,12 @@
       }
       prevMirageVisible = shouldShowMirage;
 
-      // Semantic regret — interpolated from benchmark value
+      // Mirage gap is data-backed at each replay checkpoint
       if (semanticRegretEl && semanticRegretValueEl) {
-        var driftSeverity = 1 - naive.pivot_preservation_rate;
-        var regretValue = driftSeverity * mirage.witness.semantic_regret_example;
-        if (driftSeverity >= 0.12) {
+        var mirageGap = naive.raw_validity - naive.pivot_preservation_rate;
+        if (mirageGap >= 0.01) {
           semanticRegretEl.classList.remove('hidden');
-          semanticRegretValueEl.textContent = regretValue.toFixed(3);
+          semanticRegretValueEl.textContent = (mirageGap * 100).toFixed(1) + ' pp';
         } else {
           semanticRegretEl.classList.add('hidden');
         }

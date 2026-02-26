@@ -387,11 +387,19 @@ input[type="range"]::-moz-range-track {
   font-size: 0.56rem;
 }
 
+.slider-proof {
+  margin-top: 0.45rem;
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  color: var(--ink-3);
+}
+
 /* Semantic Regret indicator — appears under slider when mirage active */
 .semantic-regret-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: baseline;
-  justify-content: space-between;
+  column-gap: 0.55rem;
   margin-top: 0.7rem;
   padding: 0.5rem 0.75rem;
   background: var(--danger-bg);
@@ -407,6 +415,12 @@ input[type="range"]::-moz-range-track {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--danger);
+}
+
+.sr-meta {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  color: var(--ink-3);
 }
 
 .sr-value {
@@ -653,6 +667,64 @@ input[type="range"]::-moz-range-track {
   font-size: 0.88rem;
   font-style: italic;
   color: var(--ink-3);
+}
+
+/* ══════════════════════════════════════════════════
+   Math Snapshot
+   ═════════════════════════════════════════════════ */
+
+.math-snapshot {
+  margin-top: 1.45rem;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--surface);
+  padding: 1.2rem 1.3rem;
+}
+
+.math-snapshot h3 {
+  margin-bottom: 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.math-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.math-card {
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  padding: 0.8rem;
+  background: #fbfdff;
+}
+
+.math-card h4 {
+  margin-bottom: 0.38rem;
+  font-family: var(--sans);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.math-formula {
+  margin-bottom: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--accent);
+}
+
+.math-card p {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  color: var(--ink-2);
+  line-height: 1.54;
 }
 
 /* ══════════════════════════════════════════════════
@@ -1235,6 +1307,10 @@ input[type="range"]::-moz-range-track {
     grid-template-columns: 1fr 1fr;
   }
 
+  .math-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .certificate-compare {
     grid-template-columns: 1fr 1fr;
   }
@@ -1294,6 +1370,11 @@ input[type="range"]::-moz-range-track {
 
   .card-header {
     flex-wrap: wrap;
+  }
+
+  .semantic-regret-row {
+    grid-template-columns: 1fr;
+    row-gap: 0.12rem;
   }
 
   .headline-stats {
