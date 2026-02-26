@@ -92,4 +92,5 @@ Open: `http://localhost:8080/site/`
 - Repro artifacts: [`results/`](./results/)
 - Notebook workspace: [`notebooks/`](./notebooks/)
 - Credibility notes: [`docs/CREDIBILITY_NOTES.md`](./docs/CREDIBILITY_NOTES.md)
+- Zenodo upload notes: [`README_ZENODO.md`](./README_ZENODO.md)
 - Canonical MCP repo: <https://github.com/jack-chaudier/tropical-mcp>

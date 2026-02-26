@@ -18,6 +18,7 @@ Current high-value checks include:
 - certificate sync (`results/certificates/*` vs `site/data_certificate.json`)
 - private path leak scans in tracked text files
 - Zenodo + CITATION metadata alignment and license consistency
+- ORCID presence/consistency between Zenodo and citation metadata
 - paper source checks (draft marker + CC-BY + PDF metadata declarations)
 - paper figure asset presence checks (no missing `\includegraphics` targets)
 - compiled PDF checks (title/author metadata, first-page draft/license visibility)

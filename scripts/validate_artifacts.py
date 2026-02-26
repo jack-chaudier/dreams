@@ -194,6 +194,7 @@ def check_structure() -> None:
     _assert((ROOT / "CITATION.cff").exists(), "CITATION.cff missing")
     _assert((ROOT / ".zenodo.json").exists(), ".zenodo.json missing")
     _assert((ROOT / "papers" / "LICENSE_CC_BY_4_0.md").exists(), "papers LICENSE_CC_BY_4_0.md missing")
+    _assert((ROOT / "README_ZENODO.md").exists(), "README_ZENODO.md missing")
 
 
 def check_no_symlinks_in_public_bundle() -> None:
@@ -229,6 +230,23 @@ def check_zenodo_and_citation_consistency() -> None:
     _assert(
         any(item.get("identifier") == "https://github.com/jack-chaudier/dreams" for item in zenodo.get("related_identifiers", [])),
         "Zenodo related_identifiers must include dreams repo URL",
+    )
+
+    creators = zenodo.get("creators", [])
+    _assert(creators and isinstance(creators, list), ".zenodo.json must include at least one creator")
+    zenodo_orcid = str(creators[0].get("orcid", "")).strip()
+    _assert(zenodo_orcid, ".zenodo.json creator ORCID must not be empty")
+    _assert(
+        re.match(r"^\d{4}-\d{4}-\d{4}-\d{4}$", zenodo_orcid) is not None,
+        f".zenodo.json ORCID must be plain 16-digit form, got: {zenodo_orcid}",
+    )
+
+    cff_orcid_match = re.search(r'orcid:\s*"?(https://orcid\.org/(\d{4}-\d{4}-\d{4}-\d{4}))"?', cff_text)
+    _assert(cff_orcid_match is not None, "CITATION.cff must include an ORCID URL for the author")
+    cff_orcid_id = cff_orcid_match.group(2)
+    _assert(
+        cff_orcid_id == zenodo_orcid,
+        f"CITATION.cff ORCID ({cff_orcid_id}) must match .zenodo.json ORCID ({zenodo_orcid})",
     )
 
     preprint_refs = len(re.findall(r"status:\s*preprint", cff_text))

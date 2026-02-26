@@ -7,7 +7,7 @@ authors:
     family-names: Gaffney
     email: jackgaff@umich.edu
     affiliation: University of Michigan
-    orcid: ""
+    orcid: "https://orcid.org/0009-0000-5376-2090"
 repository-code: "https://github.com/jack-chaudier/dreams"
 url: "https://dreams-dun.vercel.app"
 license: CC-BY-4.0
