@@ -1,0 +1,58 @@
+{
+  "title": "Validity Mirage: Context Compression Failure Modes in LLMs",
+  "description": "Research on context compression failure modes in large language models. Introduces the validity mirage — where compression preserves surface-level correctness while silently substituting the governing hypothesis — and develops a tropical semiring algebra (max-plus over R ∪ {−∞}) for measuring context health. Validated across five model architectures (Llama 3.1 8B, Mistral 7B v0.3, Gemma 2 9B, Phi-3 Medium 14B, Qwen 2.5 14B) using 11,400+ boundary instances and 4,200+ streaming trials. Tested against 13 real incident graphs (12 NTSB aviation + Knight Capital 2012). Deployed as a production MCP server in Claude Code agentic sessions.",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "creators": [
+    {
+      "name": "Gaffney, Jack Chaudier",
+      "affiliation": "University of Michigan",
+      "orcid": ""
+    }
+  ],
+  "access_right": "open",
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "ai-safety",
+    "context-compression",
+    "validity-mirage",
+    "tropical-algebra",
+    "llm-evaluation",
+    "mcp-server",
+    "large-language-models"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/jack-chaudier/dreams",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/jack-chaudier/tropical-mcp",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://dreams-dun.vercel.app",
+      "relation": "isDocumentedBy",
+      "scheme": "url"
+    }
+  ],
+  "subjects": [
+    {
+      "term": "Artificial Intelligence",
+      "scheme": "url",
+      "identifier": "https://id.loc.gov/authorities/subjects/sh85008180"
+    }
+  ],
+  "dates": [
+    {
+      "start": "2025-09-01",
+      "end": "2026-02-26",
+      "type": "Collected",
+      "description": "Research period"
+    }
+  ],
+  "version": "1.0.0",
+  "language": "eng"
+}

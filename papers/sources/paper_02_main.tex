@@ -3,6 +3,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[hypertexnames=false]{hyperref}
+\hypersetup{
+  pdftitle={Streaming Oscillation Traps in Endogenous-Pivot Sequential Extraction},
+  pdfauthor={Jack Chaudier Gaffney},
+  pdfsubject={AI Safety, Context Compression},
+  pdfcreator={LaTeX},
+}
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{amsfonts}
@@ -32,6 +38,11 @@
 \begin{document}
 
 \maketitle
+
+\begin{center}
+\small Working Paper (First Draft) -- February 2026\\
+\small Licensed under \href{https://creativecommons.org/licenses/by/4.0/}{CC-BY 4.0}
+\end{center}
 
 \begin{abstract}
 The companion finite paper establishes a sufficient-condition impossibility result for greedy extraction under endogenous constraints: when development capacity before the forced pivot is smaller than the required prefix length ($j_{\text{dev}} < k$), validity is impossible. This streaming paper adds a new failure mode that does not exist in the finite setting. Under irreversible commitment semantics, phase labels assigned early cannot be revised when the running-max pivot shifts, producing \emph{streaming oscillation traps}. Across 4{,}200 naturalistic bursty instances, organic traps occur in 2{,}306 cases (54.9\%), and in the tested range $n=100$ to $n=1000$ trap rates remain between 52\% and 78\% across tested cells. Mechanistically, the minimum inter-record gap criterion $\mingap < k$ has perfect recall in our verification regime (100\% recall, 0 false negatives; 92.5\% accuracy overall). Constructively, deferred commitment yields a smooth quality-latency Pareto frontier: any nonzero patience dominates commit-now, with break-even already at $f=0.05$. At a practical operating point $f=0.25$, deferred policy reaches 80.1\% effective validity and 14.17 mean score, versus 39.4\% and 6.68 for irrevocable commit-now, while approaching finite offline performance (91.5\%, 16.58). We recommend deferred running-max commitment with patience $f\approx0.25$ as the default operating point in this regime.

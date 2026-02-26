@@ -6,6 +6,11 @@ Curated paper bundle for the Mirage research line.
 
 All PDFs in this folder should be treated as **Working Paper / First Draft (2026)** unless explicitly superseded by an arXiv or venue version.
 
+## License
+
+Paper artifacts in this folder are intended for CC-BY 4.0 distribution.
+See [`LICENSE_CC_BY_4_0.md`](./LICENSE_CC_BY_4_0.md).
+
 ## Included PDFs
 
 - `paper_00_continuous_control_structural_regularization.pdf` — Working Paper / First Draft
@@ -20,8 +25,8 @@ Selected TeX/Bib sources are included for transparency and citation traceability
 
 - `paper_00_main.tex`, `paper_00_refs.bib`
 - `paper_01_main.tex`
-- `paper_02_streaming_draft.tex`
-- `paper_03_context_algebra_draft.tex`
+- `paper_02_main.tex`
+- `paper_03_main.tex`
 - `paper_i_main.tex`, `paper_i_refs.bib`
 
 ## Interpretation guidance

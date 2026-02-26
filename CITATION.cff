@@ -1,0 +1,56 @@
+cff-version: 1.2.0
+title: "Validity Mirage: Context Compression Failure Modes in LLMs"
+message: "If you use this research, please cite it using the metadata from this file."
+type: dataset
+authors:
+  - given-names: Jack Chaudier
+    family-names: Gaffney
+    email: jackgaff@umich.edu
+    affiliation: University of Michigan
+    orcid: ""
+repository-code: "https://github.com/jack-chaudier/dreams"
+url: "https://dreams-dun.vercel.app"
+license: CC-BY-4.0
+date-released: "2026-02-26"
+keywords:
+  - ai-safety
+  - context-compression
+  - validity-mirage
+  - tropical-algebra
+  - llm-evaluation
+  - mcp-server
+abstract: >-
+  Research on context compression failure modes in large language models.
+  Introduces the validity mirage — where compression preserves surface-level
+  correctness while silently substituting the governing hypothesis. Develops
+  a tropical semiring algebra for measuring context health and deploys it as
+  a production MCP server for Claude Code agentic sessions.
+references:
+  - type: article
+    title: "Absorbing States in Greedy Search: When Endogenous Constraints Break Sequential Extraction"
+    authors:
+      - given-names: Jack Chaudier
+        family-names: Gaffney
+    year: 2026
+    status: preprint
+  - type: article
+    title: "Streaming Oscillation Traps in Endogenous-Pivot Sequential Extraction"
+    authors:
+      - given-names: Jack Chaudier
+        family-names: Gaffney
+    year: 2026
+    status: preprint
+  - type: article
+    title: "The Validity Mirage: Context Algebra for Endogenous Semantics under Memory Compression"
+    authors:
+      - given-names: Jack Chaudier
+        family-names: Gaffney
+    year: 2026
+    status: preprint
+  - type: article
+    title: "Tropical Algebra of Endogenous-Pivot Semantics: Absorbing States, Necessity, and the Record-Gap Spectrum"
+    authors:
+      - given-names: Jack Chaudier
+        family-names: Gaffney
+    year: 2026
+    status: preprint

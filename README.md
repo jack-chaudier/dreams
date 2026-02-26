@@ -28,6 +28,11 @@ A curated, public-facing research showcase for long-context reliability under me
 - Claims are tied to committed artifacts in `results/` and source TeX in `papers/sources/`.
 - This repo is intentionally minimal and evidence-first.
 
+## Licensing Split
+
+- Papers in `papers/` are released under **CC-BY 4.0** (for scholarly sharing and reuse with attribution).
+- Repository code and non-paper assets follow the root [`LICENSE`](./LICENSE).
+
 ## Evidence Snapshot
 
 Source: `results/replay/replay_summary.json`

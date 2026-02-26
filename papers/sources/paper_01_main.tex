@@ -3,6 +3,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\hypersetup{
+  pdftitle={Absorbing States in Greedy Search: When Endogenous Constraints Break Sequential Extraction},
+  pdfauthor={Jack Chaudier Gaffney},
+  pdfsubject={AI Safety, Context Compression},
+  pdfcreator={LaTeX},
+}
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{amsfonts}
@@ -30,6 +36,11 @@
 \begin{document}
 
 \maketitle
+
+\begin{center}
+\small Working Paper (First Draft) -- February 2026\\
+\small Licensed under \href{https://creativecommons.org/licenses/by/4.0/}{CC-BY 4.0}
+\end{center}
 
 \begin{abstract}
 We study constrained extraction of weighted event subsequences under a sequential phase grammar with an endogenous turning point. The turning point is defined by an \texttt{argmax} over the selected subset, so feasibility constraints depend on the evolving solution itself. We prove a sufficient-condition impossibility result for a common greedy policy: if the number of development-eligible events before the greedy-forced turning point is smaller than the required prefix length, greedy cannot produce any valid sequence. The proof uses an absorbing-state argument in the product automaton of event graph and grammar DFA. Empirically, the result is exact in its domain: across 11{,}400 boundary instances, false positives are zero under the development-eligible prefix measure, with only known measurement artifacts under alternate counters. We then present a complete failure taxonomy and a constructive algorithm hierarchy. The hierarchy reveals a partial order with sharp boundaries, including a constraint antagonism regime where span-only viability filtering collapses to 0\% validity on multi-burst+gap graphs. A TP-conditioned dynamic program recovers 94\% (multi-burst+gap) and 96\% (bursty+gap), with zero degradations versus BVAG. Across valid cases, approximation quality is consistently high, showing a feasibility-dominated landscape.

@@ -17,5 +17,8 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install PDF tooling
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
       - name: Run artifact integrity checks
         run: python scripts/validate_artifacts.py

@@ -3,6 +3,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\hypersetup{
+  pdftitle={The Validity Mirage: Context Algebra for Endogenous Semantics under Memory Compression},
+  pdfauthor={Jack Chaudier Gaffney},
+  pdfsubject={AI Safety, Context Compression},
+  pdfcreator={LaTeX},
+}
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{amsfonts}
@@ -29,6 +35,11 @@
 \begin{document}
 
 \maketitle
+
+\begin{center}
+\small Working Paper (First Draft) -- February 2026\\
+\small Licensed under \href{https://creativecommons.org/licenses/by/4.0/}{CC-BY 4.0}
+\end{center}
 
 \begin{abstract}
 Modern long-context systems compress memory using truncation, eviction, or summarization, often evaluated by raw task validity. In endogenous-pivot settings, this is insufficient: feasibility depends on a turning point chosen by \texttt{argmax} over the selected sequence, so compression can alter semantics by changing pivot identity. We formalize a compositional context algebra over summaries $C=(w^\star,d_{\mathrm{total}},d_{\mathrm{pre}})$ and prove associativity of endogenous composition. Under committed semantics, we prove an absorbing left-ideal property and define a checkable no-absorption compression contract. Empirically, composition is exact and associative on tested cells (Exp51: 0 violations), absorbing closure holds (Exp56: 0/96 violations), and closure breaks appear only under compression (Exp57: 0.133 closure violation rate). Retention sweeps show the validity mirage: TP-conditioned raw validity remains near 1.0 while pivot preservation and fixed-pivot feasibility degrade sharply. A deterministic witness (Exp58) isolates the mechanism: naive compression is infeasible under committed semantics, while under multi-candidate semantics it appears feasible only via pivot substitution, with a 54.4\% score shortfall. The main conclusion is that compression safety must be defined relative to pivot consistency, not raw feasibility alone.

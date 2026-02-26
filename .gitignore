@@ -22,3 +22,7 @@ node_modules/
 
 # Local artifacts
 *.log
+*.aux
+*.out
+*.bbl
+*.blg
