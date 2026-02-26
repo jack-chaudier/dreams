@@ -85,10 +85,16 @@
           <span class="toggle-icon" id="toggleIcon">&#9656;</span>
         </button>
         <div class="deep-content hidden" id="deepContent">
+          <p class="deep-intro">Detailed diagnostics from the Exp58 benchmark fixture. Each claim links to its source paper.</p>
           <div class="deep-grid">
             <div class="deep-block">
               <h4>Exp58 Deterministic Witness</h4>
               <p class="witness-claim" id="witnessClaim"></p>
+              <p class="witness-context">
+                The frontier vector W[0..k] measures whether the pivot and its k nearest predecessors can all survive a compaction pass.
+                When W[k] = &infin;, no valid configuration exists under that policy &mdash; the predecessors were already evicted.
+                A finite W[k] means the guard found a feasible retention set.
+              </p>
               <div class="witness-table">
                 <div class="witness-row">
                   <span class="witness-label">W[3] Naive</span>
@@ -103,34 +109,73 @@
                   <span class="mono witness-val-bad" id="witnessRegret">&mdash;</span>
                 </div>
               </div>
+              <p class="witness-regret-context">
+                Semantic regret <span class="mono" id="witnessRegretContextValue">&mdash;</span> means the model's post-compression answer drifted more than halfway from the original pivot's meaning.
+              </p>
               <div class="witness-notes" id="witnessNotes"></div>
             </div>
             <div class="deep-block">
               <h4>Memory Safety Certificate</h4>
-              <pre class="certificate-pre" id="certificateJson"></pre>
+              <div class="certificate-compare">
+                <article class="certificate-policy">
+                  <h5>Recency Policy</h5>
+                  <div class="certificate-group">
+                    <span class="certificate-group-label">Kept</span>
+                    <ul class="chunk-list" id="recencyKeptList"></ul>
+                  </div>
+                  <div class="certificate-group">
+                    <span class="certificate-group-label">Dropped</span>
+                    <ul class="chunk-list" id="recencyDroppedList"></ul>
+                  </div>
+                  <p class="certificate-note" id="recencyNote"></p>
+                  <div class="certificate-badge neutral" id="recencyBadge"></div>
+                </article>
+                <article class="certificate-policy">
+                  <h5>L2 Guarded Policy</h5>
+                  <div class="certificate-group">
+                    <span class="certificate-group-label">Kept</span>
+                    <ul class="chunk-list" id="guardedKeptList"></ul>
+                  </div>
+                  <div class="certificate-group">
+                    <span class="certificate-group-label">Dropped</span>
+                    <ul class="chunk-list" id="guardedDroppedList"></ul>
+                  </div>
+                  <p class="certificate-note" id="guardedNote"></p>
+                  <div class="certificate-badge positive" id="guardedBadge"></div>
+                </article>
+              </div>
+              <p class="certificate-token-summary" id="certificateTokenSummary"></p>
+              <details class="certificate-raw">
+                <summary>View raw certificate JSON</summary>
+                <pre class="certificate-pre" id="certificateJson"></pre>
+              </details>
             </div>
           </div>
           <div class="headline-stats">
-            <div class="stat-card">
+            <a class="stat-card stat-link" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">0</span>
               <span class="stat-label">false positives / 11,400 instances</span>
               <span class="stat-detail">The guard never blocked a compression that was actually safe.</span>
-            </div>
-            <div class="stat-card">
+              <span class="stat-source">from Paper 01 <span class="stat-arrow">&nearr;</span></span>
+            </a>
+            <a class="stat-card stat-link" href="/papers/paper_02_streaming_oscillation_traps.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">54.9%</span>
               <span class="stat-label">organic trap rate / 4,200 runs</span>
               <span class="stat-detail">Streaming traces naturally enter trap dynamics without explicit adversaries.</span>
-            </div>
-            <div class="stat-card">
+              <span class="stat-source">from Paper 02 <span class="stat-arrow">&nearr;</span></span>
+            </a>
+            <a class="stat-card stat-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">22%</span>
               <span class="stat-label">silent mirage / NTSB incidents</span>
               <span class="stat-detail">Roughly one in five incident chains keeps answerability while switching pivots.</span>
-            </div>
-            <div class="stat-card">
+              <span class="stat-source">from Paper 03 <span class="stat-arrow">&nearr;</span></span>
+            </a>
+            <a class="stat-card stat-link" href="/papers/paper_i_tropical_algebra.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">&Omega;(k)</span>
               <span class="stat-label">state bound / Myhill-Nerode</span>
               <span class="stat-detail">Finite-memory controllers need state growth with retained predecessor depth.</span>
-            </div>
+              <span class="stat-source">from Paper I <span class="stat-arrow">&nearr;</span></span>
+            </a>
           </div>
         </div>
       </section>

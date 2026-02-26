@@ -32,7 +32,17 @@
   var witnessClaimEl = document.getElementById('witnessClaim');
   var witnessTropicalEl = document.getElementById('witnessTropical');
   var witnessRegretEl = document.getElementById('witnessRegret');
+  var witnessRegretContextValueEl = document.getElementById('witnessRegretContextValue');
   var witnessNotesEl = document.getElementById('witnessNotes');
+  var recencyKeptListEl = document.getElementById('recencyKeptList');
+  var recencyDroppedListEl = document.getElementById('recencyDroppedList');
+  var guardedKeptListEl = document.getElementById('guardedKeptList');
+  var guardedDroppedListEl = document.getElementById('guardedDroppedList');
+  var recencyNoteEl = document.getElementById('recencyNote');
+  var guardedNoteEl = document.getElementById('guardedNote');
+  var recencyBadgeEl = document.getElementById('recencyBadge');
+  var guardedBadgeEl = document.getElementById('guardedBadge');
+  var certificateTokenSummaryEl = document.getElementById('certificateTokenSummary');
   var certificateJsonEl = document.getElementById('certificateJson');
 
   function lerp(a, b, t) {
@@ -153,6 +163,173 @@
       bars[m.key] = { value: value, fill: barFill, row: div, note: note };
     }
     return bars;
+  }
+
+  function buildSet(ids) {
+    var out = {};
+    if (!ids || !ids.length) return out;
+    for (var i = 0; i < ids.length; i++) {
+      out[ids[i]] = true;
+    }
+    return out;
+  }
+
+  function mergeSet(target, ids) {
+    if (!ids || !ids.length) return;
+    for (var i = 0; i < ids.length; i++) {
+      target[ids[i]] = true;
+    }
+  }
+
+  function classifyChunk(id, pivotId, protectedSet) {
+    if (id === pivotId) return 'pivot';
+    if (protectedSet[id]) return 'predecessor';
+    if (/^hc/i.test(id)) return 'predecessor';
+    if (/^n/i.test(id)) return 'noise';
+    return 'context';
+  }
+
+  function renderChunkList(el, ids, options) {
+    if (!el) return;
+    el.innerHTML = '';
+
+    if (!ids || !ids.length) {
+      var empty = document.createElement('li');
+      empty.className = 'chunk-empty';
+      empty.textContent = 'none';
+      el.appendChild(empty);
+      return;
+    }
+
+    for (var i = 0; i < ids.length; i++) {
+      var id = ids[i];
+      var role = classifyChunk(id, options.pivotId, options.protectedSet);
+      var li = document.createElement('li');
+      li.className = 'chunk-item';
+
+      if (role === 'pivot') li.classList.add('chunk-pivot');
+      if (role === 'predecessor') li.classList.add('chunk-predecessor');
+      if (role === 'noise') li.classList.add('chunk-noise');
+      if (options.dropped) li.classList.add('chunk-dropped');
+      if (options.highlightProtected && options.protectedSet[id]) li.classList.add('chunk-protected');
+
+      var idEl = document.createElement('span');
+      idEl.className = 'chunk-id mono';
+      idEl.textContent = id;
+
+      var roleEl = document.createElement('span');
+      roleEl.className = 'chunk-role';
+      roleEl.textContent = role;
+
+      li.appendChild(idEl);
+      li.appendChild(roleEl);
+      el.appendChild(li);
+    }
+  }
+
+  function joinIds(ids) {
+    if (!ids || !ids.length) return 'none';
+    return ids.join(', ');
+  }
+
+  function countByRole(ids, pivotId, protectedSet, role) {
+    var count = 0;
+    if (!ids) return count;
+    for (var i = 0; i < ids.length; i++) {
+      if (classifyChunk(ids[i], pivotId, protectedSet) === role) count++;
+    }
+    return count;
+  }
+
+  function renderCertificateComparison(cert) {
+    var recency = cert.policies && cert.policies.recency ? cert.policies.recency : {};
+    var guarded = cert.policies && cert.policies.l2_guarded ? cert.policies.l2_guarded : {};
+    var recencyAudit = recency.audit || {};
+    var guardedAudit = guarded.audit || {};
+    var pivotId = cert.full_context && cert.full_context.pivot_id ? cert.full_context.pivot_id : '';
+
+    var protectedSet = buildSet((cert.full_context && cert.full_context.protected_ids) || []);
+    mergeSet(protectedSet, guardedAudit.protected_ids || []);
+
+    var recencyKept = recency.kept_ids || [];
+    var recencyDropped = recencyAudit.dropped_ids || [];
+    var guardedKept = guarded.kept_ids || [];
+    var guardedDropped = guardedAudit.dropped_ids || [];
+
+    renderChunkList(recencyKeptListEl, recencyKept, {
+      pivotId: pivotId,
+      protectedSet: protectedSet,
+      dropped: false,
+      highlightProtected: false,
+    });
+    renderChunkList(recencyDroppedListEl, recencyDropped, {
+      pivotId: pivotId,
+      protectedSet: protectedSet,
+      dropped: true,
+      highlightProtected: false,
+    });
+    renderChunkList(guardedKeptListEl, guardedKept, {
+      pivotId: pivotId,
+      protectedSet: protectedSet,
+      dropped: false,
+      highlightProtected: true,
+    });
+    renderChunkList(guardedDroppedListEl, guardedDropped, {
+      pivotId: pivotId,
+      protectedSet: protectedSet,
+      dropped: true,
+      highlightProtected: false,
+    });
+
+    var recencyDroppedPred = [];
+    for (var i = 0; i < recencyDropped.length; i++) {
+      if (classifyChunk(recencyDropped[i], pivotId, protectedSet) === 'predecessor') {
+        recencyDroppedPred.push(recencyDropped[i]);
+      }
+    }
+    if (recencyDroppedPred.length) {
+      recencyNoteEl.textContent = 'Dropped ' + joinIds(recencyDroppedPred) + ' — the pivot\'s causal predecessors.';
+    } else {
+      recencyNoteEl.textContent = 'No predecessor-chain drops in this fixture.';
+    }
+
+    var guardedProtectedKept = [];
+    for (var id in protectedSet) {
+      if (protectedSet.hasOwnProperty(id)) {
+        for (var j = 0; j < guardedKept.length; j++) {
+          if (guardedKept[j] === id) guardedProtectedKept.push(id);
+        }
+      }
+    }
+    guardedNoteEl.textContent = 'Protected chain retained: ' + joinIds(guardedProtectedKept) + '.';
+
+    recencyBadgeEl.textContent = 'No contract \u00b7 guard not applicable';
+    guardedBadgeEl.textContent = guardedAudit.contract_satisfied
+      ? '\u2726 Contract satisfied \u00b7 guard active'
+      : '\u2727 Contract not satisfied';
+
+    var recencyBefore = typeof recencyAudit.tokens_before === 'number' ? recencyAudit.tokens_before : null;
+    var recencyAfter = typeof recencyAudit.tokens_after === 'number' ? recencyAudit.tokens_after : null;
+    var guardedBefore = typeof guardedAudit.tokens_before === 'number' ? guardedAudit.tokens_before : recencyBefore;
+    var guardedAfter = typeof guardedAudit.tokens_after === 'number' ? guardedAudit.tokens_after : null;
+
+    var recKeptNoise = countByRole(recencyKept, pivotId, protectedSet, 'noise');
+    var recLostPred = countByRole(recencyDropped, pivotId, protectedSet, 'predecessor');
+    var guardKeptPred = countByRole(guardedKept, pivotId, protectedSet, 'predecessor');
+    var guardDroppedNoise = countByRole(guardedDropped, pivotId, protectedSet, 'noise');
+
+    var recencyPhrase = (recKeptNoise > 0 && recLostPred > 0) ? 'kept noise, lost predecessors' : 'retained mostly recent context';
+    var guardPhrase = (guardKeptPred > 0 && guardDroppedNoise > 0) ? 'kept predecessors, dropped noise' : 'preserved protected context';
+
+    if (recencyBefore !== null && recencyAfter !== null && guardedBefore !== null && guardedAfter !== null) {
+      certificateTokenSummaryEl.textContent =
+        'Recency: ' + recencyBefore + ' \u2192 ' + recencyAfter + ' tokens (' + recencyPhrase + ') | ' +
+        'Guard: ' + guardedBefore + ' \u2192 ' + guardedAfter + ' tokens (' + guardPhrase + ')';
+    } else {
+      certificateTokenSummaryEl.textContent = 'Token accounting unavailable for this certificate.';
+    }
+
+    certificateJsonEl.textContent = JSON.stringify(cert, null, 2);
   }
 
   function updateMetrics(bars, data, options) {
@@ -277,6 +454,7 @@
     witnessClaimEl.textContent = mirage.witness.claim;
     witnessTropicalEl.textContent = cert.full_context.W[cert.full_context.W.length - 1].toFixed(1);
     witnessRegretEl.textContent = mirage.witness.semantic_regret_example.toFixed(3);
+    witnessRegretContextValueEl.textContent = mirage.witness.semantic_regret_example.toFixed(3);
 
     if (mirage.witness.notes && mirage.witness.notes.length) {
       var html = '';
@@ -286,7 +464,7 @@
       witnessNotesEl.innerHTML = html;
     }
 
-    certificateJsonEl.textContent = JSON.stringify(cert, null, 2);
+    renderCertificateComparison(cert);
 
     var prevMirageVisible = false;
 
@@ -341,11 +519,6 @@
       deepContent.classList.toggle('hidden');
       toggleIcon.classList.toggle('open');
       deepToggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
-      if (isHidden) {
-        deepToggle.style.borderRadius = '12px 12px 0 0';
-      } else {
-        deepToggle.style.borderRadius = '12px';
-      }
     });
 
     // Init scroll reveals
