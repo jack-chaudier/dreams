@@ -19,6 +19,10 @@
   var guardedMetricsEl = document.getElementById('guardedMetrics');
   var naiveContractEl = document.getElementById('naiveContract');
   var guardedContractEl = document.getElementById('guardedContract');
+  var cardNaive = document.getElementById('cardNaive');
+  var cardGuarded = document.getElementById('cardGuarded');
+  var naiveStatusEl = document.getElementById('naiveStatus');
+  var guardedStatusEl = document.getElementById('guardedStatus');
   var mirageWarning = document.getElementById('mirageWarning');
   var explainerText = document.getElementById('explainerText');
   var deepToggle = document.getElementById('deepToggle');
@@ -44,15 +48,26 @@
     return Math.round(value * 100) + '%';
   }
 
-  // String(1.0) → "1" but JSON key is "1.0", so normalize
+  // String(1.0) -> "1" but JSON key is "1.0", so normalize
   function levelKey(level) {
     var s = String(level);
     if (s.indexOf('.') === -1) s += '.0';
     return s;
   }
 
+  function getCardState(data) {
+    if (data.pivot_preservation_rate >= 0.8) return 'healthy';
+    if (data.pivot_preservation_rate >= 0.3) return 'degraded';
+    return 'critical';
+  }
+
+  function getStatusLabel(state) {
+    if (state === 'healthy') return 'SAFE';
+    if (state === 'degraded') return 'DEGRADED';
+    return 'CRITICAL';
+  }
+
   function interpolate(retention, levels, policyData) {
-    // levels must be sorted ascending
     if (retention <= levels[0]) {
       var d = policyData[levelKey(levels[0])];
       return addRawValidity(d);
@@ -88,8 +103,6 @@
     for (var k in d) {
       if (d.hasOwnProperty(k)) copy[k] = d[k];
     }
-    // Raw validity: the model can still answer *something* (decoy or primary survives)
-    // This is always ~1.0 for naive recency, creating the mirage
     copy.raw_validity = Math.max(copy.decoy_full_rate || 0, copy.primary_full_rate || 0);
     return copy;
   }
@@ -144,6 +157,13 @@
     }
   }
 
+  function updateCardState(cardEl, statusEl, data) {
+    var state = getCardState(data);
+    cardEl.classList.remove('state-healthy', 'state-degraded', 'state-critical');
+    cardEl.classList.add('state-' + state);
+    statusEl.textContent = getStatusLabel(state);
+  }
+
   function updateContractBadge(el, data) {
     var satisfied = data.contract_satisfied_rate >= 0.5;
     var dPre = Math.round(3 * data.primary_full_rate);
@@ -162,6 +182,30 @@
     return EXPLAINER_LOW;
   }
 
+  // Scroll reveal with IntersectionObserver
+  function initScrollReveal() {
+    var revealEls = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: just reveal everything
+      for (var i = 0; i < revealEls.length; i++) {
+        revealEls[i].classList.add('revealed');
+      }
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          entries[i].target.classList.add('revealed');
+          observer.unobserve(entries[i].target);
+        }
+      }
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    for (var j = 0; j < revealEls.length; j++) {
+      observer.observe(revealEls[j]);
+    }
+  }
+
   async function init() {
     var responses = await Promise.all([
       fetch('./data_miragekit.json'),
@@ -170,10 +214,8 @@
     var mirage = await responses[0].json();
     var cert = await responses[1].json();
 
-    // Sort levels ascending for interpolation
     var levels = mirage.retention_levels.slice().sort(function (a, b) { return a - b; });
 
-    // Build metric bars
     var naiveBars = buildMetricBars(naiveMetricsEl);
     var guardedBars = buildMetricBars(guardedMetricsEl);
 
@@ -192,25 +234,44 @@
 
     certificateJsonEl.textContent = JSON.stringify(cert, null, 2);
 
-    // Render
+    var prevMirageVisible = false;
+
     function render(retentionPct) {
       var retention = retentionPct / 100;
       retentionDisplay.textContent = retentionPct + '%';
+
+      // Color the retention display based on danger level
+      if (retention < 0.5) {
+        retentionDisplay.classList.add('danger');
+      } else {
+        retentionDisplay.classList.remove('danger');
+      }
 
       var naive = interpolate(retention, levels, mirage.policies.recency);
       var guarded = interpolate(retention, levels, mirage.policies.l2_guarded);
 
       updateMetrics(naiveBars, naive);
       updateMetrics(guardedBars, guarded);
+      updateCardState(cardNaive, naiveStatusEl, naive);
+      updateCardState(cardGuarded, guardedStatusEl, guarded);
       updateContractBadge(naiveContractEl, naive);
       updateContractBadge(guardedContractEl, guarded);
 
-      // Mirage warning: show when naive pivot is near 0 but raw validity is high
-      if (naive.pivot_preservation_rate < 0.05 && naive.raw_validity > 0.9) {
+      // Mirage warning
+      var shouldShowMirage = naive.pivot_preservation_rate < 0.05 && naive.raw_validity > 0.9;
+      if (shouldShowMirage && !prevMirageVisible) {
         mirageWarning.classList.remove('hidden');
-      } else {
+        // Re-trigger animation by cloning
+        var icon = mirageWarning.querySelector('.mirage-icon');
+        if (icon) {
+          icon.style.animation = 'none';
+          icon.offsetHeight; // force reflow
+          icon.style.animation = '';
+        }
+      } else if (!shouldShowMirage) {
         mirageWarning.classList.add('hidden');
       }
+      prevMirageVisible = shouldShowMirage;
 
       explainerText.textContent = getExplainer(retention);
     }
@@ -232,6 +293,9 @@
         deepToggle.style.borderRadius = '12px';
       }
     });
+
+    // Init scroll reveals
+    initScrollReveal();
   }
 
   init().catch(function (err) {

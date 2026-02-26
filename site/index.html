@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div class="grain" aria-hidden="true"></div>
     <div class="fireflies" aria-hidden="true">
       <div class="firefly"></div>
       <div class="firefly"></div>
@@ -22,23 +23,26 @@
     </div>
 
     <header class="hero">
-      <div class="hero-brand">
+      <div class="hero-brand stagger" style="--i:0">
         <span class="sigil">&#9672;</span>
         <span class="brand-label">Mirage Research Program</span>
       </div>
-      <h1 class="hero-title">MirageKit</h1>
-      <p class="hero-subtitle">Your context compression looks valid. <span class="text-danger">It isn't.</span></p>
-      <p class="hero-cta"><em>Drag the slider and watch.</em></p>
+      <h1 class="hero-title stagger" style="--i:1">MirageKit</h1>
+      <p class="hero-subtitle stagger" style="--i:2">Your context compression looks valid. <span class="text-danger">It isn't.</span></p>
+      <p class="hero-cta stagger" style="--i:3"><em>Drag the slider and watch.</em></p>
     </header>
 
     <main>
-      <section class="interactive-panel" id="interactive">
+      <section class="interactive-panel stagger" style="--i:4" id="interactive">
         <div class="slider-area">
           <div class="slider-header">
             <span class="slider-label-text">Retention Budget</span>
             <span class="slider-value" id="retentionValue">100%</span>
           </div>
-          <input id="retentionSlider" type="range" min="20" max="100" value="100" step="1" />
+          <div class="slider-track-wrap">
+            <div class="slider-danger-zone"></div>
+            <input id="retentionSlider" type="range" min="20" max="100" value="100" step="1" />
+          </div>
           <div class="slider-ticks">
             <span>20%</span>
             <span>40%</span>
@@ -49,13 +53,22 @@
         </div>
 
         <div class="cards-container">
-          <article class="card card-naive">
-            <h3 class="card-title">Naive Recency</h3>
+          <article class="card card-naive" id="cardNaive">
+            <div class="card-header">
+              <span class="card-icon">&#10005;</span>
+              <h3 class="card-title">Naive Recency</h3>
+              <span class="card-status" id="naiveStatus"></span>
+            </div>
             <div class="metrics" id="naiveMetrics"></div>
             <div class="contract-badge" id="naiveContract"></div>
           </article>
-          <article class="card card-guarded">
-            <h3 class="card-title">Tropical L2 &middot; Guarded</h3>
+          <div class="card-divider"><span>vs</span></div>
+          <article class="card card-guarded" id="cardGuarded">
+            <div class="card-header">
+              <span class="card-icon">&#9670;</span>
+              <h3 class="card-title">Tropical L2 &middot; Guarded</h3>
+              <span class="card-status" id="guardedStatus"></span>
+            </div>
             <div class="metrics" id="guardedMetrics"></div>
             <div class="contract-badge" id="guardedContract"></div>
           </article>
@@ -72,7 +85,7 @@
         <p class="explainer" id="explainerText"></p>
       </section>
 
-      <section class="deep-section">
+      <section class="deep-section reveal">
         <button class="deep-toggle" id="deepToggle" aria-expanded="false">
           <span>Deep analysis &mdash; witness, certificate, key results</span>
           <span class="toggle-icon" id="toggleIcon">&#9656;</span>
@@ -125,14 +138,22 @@
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer reveal">
       <p class="footer-quote"><em>The roots remember what the canopy forgets.</em></p>
       <p class="footer-credit">Jack Chaudier Gaffney &middot; University of Michigan &middot; 2026</p>
       <div class="paper-badges">
-        <span class="paper-badge">01: Absorbing States</span>
-        <span class="paper-badge">02: Streaming Traps</span>
-        <span class="paper-badge">03: Validity Mirage</span>
-        <span class="paper-badge">I: Tropical Algebra</span>
+        <a class="paper-badge" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">01</span> Absorbing States <span class="badge-arrow">&nearr;</span>
+        </a>
+        <a class="paper-badge" href="/papers/paper_02_streaming_oscillation_traps.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">02</span> Streaming Traps <span class="badge-arrow">&nearr;</span>
+        </a>
+        <a class="paper-badge" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">03</span> Validity Mirage <span class="badge-arrow">&nearr;</span>
+        </a>
+        <a class="paper-badge" href="/papers/paper_i_tropical_algebra.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">I</span> Tropical Algebra <span class="badge-arrow">&nearr;</span>
+        </a>
       </div>
     </footer>
 

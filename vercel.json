@@ -1,6 +1,8 @@
 {
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/papers/:path*", "destination": "/papers/:path*" },
+    { "source": "/results/:path*", "destination": "/results/:path*" },
     { "source": "/(.*)", "destination": "/site/$1" }
   ]
 }
