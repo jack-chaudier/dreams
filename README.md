@@ -1,5 +1,7 @@
 # Dreams: Mirage Research Showcase
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18793829.svg)](https://doi.org/10.5281/zenodo.18793829)
+
 A curated, public-facing research showcase for long-context reliability under memory pressure.
 
 ## Scope and Boundaries
