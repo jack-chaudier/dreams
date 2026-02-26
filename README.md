@@ -23,7 +23,7 @@ This repo is organized for sharing with researchers/engineers at AI labs, infra 
 - Papers: [`papers/`](/Users/jackg/dreams/papers)
 - MCP implementation: [`mcp/tropical-compactor/`](/Users/jackg/dreams/mcp/tropical-compactor)
 - Validation outputs: [`results/`](/Users/jackg/dreams/results)
-- Email kit/templates: [`email/`](/Users/jackg/dreams/email)
+- Collaboration/docs: [`docs/`](/Users/jackg/dreams/docs)
 
 ## Repo structure
 
@@ -33,7 +33,7 @@ This repo is organized for sharing with researchers/engineers at AI labs, infra 
 ├── papers/                   # PDFs + selected source TeX
 ├── mcp/tropical-compactor/   # production MCP package + tests
 ├── results/                  # reproducible benchmark and validation artifacts
-├── email/                    # outreach templates and payload guidance
+├── docs/                     # collaboration and sharing notes
 └── README.md
 ```
 
@@ -76,10 +76,10 @@ Open: `http://localhost:8080`
 The page is static and deploy-ready.
 
 1. Import this repo into Vercel.
-2. Set **Root Directory** to `site`.
+2. Keep the project root as `/Users/jackg/dreams` (default).
 3. Deploy.
 
-(Alternatively, configure project settings to serve `site/` as the static app root.)
+`vercel.json` maps `/` to the static app in `site/`.
 
 ## Suggested outreach payload
 
@@ -89,4 +89,4 @@ Use this repo as a 3-link package:
 2. paper links (mechanism and proofs)
 3. reproducible artifacts + MCP implementation
 
-Templates are in [`email/OUTREACH_TEMPLATE.md`](/Users/jackg/dreams/email/OUTREACH_TEMPLATE.md).
+Templates are in [`docs/CONTACT.md`](/Users/jackg/dreams/docs/CONTACT.md).

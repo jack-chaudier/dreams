@@ -1,4 +1,4 @@
-# Outreach Template (Labs / AI Companies)
+# Contact and Collaboration Template
 
 ## Subject ideas
 
@@ -6,7 +6,7 @@
 - Memory policies can look valid while silently changing the task
 - Checkable safety contract for context compaction (demo + code)
 
-## Short email body
+## Short intro message
 
 Hi <Name>,
 
@@ -21,7 +21,7 @@ If this is relevant to your memory/eviction stack, I’d love to compare on your
 Best,
 <Your name>
 
-## Attach/Link checklist
+## Suggested links
 
 1. Demo URL (first click)
 2. Repo URL (implementation + results)
