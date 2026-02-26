@@ -1,0 +1,95 @@
+{
+  "title": "MirageKit Demo Data",
+  "retention_levels": [
+    1.0,
+    0.8,
+    0.65,
+    0.5,
+    0.4
+  ],
+  "policies": {
+    "recency": {
+      "1.0": {
+        "pivot_preservation_rate": 1.0,
+        "primary_full_rate": 1.0,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 0.0,
+        "token_retention_mean": 1.0
+      },
+      "0.8": {
+        "pivot_preservation_rate": 0.3333333333333333,
+        "primary_full_rate": 0.3333333333333333,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 0.0,
+        "token_retention_mean": 0.7972401277840513
+      },
+      "0.65": {
+        "pivot_preservation_rate": 0.0,
+        "primary_full_rate": 0.0,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 0.0,
+        "token_retention_mean": 0.6485427364505251
+      },
+      "0.5": {
+        "pivot_preservation_rate": 0.0,
+        "primary_full_rate": 0.0,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 0.0,
+        "token_retention_mean": 0.497065246335844
+      },
+      "0.4": {
+        "pivot_preservation_rate": 0.0,
+        "primary_full_rate": 0.0,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 0.0,
+        "token_retention_mean": 0.3967664635877597
+      }
+    },
+    "l2_guarded": {
+      "1.0": {
+        "pivot_preservation_rate": 1.0,
+        "primary_full_rate": 1.0,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 1.0,
+        "token_retention_mean": 1.0
+      },
+      "0.8": {
+        "pivot_preservation_rate": 1.0,
+        "primary_full_rate": 1.0,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 1.0,
+        "token_retention_mean": 0.7973431674543244
+      },
+      "0.65": {
+        "pivot_preservation_rate": 1.0,
+        "primary_full_rate": 1.0,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 1.0,
+        "token_retention_mean": 0.6490576802257814
+      },
+      "0.5": {
+        "pivot_preservation_rate": 1.0,
+        "primary_full_rate": 1.0,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 1.0,
+        "token_retention_mean": 0.49582934342295343
+      },
+      "0.4": {
+        "pivot_preservation_rate": 1.0,
+        "primary_full_rate": 1.0,
+        "decoy_full_rate": 1.0,
+        "contract_satisfied_rate": 1.0,
+        "token_retention_mean": 0.39697235193725805
+      }
+    }
+  },
+  "witness": {
+    "name": "Deterministic Witness (Exp58-style)",
+    "claim": "Raw validity can remain high while pivot consistency collapses under naive compression.",
+    "semantic_regret_example": 0.544,
+    "notes": [
+      "Recency/truncation can preserve answerability while silently switching the governing pivot.",
+      "L2-guarded compaction enforces pivot+predecessor survival when feasible."
+    ]
+  }
+}

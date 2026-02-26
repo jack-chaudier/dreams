@@ -1,0 +1,565 @@
+{
+  "auto_and_floor": {
+    "auto": {
+      "breach_ids": [],
+      "contract_satisfied": true,
+      "dropped_ids": [],
+      "feasible": true,
+      "feasible_after": true,
+      "feasible_before": true,
+      "feasible_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "feasible_target": true,
+      "guard_effective": true,
+      "guard_reason": "active",
+      "k": 5,
+      "k_max_feasible": 5,
+      "k_selected": 5,
+      "k_target": 5,
+      "mode": "adaptive",
+      "policy": "l2_guarded",
+      "policy_requested": "auto",
+      "policy_selected": "l2_guarded",
+      "protected_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "pivot"
+      ],
+      "protection_satisfied": true,
+      "tokens_after": 79,
+      "tokens_before": 79,
+      "tokens_kept": 79
+    },
+    "floor": {
+      "approx_token_floor": 203009,
+      "count_retention_floor": 5970.4,
+      "count_retention_floor_clipped": 1.0,
+      "current_horizon_failure_estimate": 1.0,
+      "current_pi0_estimate": 0.6,
+      "exact_contract_token_floor": 36,
+      "failure_prob_target": 0.01,
+      "feasible_by_count_model": false,
+      "feasible_now": true,
+      "horizon": 100,
+      "k": 3,
+      "message_count": 13,
+      "model_note": "count_retention_floor is a count-based approximation from predecessor density; exact_contract_token_floor is exact for current tagged/provenanced context only.",
+      "pi0_target": 0.00010049830824165884,
+      "predecessor_count_observed": 5,
+      "predecessor_fraction": 0.38461538461538464,
+      "required_mu_predecessor": 29851.248767155183,
+      "required_predecessor_count": 29852
+    },
+    "strict": {
+      "breach_ids": [],
+      "contract_satisfied": true,
+      "dropped_ids": [
+        "n1",
+        "n2",
+        "f1",
+        "f2",
+        "qa"
+      ],
+      "feasible": true,
+      "feasible_after": true,
+      "feasible_before": true,
+      "feasible_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "feasible_target": true,
+      "guard_effective": true,
+      "guard_reason": "active",
+      "k": 5,
+      "k_max_feasible": 5,
+      "k_selected": 5,
+      "k_target": 5,
+      "mode": "strict",
+      "policy": "l2_guarded",
+      "policy_requested": "auto",
+      "policy_selected": "l2_guarded",
+      "protected_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "pivot"
+      ],
+      "protection_satisfied": true,
+      "tokens_after": 60,
+      "tokens_before": 79,
+      "tokens_kept": 60
+    }
+  },
+  "policy_comparison": {
+    "horizon": {
+      "W": [
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0,
+        10.0
+      ],
+      "feasible_slots": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "k_max": 5,
+      "k_max_feasible": 5,
+      "slots": [
+        {
+          "W": 10.0,
+          "feasible": true,
+          "k": 0,
+          "pivot_id": "pivot",
+          "predecessor_ids": [],
+          "protected_ids": [
+            "pivot"
+          ],
+          "protected_token_floor": 15
+        },
+        {
+          "W": 10.0,
+          "feasible": true,
+          "k": 1,
+          "pivot_id": "pivot",
+          "predecessor_ids": [
+            "c5"
+          ],
+          "protected_ids": [
+            "c5",
+            "pivot"
+          ],
+          "protected_token_floor": 24
+        },
+        {
+          "W": 10.0,
+          "feasible": true,
+          "k": 2,
+          "pivot_id": "pivot",
+          "predecessor_ids": [
+            "c4",
+            "c5"
+          ],
+          "protected_ids": [
+            "c4",
+            "c5",
+            "pivot"
+          ],
+          "protected_token_floor": 30
+        },
+        {
+          "W": 10.0,
+          "feasible": true,
+          "k": 3,
+          "pivot_id": "pivot",
+          "predecessor_ids": [
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "protected_ids": [
+            "c3",
+            "c4",
+            "c5",
+            "pivot"
+          ],
+          "protected_token_floor": 36
+        },
+        {
+          "W": 10.0,
+          "feasible": true,
+          "k": 4,
+          "pivot_id": "pivot",
+          "predecessor_ids": [
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "protected_ids": [
+            "c2",
+            "c3",
+            "c4",
+            "c5",
+            "pivot"
+          ],
+          "protected_token_floor": 44
+        },
+        {
+          "W": 10.0,
+          "feasible": true,
+          "k": 5,
+          "pivot_id": "pivot",
+          "predecessor_ids": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5"
+          ],
+          "protected_ids": [
+            "c1",
+            "c2",
+            "c3",
+            "c4",
+            "c5",
+            "pivot"
+          ],
+          "protected_token_floor": 49
+        }
+      ],
+      "tagged_chunks": [
+        {
+          "confidence": 1.0,
+          "id": "n1",
+          "role": "noise",
+          "token_count": 4,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "n2",
+          "role": "noise",
+          "token_count": 4,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c1",
+          "role": "predecessor",
+          "token_count": 5,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c2",
+          "role": "predecessor",
+          "token_count": 8,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c3",
+          "role": "predecessor",
+          "token_count": 6,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c4",
+          "role": "predecessor",
+          "token_count": 6,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c5",
+          "role": "predecessor",
+          "token_count": 9,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "pivot",
+          "role": "pivot",
+          "token_count": 15,
+          "weight": 10.0
+        },
+        {
+          "confidence": 1.0,
+          "id": "f1",
+          "role": "noise",
+          "token_count": 3,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "f2",
+          "role": "noise",
+          "token_count": 3,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "f3",
+          "role": "noise",
+          "token_count": 3,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "qa",
+          "role": "noise",
+          "token_count": 5,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "summary",
+          "role": "noise",
+          "token_count": 8,
+          "weight": null
+        }
+      ]
+    },
+    "inspect_k3": {
+      "W": [
+        10.0,
+        10.0,
+        10.0,
+        10.0
+      ],
+      "feasible": true,
+      "pivot_id": "pivot",
+      "predecessor_ids": [
+        "c3",
+        "c4",
+        "c5"
+      ],
+      "protected_ids": [
+        "c3",
+        "c4",
+        "c5",
+        "pivot"
+      ],
+      "tagged_chunks": [
+        {
+          "confidence": 1.0,
+          "id": "n1",
+          "role": "noise",
+          "token_count": 4,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "n2",
+          "role": "noise",
+          "token_count": 4,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c1",
+          "role": "predecessor",
+          "token_count": 5,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c2",
+          "role": "predecessor",
+          "token_count": 8,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c3",
+          "role": "predecessor",
+          "token_count": 6,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c4",
+          "role": "predecessor",
+          "token_count": 6,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "c5",
+          "role": "predecessor",
+          "token_count": 9,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "pivot",
+          "role": "pivot",
+          "token_count": 15,
+          "weight": 10.0
+        },
+        {
+          "confidence": 1.0,
+          "id": "f1",
+          "role": "noise",
+          "token_count": 3,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "f2",
+          "role": "noise",
+          "token_count": 3,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "f3",
+          "role": "noise",
+          "token_count": 3,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "qa",
+          "role": "noise",
+          "token_count": 5,
+          "weight": null
+        },
+        {
+          "confidence": 1.0,
+          "id": "summary",
+          "role": "noise",
+          "token_count": 8,
+          "weight": null
+        }
+      ]
+    },
+    "rows": [
+      {
+        "budget": 79,
+        "l2_guard_effective": true,
+        "l2_guarded_kept": [
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "c5",
+          "f1",
+          "f2",
+          "f3",
+          "n1",
+          "n2",
+          "pivot",
+          "qa",
+          "summary"
+        ],
+        "l2_iter_blocked": 0,
+        "l2_iter_checked": 0,
+        "l2_iter_guard_effective": true,
+        "l2_iterative_kept": [
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "c5",
+          "f1",
+          "f2",
+          "f3",
+          "n1",
+          "n2",
+          "pivot",
+          "qa",
+          "summary"
+        ],
+        "recency_kept": [
+          "c1",
+          "c2",
+          "c3",
+          "c4",
+          "c5",
+          "f1",
+          "f2",
+          "f3",
+          "n1",
+          "n2",
+          "pivot",
+          "qa",
+          "summary"
+        ]
+      },
+      {
+        "budget": 60,
+        "l2_guard_effective": true,
+        "l2_guarded_kept": [
+          "c3",
+          "c4",
+          "c5",
+          "f1",
+          "f2",
+          "f3",
+          "pivot",
+          "qa",
+          "summary"
+        ],
+        "l2_iter_blocked": 0,
+        "l2_iter_checked": 4,
+        "l2_iter_guard_effective": true,
+        "l2_iterative_kept": [
+          "c3",
+          "c4",
+          "c5",
+          "f1",
+          "f2",
+          "f3",
+          "pivot",
+          "qa",
+          "summary"
+        ],
+        "recency_kept": [
+          "c3",
+          "c4",
+          "c5",
+          "f1",
+          "f2",
+          "f3",
+          "pivot",
+          "qa",
+          "summary"
+        ]
+      },
+      {
+        "budget": 35,
+        "l2_guard_effective": false,
+        "l2_guarded_kept": [
+          "c4",
+          "c5",
+          "pivot",
+          "qa"
+        ],
+        "l2_iter_blocked": 0,
+        "l2_iter_checked": 9,
+        "l2_iter_guard_effective": false,
+        "l2_iterative_kept": [
+          "c4",
+          "c5",
+          "pivot"
+        ],
+        "recency_kept": [
+          "c5",
+          "f1",
+          "f2",
+          "f3",
+          "n2",
+          "qa",
+          "summary"
+        ]
+      }
+    ]
+  },
+  "stdio_smoke": {
+    "alive_for_1s": true,
+    "returncode": -15
+  }
+}
