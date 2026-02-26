@@ -4,11 +4,11 @@ Curated paper bundle for the Mirage/compaction research line.
 
 ## Included PDFs
 
-- `paper_00_continuous_control_structural_regularization.pdf`
-- `paper_01_absorbing_states_in_greedy_search.pdf`
-- `paper_02_streaming_oscillation_traps.pdf`
-- `paper_03_validity_mirage_compression.pdf`
-- `paper_i_tropical_algebra.pdf`
+- `paper_00_continuous_control_structural_regularization.pdf` — narrative-control baseline and structural regularization framing.
+- `paper_01_absorbing_states_in_greedy_search.pdf` — impossibility boundary for greedy selection under endogenous pivots.
+- `paper_02_streaming_oscillation_traps.pdf` — streaming trap dynamics and deferred-commitment mitigation.
+- `paper_03_validity_mirage_compression.pdf` — validity mirage mechanism under context compression.
+- `paper_i_tropical_algebra.pdf` — tropical/L2 algebraic foundation, composition laws, and lower-bound perspective.
 
 ## Included source files
 

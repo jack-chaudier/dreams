@@ -1,6 +1,6 @@
 {
   "name": "memory_safety_certificate_example",
-  "token_budget": 30,
+  "token_budget": 40,
   "k": 3,
   "full_context": {
     "pivot_id": "p1",
@@ -21,6 +21,7 @@
   "policies": {
     "recency": {
       "kept_ids": [
+        "hc3",
         "p1",
         "n1",
         "n2",
@@ -30,15 +31,14 @@
         "policy": "recency",
         "dropped_ids": [
           "hc1",
-          "hc2",
-          "hc3"
+          "hc2"
         ],
-        "tokens_kept": 30,
+        "tokens_kept": 39,
         "feasible": null,
         "guard_effective": null,
         "guard_reason": "not_applicable",
         "tokens_before": 57,
-        "tokens_after": 30,
+        "tokens_after": 39,
         "protected_ids": [],
         "breach_ids": [],
         "contract_satisfied": null,
@@ -47,6 +47,7 @@
     },
     "l2_guarded": {
       "kept_ids": [
+        "hc1",
         "hc2",
         "hc3",
         "p1"
@@ -60,25 +61,22 @@
           "hc3",
           "p1"
         ],
-        "breach_ids": [
-          "hc1"
-        ],
+        "breach_ids": [],
         "dropped_ids": [
-          "hc1",
           "n1",
           "n2",
           "n3"
         ],
-        "tokens_kept": 29,
-        "contract_satisfied": false,
-        "protection_satisfied": false,
+        "tokens_kept": 36,
+        "contract_satisfied": true,
+        "protection_satisfied": true,
         "feasible_before": true,
-        "feasible_after": false,
-        "feasible": false,
-        "guard_effective": false,
-        "guard_reason": "protected_breach_due_to_budget",
+        "feasible_after": true,
+        "feasible": true,
+        "guard_effective": true,
+        "guard_reason": "active",
         "tokens_before": 57,
-        "tokens_after": 29
+        "tokens_after": 36
       }
     }
   }

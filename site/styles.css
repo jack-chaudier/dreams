@@ -172,6 +172,23 @@ input[type="range"] {
   font-weight: 600;
 }
 
+.badge {
+  margin-top: 0.8rem;
+  display: inline-block;
+  border: 1px solid rgba(255, 127, 102, 0.7);
+  color: #ffd8cf;
+  background: rgba(255, 127, 102, 0.14);
+  padding: 0.32rem 0.56rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hidden {
+  display: none;
+}
+
 .witness-box {
   border-left: 3px solid var(--accent2);
   padding-left: 0.8rem;

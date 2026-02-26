@@ -12,6 +12,7 @@ const guardedDecoy = document.getElementById("guardedDecoy");
 const guardedContract = document.getElementById("guardedContract");
 
 const deltaText = document.getElementById("deltaText");
+const mirageBadge = document.getElementById("mirageBadge");
 const witnessClaim = document.getElementById("witnessClaim");
 const witnessRegret = document.getElementById("witnessRegret");
 const certificatePreview = document.getElementById("certificatePreview");
@@ -62,6 +63,12 @@ async function loadData() {
       pivotDelta > 0
         ? `At this budget, guarded compaction preserves pivot continuity by +${Math.round(pivotDelta * 100)} points.`
         : "At this budget, both policies are similar on this fixture.";
+
+    if (pivotDelta > 0 && rec.pivot_preservation_rate < 1.0) {
+      mirageBadge.classList.remove("hidden");
+    } else {
+      mirageBadge.classList.add("hidden");
+    }
   }
 
   slider.addEventListener("input", () => render(Number(slider.value)));

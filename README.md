@@ -3,7 +3,7 @@
 A clean, public-facing repository for demonstrating and sharing work on long-context reliability:
 
 - **MirageKit demo concept**: interactive validity-mirage visualization and safety certificates
-- **tropical-compactor MCP server**: L2 tropical-algebra context compaction with guarded retention
+- **tropical-mcp MCP server**: L2 tropical-algebra context compaction with guarded retention
 - **paper bundle**: key papers and selected TeX sources
 - **reproducible evidence**: benchmark/test outputs included in `results/`
 
@@ -19,11 +19,11 @@ This repo is organized for sharing with researchers/engineers at AI labs, infra 
 
 ## Quick links
 
-- Landing page (Vercel app source): [`site/`](/Users/jackg/dreams/site)
-- Papers: [`papers/`](/Users/jackg/dreams/papers)
-- MCP implementation: [`mcp/tropical-compactor/`](/Users/jackg/dreams/mcp/tropical-compactor)
-- Validation outputs: [`results/`](/Users/jackg/dreams/results)
-- Collaboration/docs: [`docs/`](/Users/jackg/dreams/docs)
+- Landing page (Vercel app source): [`site/`](./site/)
+- Papers: [`papers/`](./papers/)
+- Canonical MCP implementation: [`tropical-mcp`](https://github.com/jack-chaudier/tropical-mcp)
+- Validation outputs: [`results/`](./results/)
+- Collaboration/docs: [`docs/`](./docs/)
 
 ## Repo structure
 
@@ -31,7 +31,7 @@ This repo is organized for sharing with researchers/engineers at AI labs, infra 
 /dreams
 ├── site/                     # Vercel-ready showcase page
 ├── papers/                   # PDFs + selected source TeX
-├── mcp/tropical-compactor/   # production MCP package + tests
+├── mcp/                      # pointers to canonical MCP repo
 ├── results/                  # reproducible benchmark and validation artifacts
 ├── docs/                     # collaboration and sharing notes
 └── README.md
@@ -44,17 +44,17 @@ From the included replay (`results/replay/replay_summary.json`):
 - At retention fractions `0.65`, `0.5`, `0.4`:
   - `l2_guarded` pivot preservation = **1.0**
   - `recency` pivot preservation = **0.0**
-- `pytest`: **30 passed** in `mcp/tropical-compactor`
+- `pytest`: **30 passed** in the canonical `tropical-mcp` repository
 - Packaging build: wheel + sdist built successfully
 
-See full details in [`results/VALIDATION_SUMMARY.md`](/Users/jackg/dreams/results/VALIDATION_SUMMARY.md).
+See full details in [`results/VALIDATION_SUMMARY.md`](./results/VALIDATION_SUMMARY.md).
 
 ## Run locally
 
 ### 1) MCP package checks
 
 ```bash
-cd /Users/jackg/dreams/mcp/tropical-compactor
+cd /absolute/path/to/tropical-mcp
 uv run --extra dev pytest -q
 uv build
 uv run python scripts/run_full_validation.py
@@ -65,7 +65,7 @@ uv run python scripts/run_full_validation.py
 Any static server works. Example:
 
 ```bash
-cd /Users/jackg/dreams/site
+cd ./site
 python3 -m http.server 8080
 ```
 
@@ -76,7 +76,7 @@ Open: `http://localhost:8080`
 The page is static and deploy-ready.
 
 1. Import this repo into Vercel.
-2. Keep the project root as `/Users/jackg/dreams` (default).
+2. Keep the project root as this repository root (default).
 3. Deploy.
 
 `vercel.json` maps `/` to the static app in `site/`.
@@ -89,4 +89,4 @@ Use this repo as a 3-link package:
 2. paper links (mechanism and proofs)
 3. reproducible artifacts + MCP implementation
 
-Templates are in [`docs/CONTACT.md`](/Users/jackg/dreams/docs/CONTACT.md).
+Templates are in [`docs/CONTACT.md`](./docs/CONTACT.md).
