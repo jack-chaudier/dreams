@@ -44,15 +44,17 @@
   var guardedBadgeEl = document.getElementById('guardedBadge');
   var certificateTokenSummaryEl = document.getElementById('certificateTokenSummary');
   var certificateJsonEl = document.getElementById('certificateJson');
+  var semanticRegretEl = document.getElementById('semanticRegret');
+  var semanticRegretValueEl = document.getElementById('semanticRegretValue');
 
   function lerp(a, b, t) {
     return a + (b - a) * t;
   }
 
   function metricColor(value) {
-    if (value >= 0.8) return '#2d6a4f';
-    if (value >= 0.4) return '#8c6d1f';
-    return '#9b2c2c';
+    if (value >= 0.8) return '#065f46';
+    if (value >= 0.4) return '#92400e';
+    return '#991b1b';
   }
 
   function metricClassName(key) {
@@ -355,8 +357,8 @@
       if (noContract && isContractMetric) {
         b.value.textContent = 'N/A';
         b.fill.style.width = '0%';
-        b.fill.style.backgroundColor = 'rgba(220, 215, 200, 0.22)';
-        b.value.style.color = 'rgba(220, 215, 200, 0.78)';
+        b.fill.style.backgroundColor = 'rgba(226, 232, 240, 0.3)';
+        b.value.style.color = 'rgba(100, 116, 139, 0.7)';
         b.row.classList.add('metric-na');
         b.note.textContent = 'No contract in recency baseline.';
         b.note.classList.remove('hidden');
@@ -364,7 +366,7 @@
       }
 
       if (m.key === 'raw_validity' && showMirageContradiction) {
-        color = '#3a6ea5';
+        color = '#2563eb';
       }
 
       b.value.textContent = pct(val);
@@ -504,6 +506,17 @@
         mirageWarning.classList.add('hidden');
       }
       prevMirageVisible = shouldShowMirage;
+
+      // Semantic regret — interpolated from benchmark value
+      if (semanticRegretEl && semanticRegretValueEl) {
+        var regretValue = (1 - naive.pivot_preservation_rate) * mirage.witness.semantic_regret_example;
+        if (regretValue > 0.01) {
+          semanticRegretEl.classList.remove('hidden');
+          semanticRegretValueEl.textContent = regretValue.toFixed(3);
+        } else {
+          semanticRegretEl.classList.add('hidden');
+        }
+      }
 
       explainerText.textContent = getExplainer(retention);
     }
