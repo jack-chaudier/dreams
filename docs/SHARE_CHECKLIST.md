@@ -6,6 +6,7 @@ Use this sequence for highest reply odds:
 2. Live demo link (Vercel)
 3. Repo link
 4. One sentence on reproducibility (`results/` + commands)
+5. One sentence on status ("working-paper first draft; evidence and caveats included")
 
 ## Suggested CTA
 

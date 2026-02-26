@@ -1,88 +1,90 @@
-# Dreams: MirageKit + Tropical Context Safety
+# Dreams: Mirage Research Showcase
 
-A clean, public-facing repository for demonstrating and sharing work on long-context reliability:
+A curated, public-facing research showcase for long-context reliability under memory pressure.
 
-- **MirageKit demo concept**: interactive validity-mirage visualization and safety certificates
-- **tropical-mcp MCP server**: L2 tropical-algebra context compaction with guarded retention
-- **paper bundle**: key papers and selected TeX sources
-- **reproducible evidence**: benchmark/test outputs included in `results/`
+## Scope and Boundaries
 
-## Why this repo exists
+- `dreams` is the public front door: demo site, paper bundle, and reproducible artifacts.
+- The full `mirage` research monorepo stays private.
+- The canonical MCP implementation is maintained in `tropical-mcp`.
 
-Most context compression demos report only answer quality. This project shows a harder truth:
-
-- raw answer validity can stay high,
-- while **semantic intent silently drifts** (pivot substitution),
-- unless context retention is constrained by a structural contract.
-
-This repo is organized for sharing with researchers/engineers at AI labs, infra teams, and agent builders.
-
-## Quick links
-
-- Landing page (Vercel app source): [`site/`](./site/)
-- Papers: [`papers/`](./papers/)
-- Canonical MCP implementation: [`tropical-mcp`](https://github.com/jack-chaudier/tropical-mcp)
-- Validation outputs: [`results/`](./results/)
-- Collaboration/docs: [`docs/`](./docs/)
-
-## Repo structure
+## Repository Contents
 
 ```text
 /dreams
-├── site/                     # Vercel-ready showcase page
-├── papers/                   # PDFs + selected source TeX
-├── mcp/                      # pointers to canonical MCP repo
-├── results/                  # reproducible benchmark and validation artifacts
-├── docs/                     # collaboration and sharing notes
+├── site/                     # Vercel-ready interactive showcase
+├── papers/                   # Working paper PDFs + selected TeX/Bib sources
+├── results/                  # Reproducible benchmark + validation artifacts
+├── notebooks/                # Colab/local notebook workspace scaffold
+├── tests/                    # Public-surface validation notes
+├── mcp/                      # Canonical MCP source-of-truth pointer
+├── docs/                     # Outreach + sharing docs
 └── README.md
 ```
 
-## Core evidence snapshot
+## Research Status
 
-From the included replay (`results/replay/replay_summary.json`):
+- Paper bundle status: **Working Paper / First Draft (2026)**.
+- Claims are tied to committed artifacts in `results/` and source TeX in `papers/sources/`.
+- This repo is intentionally minimal and evidence-first.
 
-- At retention fractions `0.65`, `0.5`, `0.4`:
+## Evidence Snapshot
+
+Source: `results/replay/replay_summary.json`
+
+- At retention fractions `0.65`, `0.5`, and `0.4`:
   - `l2_guarded` pivot preservation = **1.0**
   - `recency` pivot preservation = **0.0**
-- `pytest`: **30 passed** in the canonical `tropical-mcp` repository
-- Packaging build: wheel + sdist built successfully
+- Canonical MCP validation snapshot:
+  - `pytest`: **30 passed**
+  - packaging build: wheel + sdist successful
 
-See full details in [`results/VALIDATION_SUMMARY.md`](./results/VALIDATION_SUMMARY.md).
+Detailed summary: [`results/VALIDATION_SUMMARY.md`](./results/VALIDATION_SUMMARY.md)
 
-## Run locally
+## Credibility Notes
 
-### 1) MCP package checks
+To keep interpretation rigorous:
+
+- Synthetic and fixture-based evaluations dominate the current artifact set.
+- Real-incident validation is smaller scale than synthetic sweeps.
+- Results are reported with explicit denominators and caveats in source papers.
+
+## Local Reproduction
+
+### 1) Validate canonical MCP implementation
 
 ```bash
-cd ../mirage/tropical-compactor
+cd /absolute/path/to/tropical-mcp
 uv run --extra dev pytest -q
 uv build
-uv run python scripts/run_full_validation.py
+uv run tropical-mcp-full-validate
+uv run tropical-mcp-replay \
+  --fractions 1.0,0.8,0.65,0.5,0.4 \
+  --policies recency,l2_guarded \
+  --k 3 \
+  --line-count 200 \
+  --output-dir /absolute/path/to/dreams/results/replay
 ```
 
-### 2) Serve the landing page
-
-Any static server works. Example:
+### 2) Serve the showcase site
 
 ```bash
-cd ./site
+cd /absolute/path/to/dreams/site
 python3 -m http.server 8080
 ```
 
 Open: `http://localhost:8080`
 
-## Deploy to Vercel
+## Deployment
 
-Live deployment: https://dreams-dun.vercel.app
+- Live site: <https://dreams-dun.vercel.app>
+- `vercel.json` routes `/` to static content in `site/`
 
-`vercel.json` maps `/` to the static app in `site/`.
+## Quick Links
 
-## Suggested outreach payload
-
-Use this repo as a 3-link package:
-
-1. landing page (fast wow)
-2. paper links (mechanism and proofs)
-3. reproducible artifacts + MCP implementation
-
-Templates are in [`docs/CONTACT.md`](./docs/CONTACT.md).
+- Site source: [`site/`](./site/)
+- Paper bundle: [`papers/`](./papers/)
+- Repro artifacts: [`results/`](./results/)
+- Notebook workspace: [`notebooks/`](./notebooks/)
+- Credibility notes: [`docs/CREDIBILITY_NOTES.md`](./docs/CREDIBILITY_NOTES.md)
+- Canonical MCP repo: <https://github.com/jack-chaudier/tropical-mcp>

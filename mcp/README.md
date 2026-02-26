@@ -1,8 +1,13 @@
 # MCP Source of Truth
 
-The canonical MCP implementation now lives in:
+The canonical MCP implementation for this research line lives in:
 
-- https://github.com/jack-chaudier/tropical-mcp
+- <https://github.com/jack-chaudier/tropical-mcp>
 
-This `dreams` repository is the showcase/research front door (papers, results, demo site).
-To avoid drift, MCP source code is maintained only in the dedicated `tropical-mcp` repository.
+This repository (`dreams`) is the public research showcase layer:
+
+- interactive demo (`site/`)
+- working paper bundle (`papers/`)
+- reproducible artifact snapshots (`results/`)
+
+No MCP source is duplicated here to prevent implementation drift.

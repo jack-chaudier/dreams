@@ -6,6 +6,7 @@ __pycache__/
 *.pyc
 .venv/
 .pytest_cache/
+.ipynb_checkpoints/
 
 # Build outputs
 build/
@@ -16,6 +17,8 @@ dist/
 node_modules/
 .vercel/
 
+# Local tooling
+.claude/
+
 # Local artifacts
 *.log
-.vercel

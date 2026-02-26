@@ -242,6 +242,17 @@ main {
   transform: translate(1px, -1px);
 }
 
+.research-status {
+  margin-top: 1rem;
+  max-width: var(--text-w);
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
 /* ══════════════════════════════════════════════════
    Interactive Panel — Figure 1
    ═════════════════════════════════════════════════ */
@@ -1056,6 +1067,46 @@ input[type="range"]::-moz-range-track {
 
 .stat-arrow {
   font-size: 0.64rem;
+}
+
+/* Credibility section keeps claims assertive but scoped */
+.credibility-note {
+  margin-top: 1.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--surface);
+  padding: 1.2rem 1.3rem;
+}
+
+.credibility-note h3 {
+  margin-bottom: 0.55rem;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.credibility-note p {
+  margin-bottom: 0.7rem;
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  line-height: 1.62;
+}
+
+.credibility-note ul {
+  padding-left: 1.05rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.credibility-note li {
+  font-family: var(--serif);
+  font-size: 0.84rem;
+  color: var(--ink-2);
+  line-height: 1.58;
 }
 
 /* ══════════════════════════════════════════════════
