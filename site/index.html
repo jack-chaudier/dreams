@@ -3,87 +3,137 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dreams | MirageKit</title>
-    <meta name="description" content="MirageKit: context compression demos, tropical-mcp, and reproducible memory-safety artifacts." />
+    <title>MirageKit — Mirage Research Program</title>
+    <meta name="description" content="Your context compression looks valid. It isn't. Interactive demo of the validity mirage in LLM context management." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div class="fireflies" aria-hidden="true">
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+      <div class="firefly"></div>
+    </div>
+
     <header class="hero">
-      <div class="hero-glow hero-glow-a"></div>
-      <div class="hero-glow hero-glow-b"></div>
-      <p class="kicker">Dreams / MirageKit</p>
-      <h1>When context compression looks valid but silently changes the task.</h1>
-      <p class="lede">
-        A public demo + reproducible artifact set for long-context reliability. Compare naive recency vs
-        contract-guarded tropical compaction and inspect memory safety certificates.
-      </p>
-      <div class="hero-links">
-        <a href="https://github.com/jack-chaudier/dreams/blob/main/results/VALIDATION_SUMMARY.md">Validation Summary</a>
-        <a href="https://github.com/jack-chaudier/dreams/tree/main/papers">Papers</a>
-        <a href="https://github.com/jack-chaudier/tropical-mcp">MCP Implementation</a>
+      <div class="hero-brand">
+        <span class="sigil">&#9672;</span>
+        <span class="brand-label">Mirage Research Program</span>
       </div>
+      <h1 class="hero-title">MirageKit</h1>
+      <p class="hero-subtitle">Your context compression looks valid. <span class="text-danger">It isn't.</span></p>
+      <p class="hero-cta"><em>Drag the slider and watch.</em></p>
     </header>
 
     <main>
-      <section class="panel" id="interactive">
-        <div class="panel-head">
-          <h2>Interactive Mirage Panel</h2>
-          <p>Slide retention budget and compare policy behavior.</p>
+      <section class="interactive-panel" id="interactive">
+        <div class="slider-area">
+          <div class="slider-header">
+            <span class="slider-label-text">Retention Budget</span>
+            <span class="slider-value" id="retentionValue">100%</span>
+          </div>
+          <input id="retentionSlider" type="range" min="20" max="100" value="100" step="1" />
+          <div class="slider-ticks">
+            <span>20%</span>
+            <span>40%</span>
+            <span>60%</span>
+            <span>80%</span>
+            <span>100%</span>
+          </div>
         </div>
 
-        <label for="retentionSlider" class="slider-label">Retention: <span id="retentionValue">100%</span></label>
-        <input id="retentionSlider" type="range" min="0" max="4" value="0" step="1" />
-
-        <div class="grid-two">
-          <article class="card card-recency">
-            <h3>Naive Recency</h3>
-            <ul>
-              <li>Pivot Preservation: <strong id="recencyPivot">-</strong></li>
-              <li>Primary Arc Survival: <strong id="recencyPrimary">-</strong></li>
-              <li>Decoy Arc Survival: <strong id="recencyDecoy">-</strong></li>
-              <li>Contract Satisfied: <strong id="recencyContract">-</strong></li>
-            </ul>
+        <div class="cards-container">
+          <article class="card card-naive">
+            <h3 class="card-title">Naive Recency</h3>
+            <div class="metrics" id="naiveMetrics"></div>
+            <div class="contract-badge" id="naiveContract"></div>
           </article>
-
           <article class="card card-guarded">
-            <h3>L2 Guarded</h3>
-            <ul>
-              <li>Pivot Preservation: <strong id="guardedPivot">-</strong></li>
-              <li>Primary Arc Survival: <strong id="guardedPrimary">-</strong></li>
-              <li>Decoy Arc Survival: <strong id="guardedDecoy">-</strong></li>
-              <li>Contract Satisfied: <strong id="guardedContract">-</strong></li>
-            </ul>
+            <h3 class="card-title">Tropical L2 &middot; Guarded</h3>
+            <div class="metrics" id="guardedMetrics"></div>
+            <div class="contract-badge" id="guardedContract"></div>
           </article>
         </div>
 
-        <p id="mirageBadge" class="badge hidden">VALIDITY MIRAGE DETECTED</p>
-        <p id="deltaText" class="delta"></p>
+        <div class="mirage-warning hidden" id="mirageWarning">
+          <span class="mirage-icon">&#9888;</span>
+          <div class="mirage-text">
+            <strong>VALIDITY MIRAGE DETECTED</strong>
+            <p>Raw validity appears perfect &mdash; but the pivot has been silently replaced. The model can still answer, just about the wrong task. Naive recency substituted a decoy for the real root cause.</p>
+          </div>
+        </div>
+
+        <p class="explainer" id="explainerText"></p>
       </section>
 
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Deterministic Witness</h2>
-          <p>Core claim visualized as an operational diagnosis.</p>
+      <section class="deep-section">
+        <button class="deep-toggle" id="deepToggle" aria-expanded="false">
+          <span>Deep analysis &mdash; witness, certificate, key results</span>
+          <span class="toggle-icon" id="toggleIcon">&#9656;</span>
+        </button>
+        <div class="deep-content hidden" id="deepContent">
+          <div class="deep-grid">
+            <div class="deep-block">
+              <h4>Exp58 Deterministic Witness</h4>
+              <p class="witness-claim" id="witnessClaim"></p>
+              <div class="witness-table">
+                <div class="witness-row">
+                  <span class="witness-label">W[3] Naive</span>
+                  <span class="mono witness-val-bad">&infin; (infeasible)</span>
+                </div>
+                <div class="witness-row">
+                  <span class="witness-label">W[3] Tropical</span>
+                  <span class="mono witness-val-good" id="witnessTropical">&mdash;</span>
+                </div>
+                <div class="witness-row">
+                  <span class="witness-label">Semantic Regret</span>
+                  <span class="mono witness-val-bad" id="witnessRegret">&mdash;</span>
+                </div>
+              </div>
+              <div class="witness-notes" id="witnessNotes"></div>
+            </div>
+            <div class="deep-block">
+              <h4>Memory Safety Certificate</h4>
+              <pre class="certificate-pre" id="certificateJson"></pre>
+            </div>
+          </div>
+          <div class="headline-stats">
+            <div class="stat-card">
+              <span class="stat-value mono">0</span>
+              <span class="stat-label">false positives / 11,400 instances</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value mono">54.9%</span>
+              <span class="stat-label">organic trap rate / 4,200 runs</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value mono">22%</span>
+              <span class="stat-label">silent mirage / NTSB incidents</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-value mono">&Omega;(k)</span>
+              <span class="stat-label">state bound / Myhill-Nerode</span>
+            </div>
+          </div>
         </div>
-        <div class="witness-box">
-          <p id="witnessClaim"></p>
-          <p>Semantic regret example: <strong id="witnessRegret"></strong></p>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Memory Safety Certificate</h2>
-          <p>A checkable JSON object you can log per compaction event.</p>
-        </div>
-        <pre id="certificatePreview" class="certificate"></pre>
       </section>
     </main>
 
-    <footer>
-      <p>
-        Built for outreach and reproducibility. Source repo includes scripts, tests, papers, and artifacts.
-      </p>
+    <footer class="site-footer">
+      <p class="footer-quote"><em>The roots remember what the canopy forgets.</em></p>
+      <p class="footer-credit">Jack Chaudier Gaffney &middot; University of Michigan &middot; 2026</p>
+      <div class="paper-badges">
+        <span class="paper-badge">01: Absorbing States</span>
+        <span class="paper-badge">02: Streaming Traps</span>
+        <span class="paper-badge">03: Validity Mirage</span>
+        <span class="paper-badge">I: Tropical Algebra</span>
+      </div>
     </footer>
 
     <script src="./app.js" defer></script>
