@@ -16,7 +16,7 @@ This repo is a curated public snapshot (working-paper stage); the larger interna
 
 - Demo page: https://dreams-dun.vercel.app
 - Repo: https://github.com/jack-chaudier/dreams
-- DOI (archival record): https://doi.org/10.5281/zenodo.18793829
+- DOI (archival record): https://doi.org/10.5281/zenodo.18794293
 - Key results: l2-guarded keeps pivot preservation at 1.0 under pressure in the included replay, while recency drops to 0.0 at the same budgets.
 
 If this is relevant to your memory/eviction stack, I’d love to compare on your internal traces or collaborate on a broader eval pass.
