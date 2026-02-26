@@ -509,8 +509,9 @@
 
       // Semantic regret — interpolated from benchmark value
       if (semanticRegretEl && semanticRegretValueEl) {
-        var regretValue = (1 - naive.pivot_preservation_rate) * mirage.witness.semantic_regret_example;
-        if (regretValue > 0.01) {
+        var driftSeverity = 1 - naive.pivot_preservation_rate;
+        var regretValue = driftSeverity * mirage.witness.semantic_regret_example;
+        if (driftSeverity >= 0.12) {
           semanticRegretEl.classList.remove('hidden');
           semanticRegretValueEl.textContent = regretValue.toFixed(3);
         } else {
