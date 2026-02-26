@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 title: "Validity Mirage: Context Compression Failure Modes in LLMs"
 message: "If you use this research, please cite it using the metadata from this file."
-type: dataset
+type: software
 authors:
   - given-names: Jack Chaudier
     family-names: Gaffney
@@ -11,6 +11,7 @@ authors:
 repository-code: "https://github.com/jack-chaudier/dreams"
 url: "https://dreams-dun.vercel.app"
 license: CC-BY-4.0
+version: 0.1.0
 date-released: "2026-02-26"
 keywords:
   - ai-safety
@@ -26,6 +27,13 @@ abstract: >-
   a tropical semiring algebra for measuring context health and deploys it as
   a production MCP server for Claude Code agentic sessions.
 references:
+  - type: article
+    title: "Continuous Control and Structural Regularization in Multi-Agent Narrative Extraction"
+    authors:
+      - given-names: Jack Chaudier
+        family-names: Gaffney
+    year: 2026
+    status: preprint
   - type: article
     title: "Absorbing States in Greedy Search: When Endogenous Constraints Break Sequential Extraction"
     authors:

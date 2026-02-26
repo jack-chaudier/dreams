@@ -12,6 +12,12 @@ from typing import Iterable
 ROOT = Path(__file__).resolve().parents[1]
 
 PAPER_SPECS = {
+    "paper_00_continuous_control_structural_regularization": {
+        "pdf": ROOT / "papers" / "paper_00_continuous_control_structural_regularization.pdf",
+        "tex": ROOT / "papers" / "sources" / "paper_00_main.tex",
+        "title": "Continuous Control and Structural Regularization in Multi-Agent Narrative Extraction",
+        "author": "Jack Chaudier Gaffney",
+    },
     "paper_01_absorbing_states_in_greedy_search": {
         "pdf": ROOT / "papers" / "paper_01_absorbing_states_in_greedy_search.pdf",
         "tex": ROOT / "papers" / "sources" / "paper_01_main.tex",
@@ -205,8 +211,9 @@ def check_zenodo_and_citation_consistency() -> None:
         zenodo.get("publication_type") == "workingpaper",
         "Zenodo publication_type must be workingpaper",
     )
-    _assert(zenodo.get("license") == "CC-BY-4.0", "Zenodo license must be CC-BY-4.0")
+    _assert(zenodo.get("license") == "cc-by-4.0", "Zenodo license must be cc-by-4.0")
     _assert("license: CC-BY-4.0" in cff_text, "CITATION.cff license must be CC-BY-4.0")
+    _assert("type: software" in cff_text, "CITATION.cff type should be software for this repository")
 
     cff_title_match = re.search(r'^title:\s*"([^"]+)"', cff_text, flags=re.MULTILINE)
     _assert(cff_title_match is not None, "CITATION.cff missing top-level title")
@@ -225,7 +232,28 @@ def check_zenodo_and_citation_consistency() -> None:
     )
 
     preprint_refs = len(re.findall(r"status:\s*preprint", cff_text))
-    _assert(preprint_refs >= 4, "CITATION.cff should include references to papers 1/2/3/I as preprints")
+    _assert(preprint_refs >= 5, "CITATION.cff should include references to papers 00/1/2/3/I as preprints")
+    _assert(
+        "Continuous Control and Structural Regularization in Multi-Agent Narrative Extraction" in cff_text,
+        "CITATION.cff should include paper 00 reference entry",
+    )
+
+    cff_version_match = re.search(r"^version:\s*([0-9.]+)", cff_text, flags=re.MULTILINE)
+    _assert(cff_version_match is not None, "CITATION.cff should include a version field")
+    _assert(zenodo.get("version") == cff_version_match.group(1), "CITATION.cff and .zenodo.json versions must match")
+
+    tags = [
+        tag
+        for tag in _run(["git", "tag", "--list", "v*", "--sort=version:refname"], cwd=ROOT).splitlines()
+        if tag
+    ]
+    if tags:
+        latest_tag = tags[-1]
+        tag_version = latest_tag[1:] if latest_tag.startswith("v") else latest_tag
+        _assert(
+            zenodo.get("version") == tag_version,
+            f".zenodo.json version ({zenodo.get('version')}) should match latest v-tag ({tag_version})",
+        )
 
 
 def check_paper_sources() -> None:

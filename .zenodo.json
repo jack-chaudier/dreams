@@ -1,6 +1,6 @@
 {
   "title": "Validity Mirage: Context Compression Failure Modes in LLMs",
-  "description": "Research on context compression failure modes in large language models. Introduces the validity mirage — where compression preserves surface-level correctness while silently substituting the governing hypothesis — and develops a tropical semiring algebra (max-plus over R ∪ {−∞}) for measuring context health. Validated across five model architectures (Llama 3.1 8B, Mistral 7B v0.3, Gemma 2 9B, Phi-3 Medium 14B, Qwen 2.5 14B) using 11,400+ boundary instances and 4,200+ streaming trials. Tested against 13 real incident graphs (12 NTSB aviation + Knight Capital 2012). Deployed as a production MCP server in Claude Code agentic sessions.",
+  "description": "Research on context compression failure modes in large language models. Introduces the validity mirage — where compression preserves surface-level correctness while silently substituting the governing hypothesis — and develops a tropical semiring algebra (max-plus over R ∪ {−∞}) for measuring context health. Validated across five model architectures (Llama 3.1 8B, Mistral 7B v0.3, Gemma 2 9B, Phi-3 Medium 14B, Qwen 2.5 14B) using 11,400+ boundary instances and 4,200+ streaming trials. Tested against 13 real incident graphs (12 NTSB aviation + Knight Capital 2012). Deployed as a production MCP server in Claude Code agentic sessions.\n\nIncluded paper bundle:\n- paper_00_continuous_control_structural_regularization.pdf\n- paper_01_absorbing_states_in_greedy_search.pdf\n- paper_02_streaming_oscillation_traps.pdf\n- paper_03_validity_mirage_compression.pdf\n- paper_i_tropical_algebra.pdf\n\nPaper artifacts are intended for CC-BY 4.0 scholarly distribution.",
   "upload_type": "publication",
   "publication_type": "workingpaper",
   "creators": [
@@ -11,7 +11,7 @@
     }
   ],
   "access_right": "open",
-  "license": "CC-BY-4.0",
+  "license": "cc-by-4.0",
   "keywords": [
     "ai-safety",
     "context-compression",
@@ -53,6 +53,6 @@
       "description": "Research period"
     }
   ],
-  "version": "1.0.0",
+  "version": "0.1.0",
   "language": "eng"
 }

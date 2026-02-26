@@ -1,5 +1,11 @@
-Copyright (c) 2025–2026 Jack Chaudier Gaffney. All rights reserved.
+Copyright (c) 2025–2026 Jack Chaudier Gaffney
 
-This repository and its contents are provided for academic review purposes only.
-No permission is granted to copy, modify, distribute, or create derivative works
-without explicit written consent from the author.
+Licensing policy for this repository:
+
+1) Paper artifacts in `papers/` are licensed under Creative Commons Attribution 4.0
+   International (CC BY 4.0). See `papers/LICENSE_CC_BY_4_0.md`.
+
+2) Non-paper repository assets (for example site code, scripts, and docs outside
+   `papers/`) are provided for academic review. No permission is granted to copy,
+   modify, distribute, or create derivative works of non-paper assets without
+   explicit written consent from the author.
