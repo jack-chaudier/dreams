@@ -74,11 +74,11 @@ uv run tropical-mcp-replay \
 ### 2) Serve the showcase site
 
 ```bash
-cd path/to/dreams/site
+cd path/to/dreams
 python3 -m http.server 8080
 ```
 
-Open: `http://localhost:8080`
+Open: `http://localhost:8080/site/`
 
 ## Deployment
 
