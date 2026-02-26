@@ -15,8 +15,10 @@
   --green-dim: rgba(109, 184, 90, 0.15);
   --red: #e05555;
   --red-dim: rgba(224, 85, 85, 0.12);
+  --info: #57b8ff;
+  --info-dim: rgba(87, 184, 255, 0.14);
   --text: #dcd7c8;
-  --text-muted: rgba(220, 215, 200, 0.5);
+  --text-muted: rgba(220, 215, 200, 0.68);
   --border: rgba(212, 175, 55, 0.12);
   --border-strong: rgba(212, 175, 55, 0.25);
   --font-serif: 'EB Garamond', Georgia, serif;
@@ -226,6 +228,56 @@ main {
   margin-top: 0.5rem;
   color: var(--gold);
   font-size: 1rem;
+}
+
+.hero-context {
+  margin-top: 0.8rem;
+  max-width: 66ch;
+  font-size: 0.98rem;
+  color: rgba(220, 215, 200, 0.8);
+  line-height: 1.5;
+}
+
+.hero-links {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.hero-link {
+  font-family: var(--font-mono);
+  font-size: 0.71rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.38rem 0.72rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  text-decoration: none;
+  background: rgba(220, 215, 200, 0.03);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+}
+
+.hero-link:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-1px);
+}
+
+.link-arrow {
+  font-size: 0.76rem;
+  opacity: 0.82;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.hero-link:hover .link-arrow {
+  opacity: 1;
+  transform: translate(1px, -1px);
 }
 
 @keyframes shimmer {
@@ -502,6 +554,42 @@ input[type="range"]::-moz-range-track {
   min-width: 0;
 }
 
+.metric-note {
+  margin-top: 0.28rem;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--info);
+  letter-spacing: 0.01em;
+}
+
+.metric.metric-na {
+  border: 1px dashed rgba(220, 215, 200, 0.14);
+  background: rgba(220, 215, 200, 0.025);
+}
+
+.metric.metric-na .metric-note {
+  color: rgba(220, 215, 200, 0.68);
+}
+
+.metric.mirage-contradiction {
+  background: rgba(87, 184, 255, 0.08);
+  border: 1px solid rgba(87, 184, 255, 0.28);
+}
+
+.metric.mirage-contradiction .metric-label {
+  color: #cfeaff;
+}
+
+.metric.mirage-contradiction .metric-fill {
+  animation: miragePulse 1.6s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(87, 184, 255, 0.25);
+}
+
+@keyframes miragePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
 /* ========== Contract Badge ========== */
 .contract-badge {
   margin-top: 1rem;
@@ -526,6 +614,12 @@ input[type="range"]::-moz-range-track {
   background: rgba(224, 85, 85, 0.08);
   border: 1px solid rgba(224, 85, 85, 0.25);
   color: var(--red);
+}
+
+.contract-badge.not-applicable {
+  background: rgba(220, 215, 200, 0.08);
+  border: 1px solid rgba(220, 215, 200, 0.18);
+  color: rgba(220, 215, 200, 0.8);
 }
 
 /* ========== Mirage Warning ========== */
@@ -586,7 +680,7 @@ input[type="range"]::-moz-range-track {
   margin-top: 1rem;
   font-size: 0.95rem;
   color: var(--text-muted);
-  font-style: italic;
+  font-style: normal;
   min-height: 1.5em;
   transition: opacity 0.3s ease;
 }
@@ -766,6 +860,14 @@ input[type="range"]::-moz-range-track {
   line-height: 1.4;
 }
 
+.stat-detail {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.67rem;
+  line-height: 1.45;
+  color: rgba(220, 215, 200, 0.75);
+}
+
 /* ========== Footer ========== */
 .site-footer {
   position: relative;
@@ -789,6 +891,35 @@ input[type="range"]::-moz-range-track {
   color: var(--text-muted);
   letter-spacing: 0.06em;
   margin-bottom: 1.2rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.footer-link {
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.34rem 0.72rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  text-decoration: none;
+  background: rgba(220, 215, 200, 0.03);
+  transition: border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+}
+
+.footer-link:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212, 175, 55, 0.08);
+  transform: translateY(-1px);
 }
 
 .paper-badges {
@@ -881,6 +1012,15 @@ input[type="range"]::-moz-range-track {
 @media (max-width: 480px) {
   .hero-title {
     font-size: 2.8rem;
+  }
+
+  .hero-links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-link {
+    justify-content: center;
   }
 
   .interactive-panel {

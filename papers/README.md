@@ -4,7 +4,7 @@ Curated paper bundle for the Mirage/compaction research line.
 
 ## Included PDFs
 
-- `paper_00_continuous_control_structural_regularization.pdf` — narrative-control baseline and structural regularization framing.
+- `paper_00_continuous_control_structural_regularization.pdf` — establishes the structural regularization framing that papers 01-03 build on.
 - `paper_01_absorbing_states_in_greedy_search.pdf` — impossibility boundary for greedy selection under endogenous pivots.
 - `paper_02_streaming_oscillation_traps.pdf` — streaming trap dynamics and deferred-commitment mitigation.
 - `paper_03_validity_mirage_compression.pdf` — validity mirage mechanism under context compression.

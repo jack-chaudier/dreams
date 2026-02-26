@@ -8,9 +8,10 @@
     { key: 'contract_satisfied_rate', label: 'Contract Satisfied' },
   ];
 
-  var EXPLAINER_HIGH = 'Both methods safe at this retention. Drag left to see divergence.';
-  var EXPLAINER_MID = 'Degradation zone. Predecessor support thinning.';
-  var EXPLAINER_LOW = 'Mirage active. Naive solver substituted pivot identity.';
+  var EXPLAINER_HIGH = 'No compression yet: both methods preserve the pivot. Only the guarded policy enforces a safety contract when pressure rises.';
+  var EXPLAINER_MID = 'Degradation zone: predecessor support is thinning. Guarded retention preserves the governing pivot.';
+  var EXPLAINER_LOW = 'Mirage active: naive recency still scores high on raw validity while answering for the wrong pivot.';
+  var MIRAGE_NOTE = 'Still high while pivot collapses: this is the mirage.';
 
   // DOM refs
   var slider = document.getElementById('retentionSlider');
@@ -42,6 +43,10 @@
     if (value >= 0.8) return '#6db85a';
     if (value >= 0.4) return '#d4af37';
     return '#e05555';
+  }
+
+  function metricClassName(key) {
+    return key.replace(/_/g, '-');
   }
 
   function pct(value) {
@@ -113,7 +118,7 @@
     for (var i = 0; i < METRICS.length; i++) {
       var m = METRICS[i];
       var div = document.createElement('div');
-      div.className = 'metric';
+      div.className = 'metric metric-' + metricClassName(m.key);
 
       var header = document.createElement('div');
       header.className = 'metric-header';
@@ -138,22 +143,63 @@
       barOuter.appendChild(barFill);
       div.appendChild(header);
       div.appendChild(barOuter);
+
+      var note = document.createElement('div');
+      note.className = 'metric-note hidden';
+      div.appendChild(note);
+
       container.appendChild(div);
 
-      bars[m.key] = { value: value, fill: barFill };
+      bars[m.key] = { value: value, fill: barFill, row: div, note: note };
     }
     return bars;
   }
 
-  function updateMetrics(bars, data) {
+  function updateMetrics(bars, data, options) {
+    var showMirageContradiction = Boolean(
+      options &&
+      options.highlightMirage &&
+      data.raw_validity >= 0.95 &&
+      data.pivot_preservation_rate <= 0.15
+    );
+    var noContract = Boolean(options && options.noContract);
+
     for (var i = 0; i < METRICS.length; i++) {
       var m = METRICS[i];
       var val = data[m.key];
       var b = bars[m.key];
+      var color = metricColor(val);
+      var isContractMetric = m.key === 'contract_satisfied_rate';
+
+      b.row.classList.remove('metric-na');
+      b.row.classList.remove('mirage-contradiction');
+      b.note.classList.add('hidden');
+
+      if (noContract && isContractMetric) {
+        b.value.textContent = 'N/A';
+        b.fill.style.width = '0%';
+        b.fill.style.backgroundColor = 'rgba(220, 215, 200, 0.22)';
+        b.value.style.color = 'rgba(220, 215, 200, 0.78)';
+        b.row.classList.add('metric-na');
+        b.note.textContent = 'No contract in recency baseline.';
+        b.note.classList.remove('hidden');
+        continue;
+      }
+
+      if (m.key === 'raw_validity' && showMirageContradiction) {
+        color = '#57b8ff';
+      }
+
       b.value.textContent = pct(val);
       b.fill.style.width = (val * 100) + '%';
-      b.fill.style.backgroundColor = metricColor(val);
-      b.value.style.color = metricColor(val);
+      b.fill.style.backgroundColor = color;
+      b.value.style.color = color;
+
+      if (m.key === 'raw_validity' && showMirageContradiction) {
+        b.row.classList.add('mirage-contradiction');
+        b.note.textContent = MIRAGE_NOTE;
+        b.note.classList.remove('hidden');
+      }
     }
   }
 
@@ -164,9 +210,17 @@
     statusEl.textContent = getStatusLabel(state);
   }
 
-  function updateContractBadge(el, data) {
+  function updateContractBadge(el, data, options) {
+    var mode = options && options.mode ? options.mode : 'enforced';
     var satisfied = data.contract_satisfied_rate >= 0.5;
     var dPre = Math.round(3 * data.primary_full_rate);
+
+    if (mode === 'none') {
+      el.className = 'contract-badge not-applicable';
+      el.textContent = '\u25E6 No contract enforced \u00b7 baseline recency';
+      return;
+    }
+
     if (satisfied) {
       el.className = 'contract-badge satisfied';
       el.textContent = '\u2726 Contract Satisfied \u00b7 d_pre = ' + dPre;
@@ -250,12 +304,12 @@
       var naive = interpolate(retention, levels, mirage.policies.recency);
       var guarded = interpolate(retention, levels, mirage.policies.l2_guarded);
 
-      updateMetrics(naiveBars, naive);
-      updateMetrics(guardedBars, guarded);
+      updateMetrics(naiveBars, naive, { highlightMirage: true, noContract: true });
+      updateMetrics(guardedBars, guarded, { highlightMirage: false, noContract: false });
       updateCardState(cardNaive, naiveStatusEl, naive);
       updateCardState(cardGuarded, guardedStatusEl, guarded);
-      updateContractBadge(naiveContractEl, naive);
-      updateContractBadge(guardedContractEl, guarded);
+      updateContractBadge(naiveContractEl, naive, { mode: 'none' });
+      updateContractBadge(guardedContractEl, guarded, { mode: 'enforced' });
 
       // Mirage warning
       var shouldShowMirage = naive.pivot_preservation_rate < 0.05 && naive.raw_validity > 0.9;

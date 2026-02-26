@@ -30,10 +30,16 @@
       <h1 class="hero-title stagger" style="--i:1">MirageKit</h1>
       <p class="hero-subtitle stagger" style="--i:2">Your context compression looks valid. <span class="text-danger">It isn't.</span></p>
       <p class="hero-cta stagger" style="--i:3"><em>Drag the slider and watch.</em></p>
+      <p class="hero-context stagger" style="--i:4">Context compression keeps LLM agents alive in long conversations. This demo shows how raw answer quality can stay high while intent silently drifts.</p>
+      <div class="hero-links stagger" style="--i:5">
+        <a class="hero-link" href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">Repository <span class="link-arrow">&nearr;</span></a>
+        <a class="hero-link" href="https://github.com/jack-chaudier/dreams/tree/main/papers" target="_blank" rel="noopener">Papers <span class="link-arrow">&nearr;</span></a>
+        <a class="hero-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">MCP Implementation <span class="link-arrow">&nearr;</span></a>
+      </div>
     </header>
 
     <main>
-      <section class="interactive-panel stagger" style="--i:4" id="interactive">
+      <section class="interactive-panel stagger" style="--i:6" id="interactive">
         <div class="slider-area">
           <div class="slider-header">
             <span class="slider-label-text">Retention Budget</span>
@@ -78,7 +84,7 @@
           <span class="mirage-icon">&#9888;</span>
           <div class="mirage-text">
             <strong>VALIDITY MIRAGE DETECTED</strong>
-            <p>Raw validity appears perfect &mdash; but the pivot has been silently replaced. The model can still answer, just about the wrong task. Naive recency substituted a decoy for the real root cause.</p>
+            <p>Raw validity still passes, but the causal anchor is gone. Example: the model can still answer an NTSB query, but now about the wrong incident after the original root-cause pivot was evicted.</p>
           </div>
         </div>
 
@@ -120,18 +126,22 @@
             <div class="stat-card">
               <span class="stat-value mono">0</span>
               <span class="stat-label">false positives / 11,400 instances</span>
+              <span class="stat-detail">The guard never blocked a compression that was actually safe.</span>
             </div>
             <div class="stat-card">
               <span class="stat-value mono">54.9%</span>
               <span class="stat-label">organic trap rate / 4,200 runs</span>
+              <span class="stat-detail">Streaming traces naturally enter trap dynamics without explicit adversaries.</span>
             </div>
             <div class="stat-card">
               <span class="stat-value mono">22%</span>
               <span class="stat-label">silent mirage / NTSB incidents</span>
+              <span class="stat-detail">Roughly one in five incident chains keeps answerability while switching pivots.</span>
             </div>
             <div class="stat-card">
               <span class="stat-value mono">&Omega;(k)</span>
               <span class="stat-label">state bound / Myhill-Nerode</span>
+              <span class="stat-detail">Finite-memory controllers need state growth with retained predecessor depth.</span>
             </div>
           </div>
         </div>
@@ -141,6 +151,11 @@
     <footer class="site-footer reveal">
       <p class="footer-quote"><em>The roots remember what the canopy forgets.</em></p>
       <p class="footer-credit">Jack Chaudier Gaffney &middot; University of Michigan &middot; 2026</p>
+      <div class="footer-links">
+        <a class="footer-link" href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">Repo</a>
+        <a class="footer-link" href="https://github.com/jack-chaudier/dreams/tree/main/papers" target="_blank" rel="noopener">Papers</a>
+        <a class="footer-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">MCP</a>
+      </div>
       <div class="paper-badges">
         <a class="paper-badge" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">
           <span class="badge-num">01</span> Absorbing States <span class="badge-arrow">&nearr;</span>

@@ -54,7 +54,7 @@ See full details in [`results/VALIDATION_SUMMARY.md`](./results/VALIDATION_SUMMA
 ### 1) MCP package checks
 
 ```bash
-cd /absolute/path/to/tropical-mcp
+cd ../mirage/tropical-compactor
 uv run --extra dev pytest -q
 uv build
 uv run python scripts/run_full_validation.py
@@ -73,11 +73,7 @@ Open: `http://localhost:8080`
 
 ## Deploy to Vercel
 
-The page is static and deploy-ready.
-
-1. Import this repo into Vercel.
-2. Keep the project root as this repository root (default).
-3. Deploy.
+Live deployment: https://dreams-dun.vercel.app
 
 `vercel.json` maps `/` to the static app in `site/`.
 
