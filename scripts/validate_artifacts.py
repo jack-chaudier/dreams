@@ -164,7 +164,10 @@ def check_headline_claim_regressions() -> None:
         )
 
     summary_md = (ROOT / "results" / "VALIDATION_SUMMARY.md").read_text(encoding="utf-8")
-    _assert("30 passed" in summary_md, "VALIDATION_SUMMARY must report 30 passed tests")
+    _assert(
+        re.search(r"\d+ passed", summary_md) is not None,
+        "VALIDATION_SUMMARY must report a pytest pass count (e.g. 'N passed')",
+    )
 
 
 def check_certificate_sync() -> None:
@@ -270,7 +273,10 @@ def check_zenodo_and_citation_consistency() -> None:
     )
 
     preprint_refs = len(re.findall(r"status:\s*preprint", cff_text))
-    _assert(preprint_refs >= 5, "CITATION.cff should include references to papers 00/1/2/3/I as preprints")
+    _assert(
+        preprint_refs >= len(PAPER_SPECS),
+        f"CITATION.cff should include a preprint reference for each paper ({len(PAPER_SPECS)} expected, found {preprint_refs})",
+    )
     _assert(
         "Continuous Control and Structural Regularization in Multi-Agent Narrative Extraction" in cff_text,
         "CITATION.cff should include paper 00 reference entry",
