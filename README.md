@@ -44,7 +44,7 @@ Source: `results/replay/replay_summary.json`
   - `l2_guarded` pivot preservation = **1.0**
   - `recency` pivot preservation = **0.0**
 - Canonical MCP validation snapshot:
-  - `pytest`: **30 passed**
+  - `pytest`: **34 passed**
   - packaging build: wheel + sdist successful
 
 Detailed summary: [`results/VALIDATION_SUMMARY.md`](./results/VALIDATION_SUMMARY.md)
