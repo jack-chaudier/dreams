@@ -1,14 +1,27 @@
-# Dreams: Mirage Research Showcase
+# dreams: MirageKit Public Showcase
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18794293.svg)](https://doi.org/10.5281/zenodo.18794293)
 
-A curated, public-facing research showcase for long-context reliability under memory pressure.
+A curated, public-facing showcase for the MirageKit research program.
+
+## 15-Second Map
+
+- `MirageKit` is the research program.
+- `dreams` is the public showcase repo: website, papers, replay artifacts, and certificate snapshots.
+- `tropical-mcp` is the installable implementation repo for Codex and Claude-style clients.
+- If you want to verify the implementation, start in `tropical-mcp` with `runtime_info()`, `compact_auto(...)`, and `certificate(...)`.
 
 ## Scope and Boundaries
 
-- `dreams` is the public front door: demo site, paper bundle, and reproducible artifacts.
+- `dreams` is the public front door: live site, paper bundle, and reproducible artifacts.
 - The full `mirage` research monorepo stays private.
-- The canonical MCP implementation is maintained in `tropical-mcp`.
+- The canonical installable MCP implementation is maintained in `tropical-mcp`.
+
+## Current Status
+
+- Public status: working-paper stage, with committed replay artifacts and validation outputs.
+- Live-facing surfaces: `site/` for the website, `papers/` for draft PDFs, `results/` for reproducible evidence.
+- Install path: use the `tropical-mcp` repo directly; this repo is not the package you install into Codex or Claude-style clients.
 
 ## Repository Contents
 
@@ -59,10 +72,14 @@ To keep interpretation rigorous:
 
 ## Local Reproduction
 
-### 1) Validate canonical MCP implementation
+### 1) Install and validate `tropical-mcp`
 
 ```bash
-cd path/to/tropical-mcp
+git clone https://github.com/jack-chaudier/tropical-mcp.git ~/tropical-mcp
+cd ~/tropical-mcp
+uv venv
+source .venv/bin/activate
+uv pip install -e '.[dev]'
 uv run --extra dev pytest -q
 uv build
 uv run tropical-mcp-full-validate
@@ -71,13 +88,21 @@ uv run tropical-mcp-replay \
   --policies recency,l2_guarded \
   --k 3 \
   --line-count 200 \
-  --output-dir path/to/dreams/results/replay
+  --output-dir "$PWD/../dreams/results/replay"
 ```
+
+After client registration, the minimum MCP smoke flow is:
+
+- `runtime_info()`
+- `compact_auto(...)`
+- `certificate(...)`
+
+See the implementation README for the Codex quick-start and full example bundle: <https://github.com/jack-chaudier/tropical-mcp>
 
 ### 2) Serve the showcase site
 
 ```bash
-cd path/to/dreams
+cd ~/dreams
 python3 -m http.server 8080
 ```
 
@@ -90,6 +115,8 @@ Open: `http://localhost:8080/site/`
 
 ## Quick Links
 
+- Live site: <https://dreams-dun.vercel.app>
+- Implementation repo: <https://github.com/jack-chaudier/tropical-mcp>
 - Site source: [`site/`](./site/)
 - Paper bundle: [`papers/`](./papers/)
 - Repro artifacts: [`results/`](./results/)

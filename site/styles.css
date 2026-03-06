@@ -207,6 +207,56 @@ main {
   font-style: italic;
 }
 
+.hero-context a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(30, 58, 95, 0.25);
+}
+
+.hero-context a:hover {
+  color: var(--accent-hover);
+  border-bottom-color: currentColor;
+}
+
+.bridge-panel {
+  margin-top: 1.7rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+.bridge-card {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0.95rem 1rem;
+}
+
+.bridge-label {
+  display: block;
+  margin-bottom: 0.38rem;
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.bridge-card h2 {
+  margin-bottom: 0.2rem;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+.bridge-card p {
+  font-family: var(--serif);
+  font-size: 0.83rem;
+  color: var(--ink-2);
+  line-height: 1.58;
+}
+
 /* Hero links — clean academic references */
 .hero-links {
   margin-top: 2rem;
@@ -266,6 +316,123 @@ main {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-3);
+}
+
+.orientation,
+.install-verify {
+  margin-top: 1.45rem;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--surface);
+  padding: 1.2rem 1.3rem;
+}
+
+.orientation h2,
+.install-verify h2 {
+  margin-bottom: 0.7rem;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.orientation-grid,
+.install-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+.orientation-card,
+.install-card {
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  padding: 0.95rem;
+  background: #fbfdff;
+}
+
+.orientation-label,
+.install-note-label {
+  display: block;
+  margin-bottom: 0.38rem;
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.orientation-card h3,
+.install-card h3 {
+  margin-bottom: 0.32rem;
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.orientation-card p,
+.install-card p,
+.install-intro,
+.install-note p {
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  line-height: 1.62;
+}
+
+.orientation-links {
+  margin-top: 0.65rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1rem;
+}
+
+.orientation-links a,
+.install-note a {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.orientation-links a:hover,
+.install-note a:hover {
+  color: var(--accent-hover);
+}
+
+.install-intro {
+  margin-bottom: 0.85rem;
+}
+
+.install-pre {
+  margin-top: 0.65rem;
+  overflow: auto;
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  background: #f8fafc;
+  padding: 0.95rem;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.install-pre code {
+  font-family: inherit;
+}
+
+.install-notes {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 0.85rem;
+}
+
+.install-note {
+  border-top: 1px solid var(--rule-light);
+  padding-top: 0.75rem;
 }
 
 /* ══════════════════════════════════════════════════
@@ -1313,6 +1480,18 @@ input[type="range"]::-moz-range-track {
    ═════════════════════════════════════════════════ */
 
 @media (min-width: 920px) {
+  .bridge-panel {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .orientation-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .install-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .interactive-panel {
     padding: 2rem 2.2rem 1.8rem;
   }
@@ -1396,6 +1575,11 @@ input[type="range"]::-moz-range-track {
 
   .hero-context-note {
     padding-left: 0.8rem;
+  }
+
+  .orientation,
+  .install-verify {
+    padding: 1rem;
   }
 
   .hero-links {

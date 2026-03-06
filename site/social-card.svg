@@ -12,9 +12,9 @@
   <rect width="1200" height="630" fill="url(#bg)" />
   <rect x="80" y="66" width="1040" height="8" rx="4" fill="url(#rule)" />
 
-  <text x="90" y="132" fill="#1e3a5f" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" letter-spacing="2">MIRAGE RESEARCH PROGRAM</text>
+  <text x="90" y="132" fill="#1e3a5f" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" letter-spacing="2">MIRAGEKIT RESEARCH PROGRAM</text>
   <text x="90" y="214" fill="#0f172a" font-family="Source Serif 4, Georgia, serif" font-size="72" font-weight="700">MirageKit</text>
-  <text x="90" y="270" fill="#334155" font-family="Source Serif 4, Georgia, serif" font-size="34">Your context compression looks valid. It is not.</text>
+  <text x="90" y="270" fill="#334155" font-family="Source Serif 4, Georgia, serif" font-size="30">dreams is the research showcase. tropical-mcp is the installable MCP.</text>
 
   <rect x="90" y="320" width="1020" height="220" rx="14" fill="#ffffff" stroke="#cbd5e1" />
   <text x="120" y="376" fill="#0f172a" font-family="IBM Plex Sans, Arial, sans-serif" font-size="26" font-weight="600">Evidence Snapshot</text>

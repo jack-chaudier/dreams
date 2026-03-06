@@ -3,21 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MirageKit | Validity Mirage Research Showcase</title>
-    <meta name="description" content="Interactive research showcase of the validity mirage in context compression: raw validity can remain high while pivot integrity silently collapses." />
+    <title>MirageKit Research | dreams showcase + tropical-mcp implementation</title>
+    <meta name="description" content="MirageKit is the research program. dreams is the public showcase for papers and artifacts, and tropical-mcp is the installable MCP implementation for Codex and Claude-style clients." />
     <meta name="author" content="Jack Chaudier Gaffney" />
     <meta name="theme-color" content="#1e3a5f" />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://dreams-dun.vercel.app/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="MirageKit" />
-    <meta property="og:title" content="MirageKit | Validity Mirage Research Showcase" />
-    <meta property="og:description" content="Evidence-backed interactive demo: compression can preserve answerability while losing the governing pivot." />
+    <meta property="og:site_name" content="MirageKit Research" />
+    <meta property="og:title" content="MirageKit Research | dreams showcase + tropical-mcp implementation" />
+    <meta property="og:description" content="Research papers, replay artifacts, and a live demo in dreams; installable guarded-compaction MCP in tropical-mcp." />
     <meta property="og:url" content="https://dreams-dun.vercel.app/" />
     <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.svg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MirageKit | Validity Mirage Research Showcase" />
-    <meta name="twitter:description" content="Interactive evidence for validity mirage behavior under context compression." />
+    <meta name="twitter:title" content="MirageKit Research | dreams showcase + tropical-mcp implementation" />
+    <meta name="twitter:description" content="Research papers, replay artifacts, and a live demo in dreams; installable guarded-compaction MCP in tropical-mcp." />
     <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.svg" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,9 +28,9 @@
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "MirageKit",
+        "name": "MirageKit Research",
         "url": "https://dreams-dun.vercel.app/",
-        "description": "Research showcase for validity mirage behavior in long-context compression.",
+        "description": "Public showcase for the MirageKit research program, with papers and artifacts in dreams and the installable MCP implementation in tropical-mcp.",
         "creator": {
           "@type": "Person",
           "name": "Jack Chaudier Gaffney"
@@ -41,23 +41,123 @@
   <body>
     <header class="hero">
       <div class="hero-brand stagger" style="--i:0">
-        <span class="brand-label">Mirage Research Program</span>
+        <span class="brand-label">MirageKit Research Program</span>
       </div>
       <h1 class="hero-title stagger" style="--i:1">MirageKit</h1>
       <p class="hero-subtitle stagger" style="--i:2">Your context compression looks valid. <span class="text-danger">It isn't.</span></p>
-      <p class="hero-context stagger" style="--i:3">When LLM agents compress long conversations, they can silently lose track of <em>which task they're solving</em> while still producing confident answers. We call this a <strong>validity mirage</strong>. MirageKit detects and prevents it.</p>
+      <p class="hero-context stagger" style="--i:3">When LLM agents compress long conversations, they can silently lose track of <em>which task they're solving</em> while still producing confident answers. We call this a <strong>validity mirage</strong>. <strong>MirageKit</strong> is the research program; <strong>dreams</strong> is the public showcase for papers and artifacts; the MCP you install lives in the separate <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>.</p>
       <p class="hero-context-note stagger" style="--i:4">Built on tropical (max-plus) algebra &mdash; the same structure independently proven to govern transformer attention <span class="citation">(Alpay &amp; Senturk, 2026)</span>.</p>
-      <p class="hero-cta stagger" style="--i:5"><em>Drag the slider below to compress a conversation and watch the two policies diverge.</em></p>
-      <div class="hero-links stagger" style="--i:6">
-        <a class="hero-link" href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">Repository <span class="link-arrow">&nearr;</span></a>
-        <a class="hero-link" href="https://github.com/jack-chaudier/dreams/tree/main/papers" target="_blank" rel="noopener">Papers <span class="link-arrow">&nearr;</span></a>
-        <a class="hero-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">MCP Implementation <span class="link-arrow">&nearr;</span></a>
+      <p class="hero-cta stagger" style="--i:5"><em>Drag the slider below to watch the policies diverge, then use the install and verify path to reproduce it in Codex or Claude-style clients.</em></p>
+      <div class="bridge-panel stagger" style="--i:6" aria-label="Project map">
+        <article class="bridge-card">
+          <span class="bridge-label">Research Program</span>
+          <h2>MirageKit</h2>
+          <p>The papers, theory, witness, and evaluation framing for validity mirage behavior.</p>
+        </article>
+        <article class="bridge-card">
+          <span class="bridge-label">Showcase Repo</span>
+          <h2>dreams</h2>
+          <p>This website, working-paper bundle, and committed public artifacts live here.</p>
+        </article>
+        <article class="bridge-card">
+          <span class="bridge-label">Installable Implementation</span>
+          <h2>tropical-mcp</h2>
+          <p>The MCP server you register in Codex or Claude-style clients to run guarded compaction tools explicitly.</p>
+        </article>
       </div>
-      <p class="research-status stagger" style="--i:7">Working Papers (First Draft, 2026) &middot; Public showcase repo; full research monorepo remains private.</p>
+      <div class="hero-links stagger" style="--i:7">
+        <a class="hero-link" href="https://github.com/jack-chaudier/dreams/tree/main/papers" target="_blank" rel="noopener">Read Research <span class="link-arrow">&nearr;</span></a>
+        <a class="hero-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">Install tropical-mcp <span class="link-arrow">&nearr;</span></a>
+        <a class="hero-link" href="#interactive">See Demo Proof Path <span class="link-arrow">&searr;</span></a>
+        <a class="hero-link" href="#install-verify">Install + Verify <span class="link-arrow">&searr;</span></a>
+        <a class="hero-link" href="https://github.com/jack-chaudier" target="_blank" rel="noopener">GitHub Profile <span class="link-arrow">&nearr;</span></a>
+      </div>
+      <p class="research-status stagger" style="--i:8">Working Papers (First Draft, 2026) &middot; <code>dreams</code> = public showcase &middot; <code>tropical-mcp</code> = installable MCP &middot; full research monorepo remains private.</p>
     </header>
 
     <main>
-      <section class="interactive-panel stagger" style="--i:8" id="interactive">
+      <section class="orientation reveal" aria-label="How to navigate this project">
+        <h2>Start Here</h2>
+        <div class="orientation-grid">
+          <article class="orientation-card">
+            <span class="orientation-label">Read The Research</span>
+            <h3>Papers + Results</h3>
+            <p>Use this repo for the working papers, replay artifacts, and committed evidence that support the current claims.</p>
+            <div class="orientation-links">
+              <a href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Validity Mirage paper</a>
+              <a href="/results/VALIDATION_SUMMARY.md" target="_blank" rel="noopener">Validation summary</a>
+            </div>
+          </article>
+          <article class="orientation-card">
+            <span class="orientation-label">View The Implementation</span>
+            <h3>Install tropical-mcp</h3>
+            <p>The runnable MCP server is published in its own repository so install docs, changelog, tests, and examples stay close to the code.</p>
+            <div class="orientation-links">
+              <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">GitHub repo</a>
+              <a href="https://github.com/jack-chaudier/tropical-mcp/blob/main/README.md" target="_blank" rel="noopener">README + quick-start</a>
+            </div>
+          </article>
+          <article class="orientation-card">
+            <span class="orientation-label">Understand The Demo</span>
+            <h3>Interactive Proof Path</h3>
+            <p>Move from the replay cards to the witness, certificate, and source papers. Every number on the page comes from committed artifacts.</p>
+            <div class="orientation-links">
+              <a href="#interactive">Retention explorer</a>
+              <a href="#deep-analysis">Witness + certificate</a>
+            </div>
+          </article>
+          <article class="orientation-card">
+            <span class="orientation-label">Verify The Tool</span>
+            <h3>Three Calls</h3>
+            <p>After registering the MCP, verify it with <code>runtime_info()</code>, <code>compact_auto(...)</code>, and <code>certificate(...)</code>.</p>
+            <div class="orientation-links">
+              <a href="#install-verify">Install + verify section</a>
+              <a href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener">Certificate artifact</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="install-verify reveal" id="install-verify" aria-label="Install and verify tropical-mcp">
+        <h2>Install + Verify</h2>
+        <p class="install-intro">Install <code>tropical-mcp</code> from the implementation repo. Use <code>dreams</code> for the research narrative, paper bundle, replay outputs, and reference artifacts.</p>
+        <div class="install-grid">
+          <article class="install-card">
+            <h3>Codex Quick-Start</h3>
+            <p>Clone the implementation repo, then register the MCP in Codex.</p>
+            <pre class="install-pre"><code>git clone https://github.com/jack-chaudier/tropical-mcp.git ~/tropical-mcp
+codex mcp add tropical-mcp --env TROPICAL_MCP_CLIENT=codex -- \
+  uv --directory ~/tropical-mcp run tropical-mcp
+codex mcp list</code></pre>
+          </article>
+          <article class="install-card">
+            <h3>Minimal Verification</h3>
+            <p>Use an explicit test payload so the pivot and predecessor structure is observable.</p>
+            <pre class="install-pre"><code>messages = [
+  {"id":"goal","role":"user","content":"Build a long-running coding agent workflow for Codex.","role_hint":"pivot"},
+  {"id":"constraint_stdio","role":"user","content":"Use stdio transport and never emit JSON-RPC data to stdout logs.","role_hint":"predecessor"},
+  {"id":"constraint_clients","role":"user","content":"Support Codex and Claude-style clients through explicit MCP tool calls.","role_hint":"predecessor"},
+  {"id":"status","role":"assistant","content":"I am wiring the verification flow and docs.","role_hint":"noise"}
+]
+
+runtime_info()
+compact_auto(messages=messages, token_budget=45, k_target=2, mode="adaptive")
+certificate(messages=messages, token_budget=45, k=2)</code></pre>
+          </article>
+        </div>
+        <div class="install-notes">
+          <div class="install-note">
+            <span class="install-note-label">Expected signals</span>
+            <p><code>runtime_info()</code> should report the resolved client and telemetry path. <code>compact_auto(...)</code> should choose <code>l2_guarded</code> on the sample. <code>certificate(...)</code> should show comparable recency vs guarded kept/dropped IDs.</p>
+          </div>
+          <div class="install-note">
+            <span class="install-note-label">Source of truth</span>
+            <p>Implementation docs and the Codex example bundle live in the <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>. The witness and public certificate shown on this site live in <a href="/results/VALIDATION_SUMMARY.md" target="_blank" rel="noopener">results/VALIDATION_SUMMARY.md</a> and <a href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener">the certificate artifact</a>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="interactive-panel stagger" style="--i:9" id="interactive">
         <span class="figure-label">What happens when you compress a conversation?</span>
         <div class="slider-area">
           <div class="slider-header">
@@ -144,7 +244,7 @@
         </div>
       </section>
 
-      <section class="deep-section reveal">
+      <section class="deep-section reveal" id="deep-analysis">
         <button class="deep-toggle" id="deepToggle" aria-expanded="false" aria-controls="deepContent">
           <span>Deep analysis &mdash; witness, certificate, key results</span>
           <span class="toggle-icon" id="toggleIcon">&#9656;</span>
@@ -268,7 +368,8 @@
       <div class="footer-links">
         <a class="footer-link" href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">Repo</a>
         <a class="footer-link" href="https://github.com/jack-chaudier/dreams/tree/main/papers" target="_blank" rel="noopener">Papers</a>
-        <a class="footer-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">MCP</a>
+        <a class="footer-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>
+        <a class="footer-link" href="https://github.com/jack-chaudier" target="_blank" rel="noopener">GitHub</a>
       </div>
       <div class="paper-badges">
         <a class="paper-badge" href="/papers/paper_00_continuous_control_structural_regularization.pdf" target="_blank" rel="noopener">

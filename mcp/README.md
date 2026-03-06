@@ -1,6 +1,6 @@
 # MCP Source of Truth
 
-The canonical MCP implementation for this research line lives in:
+The installable MCP implementation for this research line lives in:
 
 - <https://github.com/jack-chaudier/tropical-mcp>
 
