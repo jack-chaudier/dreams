@@ -4,7 +4,7 @@ Snapshot generated from this clean repository copy.
 
 ## Build and test
 
-- Unit + property tests: **34 passed** (`pytest -q`)
+- Unit + property tests: **47 passed** (`pytest -q`)
 - Packaging: wheel + sdist built successfully (`uv build`)
 - Functional smoke checks: stdio server alive and tool diagnostics passed (`full_validation.json`)
 

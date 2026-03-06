@@ -23,9 +23,17 @@
       "k_selected": 5,
       "k_target": 5,
       "mode": "adaptive",
+      "pivot_id": "pivot",
       "policy": "l2_guarded",
       "policy_requested": "auto",
       "policy_selected": "l2_guarded",
+      "predecessor_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
       "protected_ids": [
         "c1",
         "c2",
@@ -88,9 +96,17 @@
       "k_selected": 5,
       "k_target": 5,
       "mode": "strict",
+      "pivot_id": "pivot",
       "policy": "l2_guarded",
       "policy_requested": "auto",
       "policy_selected": "l2_guarded",
+      "predecessor_ids": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5"
+      ],
       "protected_ids": [
         "c1",
         "c2",
@@ -104,6 +120,10 @@
       "tokens_before": 79,
       "tokens_kept": 60
     }
+  },
+  "certificate_fixture": {
+    "fixture": "/Users/jackg/tropical-mcp/fixtures/dreams_memory_safety_certificate.json",
+    "matched": true
   },
   "policy_comparison": {
     "horizon": {
@@ -330,6 +350,7 @@
         10.0
       ],
       "feasible": true,
+      "k_max_feasible": 3,
       "pivot_id": "pivot",
       "predecessor_ids": [
         "c3",
@@ -557,6 +578,10 @@
         ]
       }
     ]
+  },
+  "policy_invariance": {
+    "fixture": "/Users/jackg/tropical-mcp/fixtures/policy_invariance.json",
+    "matched": true
   },
   "stdio_smoke": {
     "alive_for_1s": true,
