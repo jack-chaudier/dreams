@@ -14,7 +14,8 @@ First public release of the MirageKit research surface: website, working-paper b
 ## Public Release Status
 
 - This repository is the public evidence surface, not the private MirageKit research monorepo.
-- The DOI-backed archive currently corresponds to `dreams v0.1.1` and `tropical-mcp v0.2.0`.
+- The DOI-backed `dreams` archive currently corresponds to `dreams v0.1.1`.
+- The mirrored implementation validation in this repository currently tracks `tropical-mcp v0.2.1`.
 - `main` can move ahead of the archived release; use the version map below when you want archival reproduction rather than latest development state.
 
 ## Scope and Boundaries
@@ -48,11 +49,11 @@ Source witness: `results/replay/replay_summary.json`
   - `recency` pivot preservation = **0.0**
 - At `0.8`, recency is topology-sensitive in this fixture (`0.3333`) while `l2_guarded` stays at `1.0`.
 
-Mirrored implementation validation from `tropical-mcp v0.2.0`:
+Mirrored implementation validation from `tropical-mcp v0.2.1`:
 
 - `ruff check .`: clean
 - `mypy src/tropical_mcp`: clean
-- `pytest`: **54 passed**
+- `pytest`: **61 passed**
 - `uv build`: wheel + sdist successful
 - `./scripts/validate_installed_wheel.sh`: installed wheel validation passed
 - `uv run tropical-mcp-full-validate`: MCP-facing validation report passed
@@ -70,7 +71,7 @@ Public surface map: [`docs/PUBLIC_SURFACE_MAP.md`](./docs/PUBLIC_SURFACE_MAP.md)
 ## Published Version Map
 
 - `dreams` archival release: [`v0.1.1`](https://github.com/jack-chaudier/dreams/releases/tag/v0.1.1)
-- `tropical-mcp` archival release: [`v0.2.0`](https://github.com/jack-chaudier/tropical-mcp/releases/tag/v0.2.0)
+- `tropical-mcp` mirrored validation release: [`v0.2.1`](https://github.com/jack-chaudier/tropical-mcp/releases/tag/v0.2.1)
 - DOI-backed working-paper record: <https://doi.org/10.5281/zenodo.18794293>
 
 ## Local Reproduction
@@ -80,7 +81,7 @@ Public surface map: [`docs/PUBLIC_SURFACE_MAP.md`](./docs/PUBLIC_SURFACE_MAP.md)
 ```bash
 git clone https://github.com/jack-chaudier/tropical-mcp.git ~/tropical-mcp
 cd ~/tropical-mcp
-git checkout v0.2.0
+git checkout v0.2.1
 uv venv
 source .venv/bin/activate
 uv pip install -e '.[dev]'

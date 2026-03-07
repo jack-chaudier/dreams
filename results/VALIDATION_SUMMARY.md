@@ -1,12 +1,12 @@
 # Validation Summary
 
-Snapshot generated on March 7, 2026 from the hardened public repository copies. Public release map: `dreams v0.1.1` and `tropical-mcp v0.2.0`.
+Snapshot generated on March 7, 2026 from the hardened public repository copies. DOI-backed `dreams` archive: `v0.1.1`. Mirrored `tropical-mcp` validation release: `v0.2.1`.
 
 ## Mirrored implementation validation
 
 - `ruff check .`: passed (`results/ruff.txt`)
 - `mypy src/tropical_mcp`: passed (`results/mypy.txt`)
-- `pytest -vv`: **54 passed** in the canonical implementation repo (`results/pytest.txt`)
+- `pytest -vv`: **61 passed** in the canonical implementation repo (`results/pytest.txt`)
 - `uv build`: wheel + sdist built successfully (`results/build.txt`)
 - `./scripts/validate_installed_wheel.sh`: built wheel validated after clean install (`results/installed_wheel.txt`)
 - `uv run tropical-mcp-full-validate`: packaged fixture refs, stdio smoke, policy comparison, and certificate checks passed (`results/full_validation.json`)

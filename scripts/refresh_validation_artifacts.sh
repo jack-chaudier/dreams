@@ -128,7 +128,7 @@ snapshot_date = f"{today:%B} {today.day}, {today:%Y}"
 rows = {(row["policy"], float(row["fraction"])): row for row in replay["summary"]}
 summary = f"""# Validation Summary
 
-Snapshot generated on {snapshot_date} from the hardened public repository copies. Public release map: `dreams v{dreams_version}` and `tropical-mcp v{tropical_version}`.
+Snapshot generated on {snapshot_date} from the hardened public repository copies. DOI-backed `dreams` archive: `v{dreams_version}`. Mirrored `tropical-mcp` validation release: `v{tropical_version}`.
 
 ## Mirrored implementation validation
 

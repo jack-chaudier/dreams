@@ -12,7 +12,8 @@ This repository (`dreams`) is the public research showcase layer:
 
 ## Release compatibility
 
-- The current public `dreams` archive (`v0.1.1`) mirrors validation artifacts from `tropical-mcp v0.2.0`.
+- The current DOI-backed `dreams` archive remains `v0.1.1`.
+- The mirrored implementation validation in this repository currently tracks `tropical-mcp v0.2.1`.
 - If you want archival reproduction, use those tags instead of `main`.
 
 No MCP source is duplicated here to prevent implementation drift.
