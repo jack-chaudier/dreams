@@ -17,8 +17,8 @@ Reproducible public evidence artifacts mirrored from the canonical `tropical-mcp
 
 ## Published Version Map
 
-- `dreams`: `v0.1.1`
-- `tropical-mcp`: `v0.2.0`
+- `dreams` archival release: `v0.1.1`
+- `tropical-mcp` mirrored validation release: `v0.2.1`
 
 ## Regenerate From Canonical MCP Repo
 
