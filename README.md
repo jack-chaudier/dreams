@@ -33,7 +33,7 @@ A curated, public-facing showcase for the MirageKit research program.
 ├── notebooks/                # Colab/local notebook workspace scaffold
 ├── tests/                    # Public-surface validation notes
 ├── mcp/                      # Canonical MCP source-of-truth pointer
-├── docs/                     # Outreach + sharing docs
+├── docs/                     # Public credibility notes for the release bundle
 └── README.md
 ```
 
@@ -57,10 +57,11 @@ Source: `results/replay/replay_summary.json`
   - `l2_guarded` pivot preservation = **1.0**
   - `recency` pivot preservation = **0.0**
 - Canonical MCP validation snapshot:
-  - `pytest`: **47 passed**
+  - `pytest`: **54 passed**
   - packaging build: wheel + sdist successful
 
-Detailed summary: [`results/VALIDATION_SUMMARY.md`](./results/VALIDATION_SUMMARY.md)
+Research-facing summary: <https://dreams-dun.vercel.app/evidence>
+Raw validation summary: [`results/VALIDATION_SUMMARY.md`](./results/VALIDATION_SUMMARY.md)
 
 ## Credibility Notes
 
@@ -117,7 +118,7 @@ Open: `http://localhost:8080/site/`
 
 - Live site: <https://dreams-dun.vercel.app>
 - Flagship paper: <https://dreams-dun.vercel.app/papers/paper_03_validity_mirage_compression.pdf>
-- Validation summary: <https://dreams-dun.vercel.app/results/VALIDATION_SUMMARY.md>
+- Evidence dossier: <https://dreams-dun.vercel.app/evidence>
 - Implementation repo: <https://github.com/jack-chaudier/tropical-mcp>
 - Site source: [`site/`](./site/)
 - Paper bundle: [`papers/`](./papers/)

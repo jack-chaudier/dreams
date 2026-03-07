@@ -122,7 +122,7 @@
     }
   },
   "certificate_fixture": {
-    "fixture": "/Users/jackg/tropical-mcp/fixtures/dreams_memory_safety_certificate.json",
+    "fixture": "fixtures/dreams_memory_safety_certificate.json",
     "matched": true
   },
   "policy_comparison": {
@@ -580,7 +580,7 @@
     ]
   },
   "policy_invariance": {
-    "fixture": "/Users/jackg/tropical-mcp/fixtures/policy_invariance.json",
+    "fixture": "fixtures/policy_invariance.json",
     "matched": true
   },
   "stdio_smoke": {

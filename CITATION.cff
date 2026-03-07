@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 title: "Validity Mirage: Context Compression Failure Modes in LLMs"
 message: "If you use this research, please cite it using the metadata from this file."
-type: software
+type: dataset
 authors:
   - given-names: Jack Chaudier
     family-names: Gaffney
@@ -21,11 +21,12 @@ keywords:
   - llm-evaluation
   - mcp-server
 abstract: >-
-  Research on context compression failure modes in large language models.
-  Introduces the validity mirage — where compression preserves surface-level
-  correctness while silently substituting the governing hypothesis. Develops
-  a tropical semiring algebra for measuring context health and deploys it as
-  a production MCP server for Claude Code agentic sessions.
+  Research artifact bundle on context compression failure modes in large
+  language models. Introduces the validity mirage — where compression
+  preserves surface-level correctness while silently substituting the
+  governing hypothesis. Develops a tropical semiring algebra for measuring
+  context health and pairs the paper set with a source-available evaluation
+  MCP implementation for Codex and Claude-style clients.
 references:
   - type: article
     title: "Continuous Control and Structural Regularization in Multi-Agent Narrative Extraction"

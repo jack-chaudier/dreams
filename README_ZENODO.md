@@ -4,8 +4,8 @@ This repository uses a split license policy:
 
 - Public research artifacts in `papers/` and `results/` are intended for CC-BY 4.0
   distribution in the Zenodo bundle.
-- Other non-paper repository assets outside those directories are review-only unless
-  otherwise granted.
+- Other repository assets stay under the root evaluation license and are not part of
+  the CC-BY paper bundle unless explicitly included.
 
 For a clean, unambiguous Zenodo record, upload a **papers-focused bundle** rather than
 auto-archiving the full repository.
@@ -17,7 +17,7 @@ auto-archiving the full repository.
 - `CITATION.cff`
 - `.zenodo.json`
 - `README_ZENODO.md`
-- `LICENSE_CC_BY_4_0.md`
+- `papers/LICENSE_CC_BY_4_0.md`
 
 ## Included Paper Mapping
 

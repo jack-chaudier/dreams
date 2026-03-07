@@ -60,6 +60,16 @@ TEXT_SUFFIXES = {
     ".cff",
 }
 
+PRIVATE_PATH_PATTERNS = (
+    re.compile(r"/Users/[^\s\"'<>`]+"),
+    re.compile(r"/home/[^\s\"'<>`]+"),
+    re.compile(r"[A-Za-z]:\\\\Users\\\\[^\s\"'<>`]+"),
+)
+
+ALLOWED_PUBLIC_DOCS = {
+    "docs/CREDIBILITY_NOTES.md",
+}
+
 
 def _load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -189,6 +199,49 @@ def check_private_path_leaks() -> None:
         text = path.read_text(encoding="utf-8")
         for token in forbidden:
             _assert(token not in text, f"Forbidden private path reference in {path}: {token}")
+        for pattern in PRIVATE_PATH_PATTERNS:
+            match = pattern.search(text)
+            if match is not None:
+                raise AssertionError(f"Forbidden absolute local path in {path}: {match.group(0)}")
+
+
+def check_public_docs_surface() -> None:
+    docs_dir = ROOT / "docs"
+    tracked_docs = {
+        path.relative_to(ROOT).as_posix()
+        for path in docs_dir.glob("*.md")
+        if path.is_file()
+    }
+    _assert(
+        tracked_docs == ALLOWED_PUBLIC_DOCS,
+        f"docs/ should only contain curated public notes; found {sorted(tracked_docs)}",
+    )
+
+
+def check_site_index_surface() -> None:
+    sitemap_text = (ROOT / "site" / "sitemap.xml").read_text(encoding="utf-8")
+    robots_text = (ROOT / "site" / "robots.txt").read_text(encoding="utf-8")
+    vercel = _load_json(ROOT / "vercel.json")
+    rewrites = vercel.get("rewrites", [])
+
+    _assert((ROOT / "site" / "evidence.html").exists(), "site/evidence.html missing")
+    _assert(
+        "https://dreams-dun.vercel.app/evidence" in sitemap_text,
+        "sitemap.xml must include the rendered evidence page",
+    )
+    _assert(
+        "https://dreams-dun.vercel.app/results/VALIDATION_SUMMARY.md" not in sitemap_text,
+        "sitemap.xml should not index raw validation markdown",
+    )
+    _assert(
+        "https://dreams-dun.vercel.app/results/certificates/memory_safety_certificate.json" not in sitemap_text,
+        "sitemap.xml should not index raw certificate JSON",
+    )
+    _assert("Disallow: /results/" in robots_text, "robots.txt should de-index raw result artifacts")
+    _assert(
+        {"source": "/evidence", "destination": "/site/evidence.html"} in rewrites,
+        "vercel.json must route /evidence to site/evidence.html",
+    )
 
 
 def check_structure() -> None:
@@ -217,7 +270,7 @@ def check_zenodo_and_citation_consistency() -> None:
     )
     _assert(zenodo.get("license") == "cc-by-4.0", "Zenodo license must be cc-by-4.0")
     _assert("license: CC-BY-4.0" in cff_text, "CITATION.cff license must be CC-BY-4.0")
-    _assert("type: software" in cff_text, "CITATION.cff type should be software for this repository")
+    _assert("type: dataset" in cff_text, "CITATION.cff type should be dataset for this repository")
 
     cff_title_match = re.search(r'^title:\s*"([^"]+)"', cff_text, flags=re.MULTILINE)
     _assert(cff_title_match is not None, "CITATION.cff missing top-level title")
@@ -356,6 +409,8 @@ def main() -> None:
     check_headline_claim_regressions()
     check_certificate_sync()
     check_private_path_leaks()
+    check_public_docs_surface()
+    check_site_index_surface()
     check_structure()
     check_no_symlinks_in_public_bundle()
     check_zenodo_and_citation_consistency()
