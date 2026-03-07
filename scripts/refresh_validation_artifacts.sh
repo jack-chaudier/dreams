@@ -100,24 +100,35 @@ for name in ("replay_rows.csv", "replay_summary.csv"):
     path.write_text(text.replace("\r\n", "\n"), encoding="utf-8")
 PY
 
-python3 - "$RESULTS_DIR" <<'PY'
+python3 - "$ROOT_DIR" "$RESULTS_DIR" <<'PY'
+from datetime import date
 import json
 import pathlib
 import re
 import sys
 
-results_dir = pathlib.Path(sys.argv[1])
+root_dir = pathlib.Path(sys.argv[1])
+results_dir = pathlib.Path(sys.argv[2])
 pytest_text = (results_dir / "pytest.txt").read_text(encoding="utf-8")
 replay = json.loads((results_dir / "replay" / "replay_summary.json").read_text(encoding="utf-8"))
+site_data = json.loads((root_dir / "site" / "data_miragekit.json").read_text(encoding="utf-8"))
 
 match = re.search(r"(\d+) passed", pytest_text)
 if match is None:
     raise SystemExit("Could not find pytest pass count in results/pytest.txt")
 
+public_release = site_data.get("public_release", {})
+dreams_version = str(public_release.get("dreams_version", "")).strip()
+tropical_version = str(public_release.get("tropical_mcp_version", "")).strip()
+if not dreams_version or not tropical_version:
+    raise SystemExit("site/data_miragekit.json must define public_release.dreams_version and tropical_mcp_version")
+
+today = date.today()
+snapshot_date = f"{today:%B} {today.day}, {today:%Y}"
 rows = {(row["policy"], float(row["fraction"])): row for row in replay["summary"]}
 summary = f"""# Validation Summary
 
-Snapshot generated on March 7, 2026 from the hardened public repository copies. Public release map: `dreams v0.1.1` and `tropical-mcp v0.2.0`.
+Snapshot generated on {snapshot_date} from the hardened public repository copies. Public release map: `dreams v{dreams_version}` and `tropical-mcp v{tropical_version}`.
 
 ## Mirrored implementation validation
 
@@ -134,7 +145,7 @@ Source: `results/replay/replay_summary.json`
 
 This witness is intentionally small and inspectable: `n=3` variants per policy and retention fraction.
 
-At retention fractions `0.65`, `0.5`, and `0.4`:
+At retention fractions `0.65`, `0.5`, and `0.4`, the committed witness produces the same rates shown below:
 
 - `l2_guarded`
   - pivot preservation rate: **{rows[('l2_guarded', 0.65)]['pivot_preservation_rate']:.1f}**

@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+from functools import cache
 from pathlib import Path
 from typing import Iterable
 
@@ -71,6 +72,29 @@ def _assert(condition: bool, message: str) -> None:
         raise AssertionError(message)
 
 
+@cache
+def _public_release_map() -> dict[str, str]:
+    site = _load_json(ROOT / "site" / "data_miragekit.json")
+    release = site.get("public_release")
+    _assert(
+        isinstance(release, dict),
+        "site/data_miragekit.json must define a public_release object",
+    )
+
+    dreams_version = str(release.get("dreams_version", "")).strip()
+    tropical_version = str(release.get("tropical_mcp_version", "")).strip()
+    _assert(dreams_version, "site/data_miragekit.json must define public_release.dreams_version")
+    _assert(
+        tropical_version,
+        "site/data_miragekit.json must define public_release.tropical_mcp_version",
+    )
+    return {
+        "dreams_version": dreams_version,
+        "tropical_mcp_version": tropical_version,
+    }
+
+
+@cache
 def _paper_specs() -> dict[str, dict[str, object]]:
     manifest = _load_json(ROOT / "papers" / "manifest.json")
     papers = manifest.get("papers")
@@ -194,6 +218,9 @@ def check_validation_logs() -> None:
     build_text = (ROOT / "results" / "build.txt").read_text(encoding="utf-8")
     wheel_text = (ROOT / "results" / "installed_wheel.txt").read_text(encoding="utf-8")
     full_validation = _load_json(ROOT / "results" / "full_validation.json")
+    tropical_version = _public_release_map()["tropical_mcp_version"]
+    sdist_name = f"tropical_mcp-{tropical_version}.tar.gz"
+    wheel_name = f"tropical_mcp-{tropical_version}-py3-none-any.whl"
 
     _assert("All checks passed!" in ruff_text, "results/ruff.txt must show a clean Ruff run")
     _assert(
@@ -203,16 +230,16 @@ def check_validation_logs() -> None:
     pytest_match = re.search(r"(\d+) passed", pytest_text)
     _assert(pytest_match is not None, "results/pytest.txt must include a pass count")
     _assert(
-        "Successfully built dist/tropical_mcp-0.2.0.tar.gz" in build_text,
-        "results/build.txt must include the built sdist",
+        f"Successfully built dist/{sdist_name}" in build_text,
+        f"results/build.txt must include the built sdist ({sdist_name})",
     )
     _assert(
-        "Successfully built dist/tropical_mcp-0.2.0-py3-none-any.whl" in build_text,
-        "results/build.txt must include the built wheel",
+        f"Successfully built dist/{wheel_name}" in build_text,
+        f"results/build.txt must include the built wheel ({wheel_name})",
     )
     _assert(
-        "Installed wheel validation passed for tropical_mcp-0.2.0-py3-none-any.whl" in wheel_text,
-        "results/installed_wheel.txt must confirm the built wheel validates after install",
+        f"Installed wheel validation passed for {wheel_name}" in wheel_text,
+        f"results/installed_wheel.txt must confirm the built wheel validates after install ({wheel_name})",
     )
     _assert(
         str(full_validation["certificate_fixture"]["fixture"]).startswith("package:fixtures/"),
@@ -335,6 +362,7 @@ def check_no_symlinks_in_public_bundle() -> None:
 def check_zenodo_and_citation_consistency() -> None:
     zenodo = _load_json(ROOT / ".zenodo.json")
     cff_text = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
+    release = _public_release_map()
 
     _assert(zenodo.get("upload_type") == "publication", "Zenodo upload_type must be publication")
     _assert(
@@ -422,6 +450,10 @@ def check_zenodo_and_citation_consistency() -> None:
     _assert(
         zenodo.get("version") == cff_version_match.group(1),
         "CITATION.cff and .zenodo.json versions must match",
+    )
+    _assert(
+        release["dreams_version"] == zenodo.get("version"),
+        "site/data_miragekit.json public_release.dreams_version must match .zenodo.json version",
     )
 
     tags = [
