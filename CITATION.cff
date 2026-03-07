@@ -1,7 +1,7 @@
 cff-version: 1.2.0
-title: "Validity Mirage: Context Compression Failure Modes in LLMs"
-message: "If you use this research, please cite it using the metadata from this file."
-type: dataset
+title: "dreams: MirageKit public research showcase"
+message: "If you use this research bundle, cite the preferred citation below; if you rely on the repository surface directly, the software metadata above is also valid."
+type: software
 authors:
   - given-names: Jack Chaudier
     family-names: Gaffney
@@ -13,6 +13,23 @@ url: "https://dreams-dun.vercel.app"
 license: CC-BY-4.0
 version: 0.1.1
 date-released: "2026-02-26"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.18794293
+preferred-citation:
+  type: article
+  title: "Validity Mirage: Context Compression Failure Modes in LLMs"
+  authors:
+    - given-names: Jack Chaudier
+      family-names: Gaffney
+      email: jackgaff@umich.edu
+      affiliation: University of Michigan
+      orcid: "https://orcid.org/0009-0000-5376-2090"
+  doi: 10.5281/zenodo.18794293
+  url: "https://doi.org/10.5281/zenodo.18794293"
+  publisher: Zenodo
+  year: 2026
+  version: 0.1.1
 keywords:
   - ai-safety
   - context-compression
@@ -21,12 +38,11 @@ keywords:
   - llm-evaluation
   - mcp-server
 abstract: >-
-  Research artifact bundle on context compression failure modes in large
-  language models. Introduces the validity mirage — where compression
-  preserves surface-level correctness while silently substituting the
-  governing hypothesis. Develops a tropical semiring algebra for measuring
-  context health and pairs the paper set with a source-available evaluation
-  MCP implementation for Codex and Claude-style clients.
+  Public research showcase for the MirageKit program on context compression
+  failure modes in large language models. The repository packages the live
+  site, working-paper bundle, deterministic replay witness, and mirrored
+  validation artifacts for the companion tropical-mcp evaluation
+  implementation.
 references:
   - type: article
     title: "Continuous Control and Structural Regularization in Multi-Agent Narrative Extraction"

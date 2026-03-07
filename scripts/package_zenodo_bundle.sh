@@ -30,17 +30,12 @@ cp "$ROOT/papers/LICENSE_CC_BY_4_0.md" "$STAGE_DIR/"
 mkdir -p "$STAGE_DIR/papers" "$STAGE_DIR/papers/sources"
 cp "$PAPERS_ROOT"/paper_*.pdf "$STAGE_DIR/papers/"
 cp "$PAPERS_ROOT/README.md" "$STAGE_DIR/papers/"
+cp "$PAPERS_ROOT/manifest.json" "$STAGE_DIR/papers/"
 cp "$PAPERS_ROOT/LICENSE_CC_BY_4_0.md" "$STAGE_DIR/papers/"
 cp -R "$PAPERS_ROOT/sources/figures" "$STAGE_DIR/papers/sources/"
-cp "$PAPERS_ROOT/sources"/paper_00_main.tex "$STAGE_DIR/papers/sources/"
-cp "$PAPERS_ROOT/sources"/paper_00_refs.bib "$STAGE_DIR/papers/sources/"
-cp "$PAPERS_ROOT/sources"/paper_01_main.tex "$STAGE_DIR/papers/sources/"
-cp "$PAPERS_ROOT/sources"/paper_02_main.tex "$STAGE_DIR/papers/sources/"
-cp "$PAPERS_ROOT/sources"/paper_03_main.tex "$STAGE_DIR/papers/sources/"
-cp "$PAPERS_ROOT/sources"/paper_i_main.tex "$STAGE_DIR/papers/sources/"
-cp "$PAPERS_ROOT/sources"/paper_i_refs.bib "$STAGE_DIR/papers/sources/"
-cp "$PAPERS_ROOT/sources"/references.bib "$STAGE_DIR/papers/sources/"
-cp "$PAPERS_ROOT/sources"/refs.bib "$STAGE_DIR/papers/sources/"
+find "$PAPERS_ROOT/sources" -maxdepth 1 -type f \
+  \( -name '*.tex' -o -name '*.bib' -o -name '*.sty' \) \
+  -exec cp {} "$STAGE_DIR/papers/sources/" \;
 
 # Results are intentionally included for reproducibility.
 cp -R "$RESULTS_ROOT" "$STAGE_DIR/"
