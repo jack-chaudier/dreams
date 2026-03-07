@@ -1,10 +1,16 @@
 # Papers
 
-Curated paper bundle for the Mirage research line.
+Curated paper bundle for the MirageKit research line.
 
 ## Status
 
 All PDFs in this folder should be treated as **Working Paper / First Draft (2026)** unless explicitly superseded by an arXiv or venue version.
+
+## Canonical public record
+
+- DOI-backed archive: <https://doi.org/10.5281/zenodo.18794293>
+- Current public `dreams` archive: `v0.1.1`
+- Paper metadata manifest: [`manifest.json`](./manifest.json)
 
 ## License
 
@@ -28,6 +34,14 @@ Selected TeX/Bib sources are included for transparency and citation traceability
 - `paper_02_main.tex`
 - `paper_03_main.tex`
 - `paper_i_main.tex`, `paper_i_refs.bib`
+- shared bibliography, style, and figure assets in `sources/`
+
+## Where to update when the bundle expands
+
+- add the new PDF and TeX source under `papers/` and `papers/sources/`
+- register the paper in [`manifest.json`](./manifest.json)
+- rerun `python3 scripts/validate_artifacts.py`
+- rebuild the publication archive with `./scripts/package_zenodo_bundle.sh`
 
 ## Interpretation guidance
 

@@ -1,0 +1,39 @@
+{
+  "papers": [
+    {
+      "key": "paper_00_continuous_control_structural_regularization",
+      "pdf": "papers/paper_00_continuous_control_structural_regularization.pdf",
+      "tex": "papers/sources/paper_00_main.tex",
+      "title": "Continuous Control and Structural Regularization in Multi-Agent Narrative Extraction",
+      "author": "Jack Chaudier Gaffney"
+    },
+    {
+      "key": "paper_01_absorbing_states_in_greedy_search",
+      "pdf": "papers/paper_01_absorbing_states_in_greedy_search.pdf",
+      "tex": "papers/sources/paper_01_main.tex",
+      "title": "Absorbing States in Greedy Search: When Endogenous Constraints Break Sequential Extraction",
+      "author": "Jack Chaudier Gaffney"
+    },
+    {
+      "key": "paper_02_streaming_oscillation_traps",
+      "pdf": "papers/paper_02_streaming_oscillation_traps.pdf",
+      "tex": "papers/sources/paper_02_main.tex",
+      "title": "Streaming Oscillation Traps in Endogenous-Pivot Sequential Extraction",
+      "author": "Jack Chaudier Gaffney"
+    },
+    {
+      "key": "paper_03_validity_mirage_compression",
+      "pdf": "papers/paper_03_validity_mirage_compression.pdf",
+      "tex": "papers/sources/paper_03_main.tex",
+      "title": "The Validity Mirage: Context Algebra for Endogenous Semantics under Memory Compression",
+      "author": "Jack Chaudier Gaffney"
+    },
+    {
+      "key": "paper_i_tropical_algebra",
+      "pdf": "papers/paper_i_tropical_algebra.pdf",
+      "tex": "papers/sources/paper_i_main.tex",
+      "title": "Tropical Algebra of Endogenous-Pivot Semantics: Absorbing States, Necessity, and the Record-Gap Spectrum",
+      "author": "Jack Chaudier Gaffney"
+    }
+  ]
+}

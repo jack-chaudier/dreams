@@ -6,13 +6,27 @@
     <title>MirageKit Evidence Dossier</title>
     <meta
       name="description"
-      content="Curated validation summary, replay witness, certificate artifact, and reproduction path for MirageKit and tropical-mcp."
+      content="Curated MirageKit evidence dossier: deterministic replay witness (n=3 per policy/fraction), raw validation logs, certificate artifact, and reproduction path."
     />
     <meta name="author" content="Jack Chaudier Gaffney" />
     <meta id="themeColorMeta" name="theme-color" content="#1f3d63" />
     <meta name="color-scheme" content="light dark" />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://dreams-dun.vercel.app/evidence" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MirageKit Research" />
+    <meta property="og:title" content="MirageKit Evidence Dossier" />
+    <meta property="og:description" content="Deterministic replay witness (n=3 per policy/fraction), raw validation logs, certificate artifact, and reproduction path for MirageKit and tropical-mcp." />
+    <meta property="og:url" content="https://dreams-dun.vercel.app/evidence" />
+    <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png" />
+    <meta property="og:image:alt" content="MirageKit research card showing deterministic replay witness metrics and public release artifacts." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@J_C_Gaffney" />
+    <meta name="twitter:creator" content="@J_C_Gaffney" />
+    <meta name="twitter:title" content="MirageKit Evidence Dossier" />
+    <meta name="twitter:description" content="Deterministic replay witness (n=3 per policy/fraction), raw validation logs, certificate artifact, and reproduction path for MirageKit and tropical-mcp." />
+    <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png" />
+    <meta name="twitter:image:alt" content="MirageKit research card showing deterministic replay witness metrics and public release artifacts." />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -64,6 +78,7 @@
         The research program lives in <strong>MirageKit</strong>, the public artifact surface lives in
         <strong>dreams</strong>, and the evaluation MCP implementation lives in
         <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>.
+        The replay rates below are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction.
       </p>
       <div class="hero-links">
         <a class="hero-link" href="/">Overview <span class="link-arrow">&nwarr;</span></a>
@@ -79,19 +94,26 @@
         <p class="hero-context">
           The strongest public evidence right now is structural: under compression pressure, recency can preserve
           answerability while silently losing the governing pivot, while the guarded policy preserves the protected
-          arc on the committed replay witness.
+          arc on the committed replay witness. Raw lint, type-check, test, build, installed-wheel, and functional validation logs are published alongside that witness.
         </p>
         <div class="evidence-grid">
           <article class="evidence-card">
             <span class="orientation-label">Implementation checks</span>
             <h3>Build, tests, and functional validation</h3>
-            <p>The implementation repo is validated with lint, typing, tests, packaging, and a functional MCP smoke report.</p>
+            <p>The implementation repo is validated with published lint, typing, tests, packaging, installed-wheel, and functional MCP smoke outputs.</p>
             <ul class="evidence-list">
-              <li><code>pytest -q</code> on the canonical implementation repo</li>
+              <li><code>ruff check .</code> and <code>mypy src/tropical_mcp</code> on the canonical implementation repo</li>
+              <li><code>pytest</code> with a published pass count</li>
               <li><code>uv build</code> for wheel + sdist packaging</li>
+              <li><code>./scripts/validate_installed_wheel.sh</code> to confirm the built wheel validates after install</li>
               <li><code>uv run tropical-mcp-full-validate</code> for MCP-facing checks</li>
             </ul>
             <div class="evidence-toolbar">
+              <a href="/results/ruff.txt" target="_blank" rel="noopener">Ruff log</a>
+              <a href="/results/mypy.txt" target="_blank" rel="noopener">Mypy log</a>
+              <a href="/results/pytest.txt" target="_blank" rel="noopener">Pytest log</a>
+              <a href="/results/build.txt" target="_blank" rel="noopener">Build log</a>
+              <a href="/results/installed_wheel.txt" target="_blank" rel="noopener">Installed-wheel log</a>
               <a href="/results/VALIDATION_SUMMARY.md" target="_blank" rel="noopener">Raw validation summary</a>
               <a href="/results/full_validation.json" target="_blank" rel="noopener">Full validation report</a>
             </div>
@@ -99,14 +121,16 @@
           <article class="evidence-card">
             <span class="orientation-label">Replay witness</span>
             <h3>Guarded policy preserves the pivot</h3>
-            <p>At retention fractions <code>0.65</code>, <code>0.5</code>, and <code>0.4</code>, the committed replay keeps the primary arc intact under <code>l2_guarded</code> while recency collapses it.</p>
+            <p>At retention fractions <code>0.65</code>, <code>0.5</code>, and <code>0.4</code>, the committed replay keeps the primary arc intact under <code>l2_guarded</code> while recency collapses it. These rates are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction.</p>
             <ul class="evidence-list">
               <li><code>l2_guarded</code> pivot preservation: <strong>1.0</strong></li>
               <li><code>recency</code> pivot preservation: <strong>0.0</strong></li>
-              <li>Interactive view on the overview page stays in sync with committed replay data</li>
+              <li>The interactive view on the overview page stays in sync with committed replay data</li>
+              <li>Paper-level model and incident counts live in the PDFs and are intentionally separate from this witness</li>
             </ul>
             <div class="evidence-toolbar">
               <a href="/" target="_blank" rel="noopener">Open live witness view</a>
+              <a href="/results/replay/replay_summary.csv" target="_blank" rel="noopener">Replay summary CSV</a>
               <a href="/results/replay/replay_summary.json" target="_blank" rel="noopener">Replay summary JSON</a>
             </div>
           </article>
@@ -130,7 +154,8 @@
       <section class="evidence-callout" aria-label="How to read this bundle">
         <p>
           <strong>Suggested reading order:</strong> flagship paper, this evidence dossier, the live replay witness, then the
-          raw artifacts only if you want to inspect the committed record directly.
+          raw artifacts only if you want to inspect the committed record directly. Current public version map:
+          <code>dreams v0.1.1</code> and <code>tropical-mcp v0.2.0</code>.
         </p>
       </section>
 
@@ -174,6 +199,7 @@ certificate(
         <a class="footer-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship paper</a>
         <a class="footer-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>
         <a class="footer-link" href="mailto:jackgaff@umich.edu">Correspondence</a>
+        <a class="footer-link" href="https://x.com/J_C_Gaffney" target="_blank" rel="noopener">X / updates</a>
       </div>
     </footer>
 

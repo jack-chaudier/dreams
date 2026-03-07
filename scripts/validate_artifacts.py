@@ -11,39 +11,6 @@ from typing import Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 
-PAPER_SPECS = {
-    "paper_00_continuous_control_structural_regularization": {
-        "pdf": ROOT / "papers" / "paper_00_continuous_control_structural_regularization.pdf",
-        "tex": ROOT / "papers" / "sources" / "paper_00_main.tex",
-        "title": "Continuous Control and Structural Regularization in Multi-Agent Narrative Extraction",
-        "author": "Jack Chaudier Gaffney",
-    },
-    "paper_01_absorbing_states_in_greedy_search": {
-        "pdf": ROOT / "papers" / "paper_01_absorbing_states_in_greedy_search.pdf",
-        "tex": ROOT / "papers" / "sources" / "paper_01_main.tex",
-        "title": "Absorbing States in Greedy Search: When Endogenous Constraints Break Sequential Extraction",
-        "author": "Jack Chaudier Gaffney",
-    },
-    "paper_02_streaming_oscillation_traps": {
-        "pdf": ROOT / "papers" / "paper_02_streaming_oscillation_traps.pdf",
-        "tex": ROOT / "papers" / "sources" / "paper_02_main.tex",
-        "title": "Streaming Oscillation Traps in Endogenous-Pivot Sequential Extraction",
-        "author": "Jack Chaudier Gaffney",
-    },
-    "paper_03_validity_mirage_compression": {
-        "pdf": ROOT / "papers" / "paper_03_validity_mirage_compression.pdf",
-        "tex": ROOT / "papers" / "sources" / "paper_03_main.tex",
-        "title": "The Validity Mirage: Context Algebra for Endogenous Semantics under Memory Compression",
-        "author": "Jack Chaudier Gaffney",
-    },
-    "paper_i_tropical_algebra": {
-        "pdf": ROOT / "papers" / "paper_i_tropical_algebra.pdf",
-        "tex": ROOT / "papers" / "sources" / "paper_i_main.tex",
-        "title": "Tropical Algebra of Endogenous-Pivot Semantics: Absorbing States, Necessity, and the Record-Gap Spectrum",
-        "author": "Jack Chaudier Gaffney",
-    },
-}
-
 TEXT_SUFFIXES = {
     ".md",
     ".txt",
@@ -58,6 +25,7 @@ TEXT_SUFFIXES = {
     ".tex",
     ".bib",
     ".cff",
+    ".svg",
 }
 
 PRIVATE_PATH_PATTERNS = (
@@ -66,8 +34,16 @@ PRIVATE_PATH_PATTERNS = (
     re.compile(r"[A-Za-z]:\\\\Users\\\\[^\s\"'<>`]+"),
 )
 
-ALLOWED_PUBLIC_DOCS = {
+REQUIRED_PUBLIC_DOCS = {
     "docs/CREDIBILITY_NOTES.md",
+    "docs/PUBLIC_SURFACE_MAP.md",
+}
+
+REQUIRED_ROOT_DOCS = {
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "CODE_OF_CONDUCT.md",
+    "SUPPORT.md",
 }
 
 
@@ -93,6 +69,37 @@ def _run(cmd: list[str], cwd: Path | None = None) -> str:
 def _assert(condition: bool, message: str) -> None:
     if not condition:
         raise AssertionError(message)
+
+
+def _paper_specs() -> dict[str, dict[str, object]]:
+    manifest = _load_json(ROOT / "papers" / "manifest.json")
+    papers = manifest.get("papers")
+    _assert(isinstance(papers, list) and papers, "papers/manifest.json must define at least one paper")
+
+    specs: dict[str, dict[str, object]] = {}
+    for entry in papers:
+        _assert(isinstance(entry, dict), "Each paper manifest entry must be an object")
+        key = str(entry.get("key", "")).strip()
+        pdf = str(entry.get("pdf", "")).strip()
+        tex = str(entry.get("tex", "")).strip()
+        title = str(entry.get("title", "")).strip()
+        author = str(entry.get("author", "")).strip()
+        _assert(key and pdf and tex and title and author, f"Incomplete paper manifest entry: {entry}")
+        specs[key] = {
+            "pdf": ROOT / pdf,
+            "tex": ROOT / tex,
+            "title": title,
+            "author": author,
+        }
+    return specs
+
+
+def _public_site_base() -> str:
+    zenodo = _load_json(ROOT / ".zenodo.json")
+    for item in zenodo.get("related_identifiers", []):
+        if item.get("relation") == "isDocumentedBy":
+            return str(item.get("identifier", "")).rstrip("/")
+    raise AssertionError(".zenodo.json must define an isDocumentedBy public site URL")
 
 
 def _parse_pdfinfo(text: str) -> dict[str, str]:
@@ -144,14 +151,13 @@ def check_replay_vs_site() -> None:
 
 def check_headline_claim_regressions() -> None:
     replay = _load_json(ROOT / "results" / "replay" / "replay_summary.json")
-    rows = {
-        (str(row["policy"]), float(row["fraction"])): row
-        for row in replay["summary"]
-    }
+    rows = {(str(row["policy"]), float(row["fraction"])): row for row in replay["summary"]}
 
     for fraction in (0.65, 0.5, 0.4):
         l2 = rows[("l2_guarded", fraction)]
         recency = rows[("recency", fraction)]
+        _assert(int(l2["n"]) == 3, f"l2_guarded must report n=3 at fraction={fraction}")
+        _assert(int(recency["n"]) == 3, f"recency must report n=3 at fraction={fraction}")
         _assert(
             float(l2["pivot_preservation_rate"]) == 1.0,
             f"l2_guarded pivot preservation must stay 1.0 at fraction={fraction}",
@@ -174,9 +180,51 @@ def check_headline_claim_regressions() -> None:
         )
 
     summary_md = (ROOT / "results" / "VALIDATION_SUMMARY.md").read_text(encoding="utf-8")
+    _assert("n=3" in summary_md, "VALIDATION_SUMMARY must explain the deterministic witness denominator")
     _assert(
         re.search(r"\d+ passed", summary_md) is not None,
         "VALIDATION_SUMMARY must report a pytest pass count (e.g. 'N passed')",
+    )
+
+
+def check_validation_logs() -> None:
+    ruff_text = (ROOT / "results" / "ruff.txt").read_text(encoding="utf-8")
+    mypy_text = (ROOT / "results" / "mypy.txt").read_text(encoding="utf-8")
+    pytest_text = (ROOT / "results" / "pytest.txt").read_text(encoding="utf-8")
+    build_text = (ROOT / "results" / "build.txt").read_text(encoding="utf-8")
+    wheel_text = (ROOT / "results" / "installed_wheel.txt").read_text(encoding="utf-8")
+    full_validation = _load_json(ROOT / "results" / "full_validation.json")
+
+    _assert("All checks passed!" in ruff_text, "results/ruff.txt must show a clean Ruff run")
+    _assert(
+        "Success: no issues found" in mypy_text,
+        "results/mypy.txt must show a clean mypy run",
+    )
+    pytest_match = re.search(r"(\d+) passed", pytest_text)
+    _assert(pytest_match is not None, "results/pytest.txt must include a pass count")
+    _assert(
+        "Successfully built dist/tropical_mcp-0.2.0.tar.gz" in build_text,
+        "results/build.txt must include the built sdist",
+    )
+    _assert(
+        "Successfully built dist/tropical_mcp-0.2.0-py3-none-any.whl" in build_text,
+        "results/build.txt must include the built wheel",
+    )
+    _assert(
+        "Installed wheel validation passed for tropical_mcp-0.2.0-py3-none-any.whl" in wheel_text,
+        "results/installed_wheel.txt must confirm the built wheel validates after install",
+    )
+    _assert(
+        str(full_validation["certificate_fixture"]["fixture"]).startswith("package:fixtures/"),
+        "results/full_validation.json should expose packaged fixture refs",
+    )
+    _assert(
+        str(full_validation["policy_invariance"]["fixture"]).startswith("package:fixtures/"),
+        "results/full_validation.json should expose packaged fixture refs",
+    )
+    _assert(
+        full_validation["stdio_smoke"]["alive_for_1s"] is True,
+        "results/full_validation.json must show a live stdio smoke check",
     )
 
 
@@ -213,28 +261,32 @@ def check_public_docs_surface() -> None:
         if path.is_file()
     }
     _assert(
-        tracked_docs == ALLOWED_PUBLIC_DOCS,
-        f"docs/ should only contain curated public notes; found {sorted(tracked_docs)}",
+        REQUIRED_PUBLIC_DOCS.issubset(tracked_docs),
+        f"docs/ must include the curated public notes {sorted(REQUIRED_PUBLIC_DOCS)}; found {sorted(tracked_docs)}",
     )
 
 
 def check_site_index_surface() -> None:
+    site_base = _public_site_base()
+    index_text = (ROOT / "site" / "index.html").read_text(encoding="utf-8")
+    evidence_text = (ROOT / "site" / "evidence.html").read_text(encoding="utf-8")
     sitemap_text = (ROOT / "site" / "sitemap.xml").read_text(encoding="utf-8")
     robots_text = (ROOT / "site" / "robots.txt").read_text(encoding="utf-8")
     vercel = _load_json(ROOT / "vercel.json")
     rewrites = vercel.get("rewrites", [])
 
     _assert((ROOT / "site" / "evidence.html").exists(), "site/evidence.html missing")
+    _assert((ROOT / "site" / "social-card.png").exists(), "site/social-card.png missing")
     _assert(
-        "https://dreams-dun.vercel.app/evidence" in sitemap_text,
+        f"{site_base}/evidence" in sitemap_text,
         "sitemap.xml must include the rendered evidence page",
     )
     _assert(
-        "https://dreams-dun.vercel.app/results/VALIDATION_SUMMARY.md" not in sitemap_text,
+        f"{site_base}/results/VALIDATION_SUMMARY.md" not in sitemap_text,
         "sitemap.xml should not index raw validation markdown",
     )
     _assert(
-        "https://dreams-dun.vercel.app/results/certificates/memory_safety_certificate.json" not in sitemap_text,
+        f"{site_base}/results/certificates/memory_safety_certificate.json" not in sitemap_text,
         "sitemap.xml should not index raw certificate JSON",
     )
     _assert("Disallow: /results/" in robots_text, "robots.txt should de-index raw result artifacts")
@@ -242,15 +294,36 @@ def check_site_index_surface() -> None:
         {"source": "/evidence", "destination": "/site/evidence"} in rewrites,
         "vercel.json must route /evidence to site/evidence",
     )
+    _assert("social-card.png" in index_text, "site/index.html must use the PNG social card")
+    _assert("twitter:image:alt" in index_text, "site/index.html must define twitter:image:alt")
+    _assert("og:image:alt" in index_text, "site/index.html must define og:image:alt")
+    _assert("social-card.png" in evidence_text, "site/evidence.html must use the PNG social card")
+    _assert("twitter:image:alt" in evidence_text, "site/evidence.html must define twitter:image:alt")
+    _assert("og:image:alt" in evidence_text, "site/evidence.html must define og:image:alt")
+    _assert("n=3" in evidence_text, "site/evidence.html must explain the replay witness denominator")
 
 
 def check_structure() -> None:
-    _assert((ROOT / "notebooks" / "README.md").exists(), "notebooks/README.md missing")
-    _assert((ROOT / "tests" / "README.md").exists(), "tests/README.md missing")
-    _assert((ROOT / "CITATION.cff").exists(), "CITATION.cff missing")
-    _assert((ROOT / ".zenodo.json").exists(), ".zenodo.json missing")
-    _assert((ROOT / "papers" / "LICENSE_CC_BY_4_0.md").exists(), "papers LICENSE_CC_BY_4_0.md missing")
-    _assert((ROOT / "README_ZENODO.md").exists(), "README_ZENODO.md missing")
+    required_paths = [
+        ROOT / "notebooks" / "README.md",
+        ROOT / "tests" / "README.md",
+        ROOT / "CITATION.cff",
+        ROOT / ".zenodo.json",
+        ROOT / "README_ZENODO.md",
+        ROOT / "papers" / "LICENSE_CC_BY_4_0.md",
+        ROOT / "papers" / "manifest.json",
+        ROOT / "results" / "ruff.txt",
+        ROOT / "results" / "mypy.txt",
+        ROOT / "results" / "pytest.txt",
+        ROOT / "results" / "build.txt",
+        ROOT / "results" / "installed_wheel.txt",
+        ROOT / "results" / "full_validation.json",
+    ]
+    for path in required_paths:
+        _assert(path.exists(), f"Required public artifact missing: {path.relative_to(ROOT)}")
+
+    for rel in REQUIRED_ROOT_DOCS:
+        _assert((ROOT / rel).exists(), f"Required repo policy file missing: {rel}")
 
 
 def check_no_symlinks_in_public_bundle() -> None:
@@ -270,24 +343,34 @@ def check_zenodo_and_citation_consistency() -> None:
     )
     _assert(zenodo.get("license") == "cc-by-4.0", "Zenodo license must be cc-by-4.0")
     _assert("license: CC-BY-4.0" in cff_text, "CITATION.cff license must be CC-BY-4.0")
-    _assert("type: dataset" in cff_text, "CITATION.cff type should be dataset for this repository")
+    _assert("type: software" in cff_text, "CITATION.cff type should be software for this repository")
+    _assert("preferred-citation:" in cff_text, "CITATION.cff must define a preferred citation")
+    _assert(
+        zenodo.get("title") in cff_text,
+        "CITATION.cff should include the Zenodo working-paper title in its preferred citation",
+    )
+    _assert(
+        "10.5281/zenodo.18794293" in cff_text,
+        "CITATION.cff must include the DOI-backed preferred citation",
+    )
 
     cff_title_match = re.search(r'^title:\s*"([^"]+)"', cff_text, flags=re.MULTILINE)
     _assert(cff_title_match is not None, "CITATION.cff missing top-level title")
-    _assert(
-        zenodo.get("title") == cff_title_match.group(1),
-        "CITATION.cff and .zenodo.json titles must match",
-    )
-
     _assert(
         "repository-code: \"https://github.com/jack-chaudier/dreams\"" in cff_text,
         "CITATION.cff repository-code must reference dreams repo",
     )
     _assert(
-        any(item.get("identifier") == "https://github.com/jack-chaudier/dreams" for item in zenodo.get("related_identifiers", [])),
+        any(
+            item.get("identifier") == "https://github.com/jack-chaudier/dreams"
+            for item in zenodo.get("related_identifiers", [])
+        ),
         "Zenodo related_identifiers must include dreams repo URL",
     )
-    relation_map = {str(item.get("identifier")): str(item.get("relation")) for item in zenodo.get("related_identifiers", [])}
+    relation_map = {
+        str(item.get("identifier")): str(item.get("relation"))
+        for item in zenodo.get("related_identifiers", [])
+    }
     _assert(
         relation_map.get("https://github.com/jack-chaudier/dreams") == "isSupplementedBy",
         "Dreams repo related identifier should use relation isSupplementedBy",
@@ -297,7 +380,7 @@ def check_zenodo_and_citation_consistency() -> None:
         "tropical-mcp related identifier should use relation isSupplementedBy",
     )
     _assert(
-        relation_map.get("https://dreams-dun.vercel.app") == "isDocumentedBy",
+        relation_map.get(_public_site_base()) == "isDocumentedBy",
         "Live demo related identifier should use relation isDocumentedBy",
     )
 
@@ -317,7 +400,10 @@ def check_zenodo_and_citation_consistency() -> None:
         f".zenodo.json ORCID must be plain 16-digit form, got: {zenodo_orcid}",
     )
 
-    cff_orcid_match = re.search(r'orcid:\s*"?(https://orcid\.org/(\d{4}-\d{4}-\d{4}-\d{4}))"?', cff_text)
+    cff_orcid_match = re.search(
+        r'orcid:\s*"?(https://orcid\.org/(\d{4}-\d{4}-\d{4}-\d{4}))"?',
+        cff_text,
+    )
     _assert(cff_orcid_match is not None, "CITATION.cff must include an ORCID URL for the author")
     cff_orcid_id = cff_orcid_match.group(2)
     _assert(
@@ -327,17 +413,16 @@ def check_zenodo_and_citation_consistency() -> None:
 
     preprint_refs = len(re.findall(r"status:\s*preprint", cff_text))
     _assert(
-        preprint_refs >= len(PAPER_SPECS),
-        f"CITATION.cff should include a preprint reference for each paper ({len(PAPER_SPECS)} expected, found {preprint_refs})",
-    )
-    _assert(
-        "Continuous Control and Structural Regularization in Multi-Agent Narrative Extraction" in cff_text,
-        "CITATION.cff should include paper 00 reference entry",
+        preprint_refs >= len(_paper_specs()),
+        f"CITATION.cff should include a preprint reference for each paper ({len(_paper_specs())} expected, found {preprint_refs})",
     )
 
     cff_version_match = re.search(r"^version:\s*([0-9.]+)", cff_text, flags=re.MULTILINE)
     _assert(cff_version_match is not None, "CITATION.cff should include a version field")
-    _assert(zenodo.get("version") == cff_version_match.group(1), "CITATION.cff and .zenodo.json versions must match")
+    _assert(
+        zenodo.get("version") == cff_version_match.group(1),
+        "CITATION.cff and .zenodo.json versions must match",
+    )
 
     tags = [
         tag
@@ -354,8 +439,8 @@ def check_zenodo_and_citation_consistency() -> None:
 
 
 def check_paper_sources() -> None:
-    for key, spec in PAPER_SPECS.items():
-        tex_path = spec["tex"]
+    for key, spec in _paper_specs().items():
+        tex_path = Path(spec["tex"])
         _assert(tex_path.exists(), f"{key}: missing TeX source {tex_path}")
         text = tex_path.read_text(encoding="utf-8")
         _assert(
@@ -372,8 +457,8 @@ def check_paper_sources() -> None:
 
 def check_paper_figure_assets() -> None:
     include_pattern = re.compile(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}")
-    for key, spec in PAPER_SPECS.items():
-        tex_path = spec["tex"]
+    for key, spec in _paper_specs().items():
+        tex_path = Path(spec["tex"])
         text = tex_path.read_text(encoding="utf-8")
         refs = include_pattern.findall(text)
         for ref in refs:
@@ -383,8 +468,8 @@ def check_paper_figure_assets() -> None:
 
 
 def check_paper_pdfs() -> None:
-    for key, spec in PAPER_SPECS.items():
-        pdf_path = spec["pdf"]
+    for key, spec in _paper_specs().items():
+        pdf_path = Path(spec["pdf"])
         _assert(pdf_path.exists(), f"{key}: missing PDF {pdf_path}")
 
         info = _parse_pdfinfo(_run(["pdfinfo", str(pdf_path)]))
@@ -407,6 +492,7 @@ def check_paper_pdfs() -> None:
 def main() -> None:
     check_replay_vs_site()
     check_headline_claim_regressions()
+    check_validation_logs()
     check_certificate_sync()
     check_private_path_leaks()
     check_public_docs_surface()

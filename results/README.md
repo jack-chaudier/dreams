@@ -1,28 +1,38 @@
 # Results
 
-Reproducible evidence artifacts used by the showcase.
+Reproducible public evidence artifacts mirrored from the canonical `tropical-mcp` evaluation repo.
 
 ## Files
 
-- `pytest.txt` — canonical MCP unit/property test output
-- `build.txt` — canonical MCP packaging build output
+- `ruff.txt` — canonical lint output
+- `mypy.txt` — canonical type-check output
+- `pytest.txt` — canonical unit/property test output with a public pass count and machine-local paths removed
+- `build.txt` — canonical packaging build output
+- `installed_wheel.txt` — installed-wheel validation output
 - `full_validation.json` — canonical MCP functional validation report
 - `replay/replay_rows.csv` — row-level replay output
 - `replay/replay_summary.csv` — aggregate replay metrics
 - `replay/replay_summary.json` — aggregate replay metrics (JSON)
 - `certificates/memory_safety_certificate.json` — example memory safety certificate
 
+## Published Version Map
+
+- `dreams`: `v0.1.1`
+- `tropical-mcp`: `v0.2.0`
+
 ## Regenerate From Canonical MCP Repo
 
 ```bash
-cd ~/tropical-mcp
-uv run --extra dev pytest -q | tee ~/dreams/results/pytest.txt
-uv build > ~/dreams/results/build.txt 2>&1
-uv run tropical-mcp-full-validate > ~/dreams/results/full_validation.json
-uv run tropical-mcp-replay \
-  --fractions 1.0,0.8,0.65,0.5,0.4 \
-  --policies recency,l2_guarded \
-  --k 3 \
-  --line-count 200 \
-  --output-dir ~/dreams/results/replay
+git clone https://github.com/jack-chaudier/tropical-mcp.git ~/tropical-mcp
+cd ~/dreams
+./scripts/refresh_validation_artifacts.sh ~/tropical-mcp
 ```
+
+The refresh script is the canonical maintainer path: it reruns the validation commands, refreshes the replay witness, rewrites `VALIDATION_SUMMARY.md`, and strips machine-local absolute paths from the mirrored logs before they become public artifacts.
+
+## Sync Notes
+
+- If the replay witness changes, also refresh `site/data_miragekit.json`, `site/index.html`, and `site/evidence.html`.
+- If the validation shape changes, refresh `results/VALIDATION_SUMMARY.md` and `scripts/validate_artifacts.py`.
+- Treat these files as mirrored outputs from `tropical-mcp`, not hand-authored substitutes for the implementation repo.
+- The refresh entry point for maintainers is `scripts/refresh_validation_artifacts.sh`.

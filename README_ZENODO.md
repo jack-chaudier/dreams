@@ -1,14 +1,16 @@
 # Zenodo Upload Notes
 
-This repository uses a split license policy:
+This repository uses a split-license release policy:
 
-- Public research artifacts in `papers/` and `results/` are intended for CC-BY 4.0
-  distribution in the Zenodo bundle.
-- Other repository assets stay under the root evaluation license and are not part of
-  the CC-BY paper bundle unless explicitly included.
+- Public research artifacts in `papers/` and `results/` are intended for CC-BY 4.0 distribution in the Zenodo bundle.
+- Other repository assets stay under the root evaluation license and are not part of the CC-BY paper bundle unless explicitly included.
 
-For a clean, unambiguous Zenodo record, upload a **papers-focused bundle** rather than
-auto-archiving the full repository.
+For a clean, unambiguous Zenodo record, upload a papers-focused bundle rather than auto-archiving the full repository.
+
+## Current DOI
+
+- Published record: <https://doi.org/10.5281/zenodo.18794293>
+- Published archival version: `v0.1.1`
 
 ## Recommended Zenodo Bundle Contents (CC-BY 4.0)
 
@@ -36,18 +38,20 @@ auto-archiving the full repository.
    ```
 
 2. In Zenodo, create a new upload as:
-   - `upload_type`: publication
-   - `publication_type`: working paper
+   - `upload_type`: `publication`
+   - `publication_type`: `working paper`
    - `license`: `cc-by-4.0`
 
 3. Upload the generated archive from `dist/zenodo/`.
 4. Optional but recommended: also upload the five paper PDFs as individual files so Zenodo can preview them directly.
 5. Confirm metadata fields from `.zenodo.json` and publish.
 
-## DOI Update Follow-Up
+## For The Next Archive Refresh
 
-After publication, add the minted DOI to:
+When a new public archive is cut, update all of the following together:
 
-- site footer and/or hero links in `site/index.html`
+- `CITATION.cff`
+- `.zenodo.json`
 - `README.md`
-- future paper revisions
+- `site/index.html` and `site/evidence.html`
+- any paper PDF metadata or DOI references that should point at the new record

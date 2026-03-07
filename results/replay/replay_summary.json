@@ -40,7 +40,7 @@
       "primary_full_rate": 1.0,
       "decoy_full_rate": 1.0,
       "pivot_preservation_rate": 1.0,
-      "realized_token_retention_mean": 0.49582934342295343,
+      "realized_token_retention_mean": 0.4958293434229535,
       "contract_satisfied_rate": 1.0,
       "mean_breach_count": 0.0
     },
@@ -84,7 +84,7 @@
       "primary_full_rate": 0.0,
       "decoy_full_rate": 1.0,
       "pivot_preservation_rate": 0.0,
-      "realized_token_retention_mean": 0.6485427364505251,
+      "realized_token_retention_mean": 0.648542736450525,
       "contract_satisfied_rate": 0.0,
       "mean_breach_count": 0.0
     },

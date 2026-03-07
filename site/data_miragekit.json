@@ -84,12 +84,18 @@
     }
   },
   "witness": {
-    "name": "Deterministic Witness (Exp58-style)",
-    "claim": "Raw validity can remain high while pivot consistency collapses under naive compression.",
+    "name": "Deterministic Replay Witness (n=3 per policy/fraction)",
+    "claim": "Raw validity can remain high while pivot consistency collapses under naive compression; the rates shown here are exact proportions on the committed three-variant witness.",
     "semantic_regret_example": 0.544,
     "notes": [
+      "The overview cards are exact proportions on a deterministic replay witness with n=3 variants per policy and retention fraction.",
+      "Paper-level model counts, streaming studies, and real-incident analyses live in the PDFs and are intentionally separate from this small committed witness.",
       "Recency/truncation can preserve answerability while silently switching the governing pivot.",
       "L2-guarded compaction enforces pivot+predecessor survival when feasible."
     ]
+  },
+  "public_release": {
+    "dreams_version": "0.1.1",
+    "tropical_mcp_version": "0.2.0"
   }
 }
