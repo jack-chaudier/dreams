@@ -138,38 +138,95 @@
             <h3>Three Calls</h3>
             <p>After registering the MCP, verify it with <code>runtime_info()</code>, <code>compact_auto(...)</code>, and <code>certificate(...)</code>.</p>
             <div class="orientation-links">
-              <a href="#install-verify">Install + verify section</a>
+              <a href="#install-verify">Evaluate + verify section</a>
               <a href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener">Certificate artifact</a>
             </div>
           </article>
         </div>
       </section>
 
-      <section class="install-verify reveal" id="install-verify" aria-label="Install and verify tropical-mcp">
-        <h2>Install + Verify</h2>
-        <p class="install-intro">Install <code>tropical-mcp</code> from the implementation repo for academic or internal evaluation. Use <code>dreams</code> for the research narrative, paper bundle, replay outputs, and reference artifacts.</p>
+      <section class="install-verify reveal" id="install-verify" aria-label="Evaluate and verify tropical-mcp">
+        <h2>Evaluate + Verify</h2>
+        <p class="install-intro"><code>tropical-mcp</code> is the evaluation implementation. Use <code>dreams</code> for the paper set, replay witness, public certificate, and the broader research narrative.</p>
+        <div class="install-summary" aria-label="Evaluation sequence">
+          <span>1. Register the MCP</span>
+          <span>2. Run the three-call witness</span>
+          <span>3. Compare against the public certificate</span>
+        </div>
         <div class="install-grid">
           <article class="install-card">
-            <h3>Codex Quick-Start</h3>
-            <p>Clone the implementation repo, then register the MCP in Codex.</p>
-            <pre class="install-pre"><code>git clone https://github.com/jack-chaudier/tropical-mcp.git ~/tropical-mcp
-codex mcp add tropical-mcp --env TROPICAL_MCP_CLIENT=codex -- \
+            <div class="install-card-header">
+              <span class="install-step mono">01</span>
+              <div>
+                <span class="install-card-label">Codex Registration</span>
+                <h3>Register <code>tropical-mcp</code></h3>
+              </div>
+            </div>
+            <p>Clone the evaluation repo, then register the MCP in Codex so the tool calls stay explicit and auditable.</p>
+            <div class="install-codeframe">
+              <span class="install-codeframe-label">codex shell</span>
+              <pre class="install-pre install-pre-wrap"><code>git clone https://github.com/jack-chaudier/tropical-mcp.git ~/tropical-mcp
+codex mcp add tropical-mcp \
+  --env TROPICAL_MCP_CLIENT=codex -- \
   uv --directory ~/tropical-mcp run tropical-mcp
 codex mcp list</code></pre>
+            </div>
+            <p class="install-outcome"><span class="install-outcome-label">Expected signal</span><code>codex mcp list</code> should show <code>tropical-mcp</code> as an available server.</p>
           </article>
           <article class="install-card">
-            <h3>Minimal Verification</h3>
-            <p>Use an explicit test payload so the pivot and predecessor structure is observable.</p>
-            <pre class="install-pre install-pre-wrap"><code>messages = [
-  {"id":"goal","role":"user","content":"Build a long-running coding agent workflow for Codex.","role_hint":"pivot"},
-  {"id":"constraint_stdio","role":"user","content":"Use stdio transport and never emit JSON-RPC data to stdout logs.","role_hint":"predecessor"},
-  {"id":"constraint_clients","role":"user","content":"Support Codex and Claude-style clients through explicit MCP tool calls.","role_hint":"predecessor"},
-  {"id":"status","role":"assistant","content":"I am wiring the verification flow and docs.","role_hint":"noise"}
-]
-
-runtime_info()
-compact_auto(messages=messages, token_budget=45, k_target=2, mode="adaptive")
-certificate(messages=messages, token_budget=45, k=2)</code></pre>
+            <div class="install-card-header">
+              <span class="install-step mono">02</span>
+              <div>
+                <span class="install-card-label">Three-Call Witness</span>
+                <h3>Minimal Verification</h3>
+              </div>
+            </div>
+            <p>Use a small explicit payload so the pivot and predecessor structure remain visible at a glance.</p>
+            <div class="install-codeframe">
+              <span class="install-codeframe-label">payload</span>
+              <pre class="install-pre install-pre-wrap"><code>messages = [
+  {
+    "id": "goal",
+    "role": "user",
+    "content": "Build a long-running coding agent workflow for Codex.",
+    "role_hint": "pivot",
+  },
+  {
+    "id": "constraint_stdio",
+    "role": "user",
+    "content": "Use stdio transport and never emit JSON-RPC data to stdout logs.",
+    "role_hint": "predecessor",
+  },
+  {
+    "id": "constraint_clients",
+    "role": "user",
+    "content": "Support Codex and Claude-style clients through explicit MCP tool calls.",
+    "role_hint": "predecessor",
+  },
+  {
+    "id": "status",
+    "role": "assistant",
+    "content": "I am wiring the verification flow and docs.",
+    "role_hint": "noise",
+  },
+]</code></pre>
+            </div>
+            <div class="install-codeframe install-codeframe-tight">
+              <span class="install-codeframe-label">verify</span>
+              <pre class="install-pre install-pre-wrap"><code>runtime_info()
+compact_auto(
+  messages=messages,
+  token_budget=45,
+  k_target=2,
+  mode="adaptive",
+)
+certificate(
+  messages=messages,
+  token_budget=45,
+  k=2,
+)</code></pre>
+            </div>
+            <p class="install-outcome"><span class="install-outcome-label">Expected signal</span><code>compact_auto(...)</code> should prefer the guarded policy on this witness payload.</p>
           </article>
         </div>
         <div class="install-notes">

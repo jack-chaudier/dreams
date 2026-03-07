@@ -460,6 +460,7 @@ main {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.85rem;
+  align-items: start;
 }
 
 .orientation-card,
@@ -522,19 +523,42 @@ main {
 
 .install-intro {
   margin-bottom: 0.85rem;
+  max-width: 46rem;
+}
+
+.install-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.6rem;
+  margin-bottom: 0.95rem;
+}
+
+.install-summary span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.36rem 0.58rem;
+  border: 1px solid var(--rule-light);
+  border-radius: 999px;
+  background: var(--surface-muted);
+  font-family: var(--sans);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
 
 .install-pre {
-  margin-top: 0.65rem;
+  margin: 0;
   overflow: auto;
-  border: 1px solid var(--rule-light);
-  border-radius: 3px;
-  background: var(--surface-strong);
-  padding: 0.95rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0.9rem 0.95rem 0.95rem;
   font-family: var(--mono);
   font-size: 0.64rem;
   line-height: 1.65;
-  color: var(--ink-2);
+  color: var(--ink);
 }
 
 .install-pre code {
@@ -550,13 +574,101 @@ main {
 
 .install-notes {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr));
   gap: 0.8rem;
-  margin-top: 0.85rem;
+  margin-top: 0.95rem;
 }
 
 .install-note {
+  min-height: 100%;
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  padding: 0.82rem 0.88rem;
+  background: var(--surface-muted);
+}
+
+.install-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.72rem;
+  background:
+    linear-gradient(180deg, rgba(118, 141, 175, 0.045) 0%, rgba(118, 141, 175, 0) 28%),
+    var(--surface-muted);
+}
+
+.install-card-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.72rem;
+  align-items: start;
+}
+
+.install-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border: 1px solid var(--rule-light);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.install-card-label,
+.install-codeframe-label,
+.install-outcome-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.install-card-label {
+  margin-bottom: 0.28rem;
+  color: var(--ink-3);
+}
+
+.install-codeframe {
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.install-codeframe + .install-codeframe {
+  margin-top: -0.1rem;
+}
+
+.install-codeframe-label {
+  padding: 0.48rem 0.72rem;
+  border-bottom: 1px solid var(--rule-light);
+  background: rgba(118, 141, 175, 0.05);
+  color: var(--ink-3);
+}
+
+.install-codeframe-tight .install-pre {
+  padding-top: 0.82rem;
+}
+
+.install-outcome {
+  margin-top: 0.08rem;
+  padding-top: 0.68rem;
   border-top: 1px solid var(--rule-light);
-  padding-top: 0.75rem;
+}
+
+.install-outcome-label {
+  margin-bottom: 0.24rem;
+  color: var(--ink-3);
+}
+
+.install-note p,
+.install-outcome {
+  margin-bottom: 0;
 }
 
 /* ══════════════════════════════════════════════════
