@@ -17,7 +17,7 @@ Source: `results/replay/replay_summary.json`
 
 This witness is intentionally small and inspectable: `n=3` variants per policy and retention fraction.
 
-At retention fractions `0.65`, `0.5`, and `0.4`:
+At retention fractions `0.65`, `0.5`, and `0.4`, the committed witness produces the same rates shown below:
 
 - `l2_guarded`
   - pivot preservation rate: **1.0**
