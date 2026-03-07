@@ -10,13 +10,13 @@
 
 Hi <Name>,
 
-I built a public research program called **MirageKit** around a long-context failure mode: under naive compression, answer validity can stay high while the model silently switches pivots (semantic drift). The public showcase lives in **dreams** (site, papers, artifacts), and the installable MCP implementation lives in **tropical-mcp**.
+I built a public research program called **MirageKit** around a long-context failure mode: under naive compression, answer validity can stay high while the model silently switches pivots (semantic drift). The public showcase lives in **dreams** (site, papers, artifacts), and the source-available evaluation MCP implementation lives in **tropical-mcp**.
 
 This repo is a curated public snapshot (working-paper stage); the larger internal research monorepo remains private.
 
 - Demo page: https://dreams-dun.vercel.app
 - Showcase repo: https://github.com/jack-chaudier/dreams
-- Installable MCP repo: https://github.com/jack-chaudier/tropical-mcp
+- Evaluation MCP repo: https://github.com/jack-chaudier/tropical-mcp
 - DOI (archival record): https://doi.org/10.5281/zenodo.18794293
 - Key results: l2-guarded keeps pivot preservation at 1.0 under pressure in the included replay, while recency drops to 0.0 at the same budgets.
 

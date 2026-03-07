@@ -1,27 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">MirageKit Research</title>
+  <desc id="desc">Flagship paper, validation summary, and evaluation MCP for validity mirage under context compression.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f8fafc" />
-      <stop offset="100%" stop-color="#e2e8f0" />
+      <stop offset="0%" stop-color="#08111d" />
+      <stop offset="55%" stop-color="#101c2c" />
+      <stop offset="100%" stop-color="#07111b" />
     </linearGradient>
     <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#1e3a5f" />
-      <stop offset="100%" stop-color="#991b1b" />
+      <stop offset="0%" stop-color="#5eead4" />
+      <stop offset="55%" stop-color="#f5d09d" />
+      <stop offset="100%" stop-color="#ef9a9a" />
     </linearGradient>
+    <radialGradient id="glow" cx="0.28" cy="0.18" r="0.92">
+      <stop offset="0%" stop-color="#1a3251" stop-opacity="0.56" />
+      <stop offset="100%" stop-color="#1a3251" stop-opacity="0" />
+    </radialGradient>
   </defs>
+
   <rect width="1200" height="630" fill="url(#bg)" />
-  <rect x="80" y="66" width="1040" height="8" rx="4" fill="url(#rule)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+  <rect x="82" y="68" width="1036" height="4" rx="2" fill="url(#rule)" />
 
-  <text x="90" y="132" fill="#1e3a5f" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" letter-spacing="2">MIRAGEKIT RESEARCH PROGRAM</text>
-  <text x="90" y="214" fill="#0f172a" font-family="Source Serif 4, Georgia, serif" font-size="72" font-weight="700">MirageKit</text>
-  <text x="90" y="270" fill="#334155" font-family="Source Serif 4, Georgia, serif" font-size="30">dreams is the research showcase. tropical-mcp is the installable MCP.</text>
+  <text x="90" y="118" fill="#93a6bf" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="3">MIRAGEKIT RESEARCH PROGRAM</text>
+  <text x="90" y="205" fill="#f2f5f9" font-family="Source Serif 4, Georgia, serif" font-size="78" font-weight="700">MirageKit</text>
+  <text x="90" y="258" fill="#cdd8e6" font-family="Source Serif 4, Georgia, serif" font-size="32">Validity mirage under context compression.</text>
+  <text x="90" y="304" fill="#8ea0b7" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22">Flagship paper • validation summary • source-available evaluation MCP</text>
 
-  <rect x="90" y="320" width="1020" height="220" rx="14" fill="#ffffff" stroke="#cbd5e1" />
-  <text x="120" y="376" fill="#0f172a" font-family="IBM Plex Sans, Arial, sans-serif" font-size="26" font-weight="600">Evidence Snapshot</text>
+  <rect x="90" y="352" width="1020" height="188" rx="18" fill="#0d1724" stroke="#213248" stroke-width="2" />
+  <text x="124" y="405" fill="#9fb0c4" font-family="IBM Plex Sans, Arial, sans-serif" font-size="19" font-weight="600" letter-spacing="2">EVIDENCE SNAPSHOT</text>
 
-  <text x="120" y="430" fill="#0f172a" font-family="JetBrains Mono, monospace" font-size="34">0 / 11,400 false positives (tested regime)</text>
-  <text x="120" y="474" fill="#0f172a" font-family="JetBrains Mono, monospace" font-size="34">54.9% organic trap rate (2,306 / 4,200)</text>
-  <text x="120" y="518" fill="#0f172a" font-family="JetBrains Mono, monospace" font-size="34">21.95% silent mirage rate (real incidents)</text>
+  <text x="124" y="457" fill="#5eead4" font-family="JetBrains Mono, monospace" font-size="31" font-weight="500">0 / 11,400 false positives</text>
+  <text x="124" y="492" fill="#f5d09d" font-family="JetBrains Mono, monospace" font-size="31" font-weight="500">54.9% organic trap rate</text>
+  <text x="124" y="527" fill="#ef9a9a" font-family="JetBrains Mono, monospace" font-size="31" font-weight="500">21.95% silent mirage rate</text>
 
-  <text x="90" y="586" fill="#334155" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22">dreams-dun.vercel.app</text>
+  <text x="712" y="438" fill="#f2f5f9" font-family="Source Serif 4, Georgia, serif" font-size="25" font-weight="600">dreams-dun.vercel.app</text>
+  <text x="712" y="478" fill="#8ea0b7" font-family="IBM Plex Sans, Arial, sans-serif" font-size="20">paper • artifacts • live proof path</text>
+  <text x="712" y="513" fill="#8ea0b7" font-family="IBM Plex Sans, Arial, sans-serif" font-size="20">evaluation MCP • DOI-backed research packet</text>
 </svg>

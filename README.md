@@ -8,20 +8,20 @@ A curated, public-facing showcase for the MirageKit research program.
 
 - `MirageKit` is the research program.
 - `dreams` is the public showcase repo: website, papers, replay artifacts, and certificate snapshots.
-- `tropical-mcp` is the installable implementation repo for Codex and Claude-style clients.
+- `tropical-mcp` is the source-available evaluation implementation repo for Codex and Claude-style clients.
 - If you want to verify the implementation, start in `tropical-mcp` with `runtime_info()`, `compact_auto(...)`, and `certificate(...)`.
 
 ## Scope and Boundaries
 
 - `dreams` is the public front door: live site, paper bundle, and reproducible artifacts.
 - The full `mirage` research monorepo stays private.
-- The canonical installable MCP implementation is maintained in `tropical-mcp`.
+- The canonical evaluation MCP implementation is maintained in `tropical-mcp`.
 
 ## Current Status
 
 - Public status: working-paper stage, with committed replay artifacts and validation outputs.
 - Live-facing surfaces: `site/` for the website, `papers/` for draft PDFs, `results/` for reproducible evidence.
-- Install path: use the `tropical-mcp` repo directly; this repo is not the package you install into Codex or Claude-style clients.
+- Install path: use the `tropical-mcp` repo directly for academic or internal evaluation; this repo is not the package you install into Codex or Claude-style clients.
 
 ## Repository Contents
 
@@ -72,7 +72,7 @@ To keep interpretation rigorous:
 
 ## Local Reproduction
 
-### 1) Install and validate `tropical-mcp`
+### 1) Install and validate `tropical-mcp` for evaluation
 
 ```bash
 git clone https://github.com/jack-chaudier/tropical-mcp.git ~/tropical-mcp
@@ -97,7 +97,7 @@ After client registration, the minimum MCP smoke flow is:
 - `compact_auto(...)`
 - `certificate(...)`
 
-See the implementation README for the Codex quick-start and full example bundle: <https://github.com/jack-chaudier/tropical-mcp>
+See the implementation README for the Codex quick-start, license boundary, and full example bundle: <https://github.com/jack-chaudier/tropical-mcp>
 
 ### 2) Serve the showcase site
 
@@ -116,6 +116,8 @@ Open: `http://localhost:8080/site/`
 ## Quick Links
 
 - Live site: <https://dreams-dun.vercel.app>
+- Flagship paper: <https://dreams-dun.vercel.app/papers/paper_03_validity_mirage_compression.pdf>
+- Validation summary: <https://dreams-dun.vercel.app/results/VALIDATION_SUMMARY.md>
 - Implementation repo: <https://github.com/jack-chaudier/tropical-mcp>
 - Site source: [`site/`](./site/)
 - Paper bundle: [`papers/`](./papers/)
@@ -124,3 +126,4 @@ Open: `http://localhost:8080/site/`
 - Credibility notes: [`docs/CREDIBILITY_NOTES.md`](./docs/CREDIBILITY_NOTES.md)
 - Zenodo upload notes: [`README_ZENODO.md`](./README_ZENODO.md)
 - Canonical MCP repo: <https://github.com/jack-chaudier/tropical-mcp>
+- Correspondence: <mailto:jackgaff@umich.edu>

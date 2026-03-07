@@ -13,11 +13,16 @@
   var EXPLAINER_MID = 'Degradation zone: predecessor support is thinning. Guarded retention preserves the governing pivot.';
   var EXPLAINER_LOW = 'Mirage active: naive recency still scores high on raw validity while answering for the wrong pivot.';
   var MIRAGE_NOTE = 'Still high while pivot collapses: this is the mirage.';
+  var THEME_STORAGE_KEY = 'miragekit-theme';
 
   // DOM refs
   var slider = document.getElementById('retentionSlider');
   var sliderTicksEl = document.getElementById('sliderTicks');
   var retentionDisplay = document.getElementById('retentionValue');
+  var sliderContextEl = document.getElementById('sliderContext');
+  var sliderTrackProgressEl = document.getElementById('sliderTrackProgress');
+  var sliderRegimeEl = document.getElementById('sliderRegime');
+  var sliderRegimeValueEl = document.getElementById('sliderRegimeValue');
   var naiveMetricsEl = document.getElementById('naiveMetrics');
   var guardedMetricsEl = document.getElementById('guardedMetrics');
   var naiveContractEl = document.getElementById('naiveContract');
@@ -48,11 +53,14 @@
   var certificateJsonEl = document.getElementById('certificateJson');
   var semanticRegretEl = document.getElementById('semanticRegret');
   var semanticRegretValueEl = document.getElementById('semanticRegretValue');
+  var themeToggle = document.getElementById('themeToggle');
+  var themeToggleValueEl = document.getElementById('themeToggleValue');
+  var themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
   function metricColor(value) {
-    if (value >= 0.8) return '#065f46';
-    if (value >= 0.4) return '#92400e';
-    return '#991b1b';
+    if (value >= 0.8) return 'var(--safe)';
+    if (value >= 0.4) return 'var(--warn)';
+    return 'var(--danger)';
   }
 
   function metricClassName(key) {
@@ -332,8 +340,8 @@
       if (noContract && isContractMetric) {
         b.value.textContent = 'N/A';
         b.fill.style.width = '0%';
-        b.fill.style.backgroundColor = 'rgba(226, 232, 240, 0.3)';
-        b.value.style.color = 'rgba(100, 116, 139, 0.7)';
+        b.fill.style.backgroundColor = 'var(--rule-light)';
+        b.value.style.color = 'var(--ink-3)';
         b.row.classList.add('metric-na');
         b.note.textContent = 'No contract in recency baseline.';
         b.note.classList.remove('hidden');
@@ -341,7 +349,7 @@
       }
 
       if (m.key === 'raw_validity' && showMirageContradiction) {
-        color = '#2563eb';
+        color = 'var(--mirage-blue)';
       }
 
       b.value.textContent = pct(val);
@@ -391,6 +399,117 @@
     return EXPLAINER_LOW;
   }
 
+  function getSliderContext(naive, guarded, mirageGap) {
+    if (naive.pivot_preservation_rate >= 0.99 && guarded.pivot_preservation_rate >= 0.99) {
+      return 'Full context retained; both policies remain aligned.';
+    }
+    if (guarded.pivot_preservation_rate >= 0.99 && naive.pivot_preservation_rate >= 0.5) {
+      return 'Compression pressure is visible, but the guarded policy still preserves the governing pivot.';
+    }
+    if (guarded.pivot_preservation_rate >= 0.95 && mirageGap >= 0.4) {
+      return 'Naive recency is still answerable, but it has already drifted off the original causal anchor.';
+    }
+    return 'Compression pressure is now visible in both paths; inspect the witness and certificate before trusting the compressed state.';
+  }
+
+  function getSliderRegime(naive, guarded, mirageGap) {
+    if (naive.pivot_preservation_rate >= 0.99 && guarded.pivot_preservation_rate >= 0.99) {
+      return { label: 'Aligned', tone: 'safe' };
+    }
+    if (guarded.pivot_preservation_rate >= 0.99 && naive.pivot_preservation_rate >= 0.5) {
+      return { label: 'Guard Active', tone: 'safe' };
+    }
+    if (guarded.pivot_preservation_rate >= naive.pivot_preservation_rate && mirageGap < 0.4) {
+      return { label: 'Pressure Rising', tone: 'warn' };
+    }
+    return { label: 'Mirage Active', tone: 'danger' };
+  }
+
+  function getSavedTheme() {
+    try {
+      return window.localStorage.getItem(THEME_STORAGE_KEY);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function systemTheme() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+
+  function resolveTheme() {
+    var queryTheme = null;
+    try {
+      queryTheme = new URLSearchParams(window.location.search).get('theme');
+    } catch (err) {
+      queryTheme = null;
+    }
+    if (queryTheme === 'dark' || queryTheme === 'light') {
+      return queryTheme;
+    }
+    var savedTheme = getSavedTheme();
+    return savedTheme === 'dark' || savedTheme === 'light'
+      ? savedTheme
+      : systemTheme();
+  }
+
+  function syncTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
+    }
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+    if (themeToggleValueEl) {
+      themeToggleValueEl.textContent = theme === 'dark' ? 'Dark' : 'Light';
+    }
+  }
+
+  function initThemeToggle() {
+    var mediaQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    syncTheme(resolveTheme());
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function () {
+        var queryTheme = null;
+        try {
+          queryTheme = new URLSearchParams(window.location.search).get('theme');
+        } catch (err) {
+          queryTheme = null;
+        }
+        var currentTheme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+        var nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        if (queryTheme !== 'dark' && queryTheme !== 'light') {
+          try {
+            window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+          } catch (err) {
+            // Ignore storage failures and still apply the toggled theme for this session.
+          }
+        }
+        syncTheme(nextTheme);
+      });
+    }
+
+    if (!mediaQuery) return;
+
+    var syncSystemTheme = function () {
+      var savedTheme = getSavedTheme();
+      if (savedTheme !== 'dark' && savedTheme !== 'light') {
+        syncTheme(systemTheme());
+      }
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', syncSystemTheme);
+    } else if (mediaQuery.addListener) {
+      mediaQuery.addListener(syncSystemTheme);
+    }
+  }
+
   // Scroll reveal with IntersectionObserver
   function initScrollReveal() {
     var revealEls = document.querySelectorAll('.reveal');
@@ -416,6 +535,8 @@
   }
 
   async function init() {
+    initThemeToggle();
+
     var responses = await Promise.all([
       fetch('./data_miragekit.json'),
       fetch('./data_certificate.json'),
@@ -465,7 +586,19 @@
     function render(checkpointIndex) {
       var safeIndex = Math.max(0, Math.min(levels.length - 1, checkpointIndex));
       var retention = levels[safeIndex];
+      var progress = levels.length > 1 ? (safeIndex / (levels.length - 1)) * 100 : 100;
+      var naive = getExactPoint(mirage.policies.recency, retention);
+      var guarded = getExactPoint(mirage.policies.l2_guarded, retention);
+      var mirageGap = naive.raw_validity - naive.pivot_preservation_rate;
+      var regime = getSliderRegime(naive, guarded, mirageGap);
+      var certK = typeof cert.k === 'number' ? cert.k : null;
+
       retentionDisplay.textContent = pct(retention);
+      slider.setAttribute(
+        'aria-valuetext',
+        pct(retention) + ' retained; ' + regime.label.toLowerCase() + '; naive pivot ' +
+          pct(naive.pivot_preservation_rate) + '; guarded pivot ' + pct(guarded.pivot_preservation_rate)
+      );
 
       // Color the retention display based on danger level
       if (retention < 0.5) {
@@ -474,9 +607,27 @@
         retentionDisplay.classList.remove('danger');
       }
 
-      var naive = getExactPoint(mirage.policies.recency, retention);
-      var guarded = getExactPoint(mirage.policies.l2_guarded, retention);
-      var certK = typeof cert.k === 'number' ? cert.k : null;
+      if (sliderContextEl) {
+        sliderContextEl.textContent = getSliderContext(naive, guarded, mirageGap);
+      }
+
+      if (sliderTrackProgressEl) {
+        sliderTrackProgressEl.style.width = progress + '%';
+      }
+
+      if (sliderRegimeEl && sliderRegimeValueEl) {
+        sliderRegimeEl.classList.remove('safe', 'warn', 'danger');
+        sliderRegimeEl.classList.add(regime.tone);
+        sliderRegimeValueEl.textContent = regime.label;
+      }
+
+      if (sliderTicksEl) {
+        var tickEls = sliderTicksEl.children;
+        for (var tickIndex = 0; tickIndex < tickEls.length; tickIndex++) {
+          tickEls[tickIndex].classList.toggle('past', tickIndex <= safeIndex);
+          tickEls[tickIndex].classList.toggle('active', tickIndex === safeIndex);
+        }
+      }
 
       updateMetrics(naiveBars, naive, { highlightMirage: true, noContract: true });
       updateMetrics(guardedBars, guarded, { highlightMirage: false, noContract: false });
@@ -503,13 +654,9 @@
 
       // Mirage gap is data-backed at each replay checkpoint
       if (semanticRegretEl && semanticRegretValueEl) {
-        var mirageGap = naive.raw_validity - naive.pivot_preservation_rate;
-        if (mirageGap >= 0.01) {
-          semanticRegretEl.classList.remove('hidden');
-          semanticRegretValueEl.textContent = (mirageGap * 100).toFixed(1) + ' pp';
-        } else {
-          semanticRegretEl.classList.add('hidden');
-        }
+        semanticRegretEl.classList.remove('hidden', 'neutral', 'warn', 'danger');
+        semanticRegretEl.classList.add(mirageGap >= 0.4 ? 'danger' : mirageGap >= 0.1 ? 'warn' : 'neutral');
+        semanticRegretValueEl.textContent = (mirageGap * 100).toFixed(1) + ' pp';
       }
 
       explainerText.textContent = getExplainer(retention);
