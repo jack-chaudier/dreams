@@ -190,9 +190,10 @@ codex mcp list</code></pre>
               </div>
             </div>
             <p>Use a small explicit payload so the pivot and predecessor structure remain visible at a glance.</p>
-            <div class="install-codeframe">
-              <span class="install-codeframe-label">payload</span>
-              <pre class="install-pre install-pre-wrap"><code>messages = [
+            <div class="install-codepair">
+              <div class="install-codeframe">
+                <span class="install-codeframe-label">payload</span>
+                <pre class="install-pre install-pre-wrap"><code>messages = [
   {
     "id": "goal",
     "role": "user",
@@ -218,10 +219,10 @@ codex mcp list</code></pre>
     "role_hint": "noise",
   },
 ]</code></pre>
-            </div>
-            <div class="install-codeframe install-codeframe-tight">
-              <span class="install-codeframe-label">verify</span>
-              <pre class="install-pre install-pre-wrap"><code>runtime_info()
+              </div>
+              <div class="install-codeframe install-codeframe-tight">
+                <span class="install-codeframe-label">verify</span>
+                <pre class="install-pre install-pre-wrap"><code>runtime_info()
 compact_auto(
   messages=messages,
   token_budget=45,
@@ -233,6 +234,7 @@ certificate(
   token_budget=45,
   k=2,
 )</code></pre>
+              </div>
             </div>
             <p class="install-outcome"><span class="install-outcome-label">Expected signal</span><code>compact_auto(...)</code> should prefer the guarded policy on this witness payload.</p>
           </article>
