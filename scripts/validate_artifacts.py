@@ -239,8 +239,8 @@ def check_site_index_surface() -> None:
     )
     _assert("Disallow: /results/" in robots_text, "robots.txt should de-index raw result artifacts")
     _assert(
-        {"source": "/evidence", "destination": "/site/evidence.html"} in rewrites,
-        "vercel.json must route /evidence to site/evidence.html",
+        {"source": "/evidence", "destination": "/site/evidence"} in rewrites,
+        "vercel.json must route /evidence to site/evidence",
     )
 
 

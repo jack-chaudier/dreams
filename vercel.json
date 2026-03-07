@@ -3,7 +3,7 @@
   "rewrites": [
     { "source": "/papers/:path*", "destination": "/papers/:path*" },
     { "source": "/results/:path*", "destination": "/results/:path*" },
-    { "source": "/evidence", "destination": "/site/evidence.html" },
+    { "source": "/evidence", "destination": "/site/evidence" },
     { "source": "/(.*)", "destination": "/site/$1" }
   ]
 }
