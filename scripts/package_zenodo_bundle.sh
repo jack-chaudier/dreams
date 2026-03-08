@@ -30,8 +30,10 @@ cp "$ROOT/papers/LICENSE_CC_BY_4_0.md" "$STAGE_DIR/"
 mkdir -p "$STAGE_DIR/papers" "$STAGE_DIR/papers/sources"
 cp "$PAPERS_ROOT"/paper_*.pdf "$STAGE_DIR/papers/"
 cp "$PAPERS_ROOT/README.md" "$STAGE_DIR/papers/"
+cp "$PAPERS_ROOT/BUILD_NOTES.md" "$STAGE_DIR/papers/"
 cp "$PAPERS_ROOT/manifest.json" "$STAGE_DIR/papers/"
 cp "$PAPERS_ROOT/LICENSE_CC_BY_4_0.md" "$STAGE_DIR/papers/"
+cp "$PAPERS_ROOT/SHA256SUMS.txt" "$STAGE_DIR/papers/"
 cp -R "$PAPERS_ROOT/sources/figures" "$STAGE_DIR/papers/sources/"
 find "$PAPERS_ROOT/sources" -maxdepth 1 -type f \
   \( -name '*.tex' -o -name '*.bib' -o -name '*.sty' \) \

@@ -37,9 +37,9 @@
   --slider-thumb-ring: var(--surface);
   --slider-thumb-shadow: 0 0 0 1px var(--rule);
 
-  --serif: 'Source Serif 4', Georgia, serif;
-  --sans: 'IBM Plex Sans', -apple-system, sans-serif;
-  --mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --serif: Charter, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --sans: 'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
 
   --content-w: min(1000px, 100% - 3rem);
   --text-w: 680px;

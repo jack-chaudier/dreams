@@ -9,7 +9,7 @@ First public release of the MirageKit research surface: website, working-paper b
 - `MirageKit` is the research program.
 - `dreams` is the public showcase repo: website, papers, replay witness, and reproducible evidence.
 - `tropical-mcp` is the source-available evaluation implementation repo for Codex and Claude-style clients.
-- If you want to verify the implementation directly, start in `tropical-mcp` with `runtime_info()`, `compact_auto(...)`, and `certificate(...)`.
+- If you want to verify the implementation directly, use `runtime_info()`, `compact_auto(...)`, and `certificate(...)` as the minimum smoke flow; for a fuller review add `diagnose(...)`, `context_anchor(...)`, and `telemetry_summary(...)`.
 
 ## Public Release Status
 
@@ -67,6 +67,17 @@ Public surface map: [`docs/PUBLIC_SURFACE_MAP.md`](./docs/PUBLIC_SURFACE_MAP.md)
 - The strongest public evidence in this repo is the deterministic replay witness plus the mirrored validation logs in `results/`.
 - Broader model counts, streaming studies, and real-incident analyses live in the working papers and should be read as paper-level evidence, not as part of the small committed replay witness.
 - Caveats and conservative framing live in [`docs/CREDIBILITY_NOTES.md`](./docs/CREDIBILITY_NOTES.md).
+- When prose and machine-readable artifacts diverge, use [`docs/SOURCE_OF_TRUTH.md`](./docs/SOURCE_OF_TRUTH.md).
+- Public artifact integrity is tracked in [`papers/SHA256SUMS.txt`](./papers/SHA256SUMS.txt) and [`results/SHA256SUMS.txt`](./results/SHA256SUMS.txt).
+
+## Reviewer Start Points
+
+- Artifact index: [`docs/ARTIFACT_INDEX.md`](./docs/ARTIFACT_INDEX.md)
+- Source-of-truth map: [`docs/SOURCE_OF_TRUTH.md`](./docs/SOURCE_OF_TRUTH.md)
+- Theory-status boundary: [`docs/THEORY_STATUS.md`](./docs/THEORY_STATUS.md)
+- Public surface map: [`docs/PUBLIC_SURFACE_MAP.md`](./docs/PUBLIC_SURFACE_MAP.md)
+- Results bundle guide: [`results/README.md`](./results/README.md)
+- Papers bundle guide: [`papers/README.md`](./papers/README.md)
 
 ## Published Version Map
 
@@ -105,6 +116,15 @@ After client registration, the minimum MCP smoke flow is:
 - `compact_auto(...)`
 - `certificate(...)`
 
+For a fuller reviewer pass, extend the sequence to:
+
+- `runtime_info()`
+- `diagnose(...)`
+- `context_anchor(...)`
+- `compact_auto(...)`
+- `certificate(...)`
+- `telemetry_summary(...)`
+
 See the implementation README for the Codex quick-start, license boundary, and full example bundle: <https://github.com/jack-chaudier/tropical-mcp>
 
 ### 2) Reproduce the archival `dreams` surface
@@ -135,8 +155,14 @@ Open: `http://localhost:8080/site/`
 - Repro artifacts: [`results/`](./results/)
 - Notebook workspace: [`notebooks/`](./notebooks/)
 - Interpretation notes: [`docs/CREDIBILITY_NOTES.md`](./docs/CREDIBILITY_NOTES.md)
+- Artifact index: [`docs/ARTIFACT_INDEX.md`](./docs/ARTIFACT_INDEX.md)
+- Source-of-truth map: [`docs/SOURCE_OF_TRUTH.md`](./docs/SOURCE_OF_TRUTH.md)
+- Theory-status boundary: [`docs/THEORY_STATUS.md`](./docs/THEORY_STATUS.md)
 - Public surface map: [`docs/PUBLIC_SURFACE_MAP.md`](./docs/PUBLIC_SURFACE_MAP.md)
+- Papers checksum manifest: [`papers/SHA256SUMS.txt`](./papers/SHA256SUMS.txt)
+- Results checksum manifest: [`results/SHA256SUMS.txt`](./results/SHA256SUMS.txt)
 - Artifact refresh entry point: [`scripts/refresh_validation_artifacts.sh`](./scripts/refresh_validation_artifacts.sh)
+- Checksum refresh entry point: [`scripts/update_public_checksums.sh`](./scripts/update_public_checksums.sh)
 - Zenodo upload notes: [`README_ZENODO.md`](./README_ZENODO.md)
 - Correspondence: <mailto:jackgaff@umich.edu>
 - X / launch updates: <https://x.com/J_C_Gaffney>

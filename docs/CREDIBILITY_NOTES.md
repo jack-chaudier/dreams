@@ -19,6 +19,7 @@ This file exists to keep interpretation conservative, explicit, and easy to audi
 - Strongest public evidence: deterministic replay witness (`n=3` per policy and retention fraction) plus mirrored `tropical-mcp` validation logs in `results/`.
 - Broader paper-level evidence: the working papers in `papers/` discuss larger synthetic sweeps, streaming studies, theory, and limited real-incident analyses with their own denominators and caveats.
 - Binary rates on the site are exact proportions on the committed witness fixture, not smoothed benchmark averages.
+- Software-facing claims should be read at the witness-preserving, threshold-`k` contract level used by `tropical-mcp`; stronger categorical language remains explicitly conjectural unless marked otherwise in [`docs/THEORY_STATUS.md`](./THEORY_STATUS.md).
 
 ## Release framing
 
@@ -26,3 +27,4 @@ This file exists to keep interpretation conservative, explicit, and easy to audi
 - `dreams` is the public showcase.
 - `tropical-mcp` is the public evaluation implementation.
 - The larger MirageKit research monorepo remains private and is not required to inspect the released artifacts.
+- The minimum implementation smoke flow is `runtime_info()`, `compact_auto(...)`, and `certificate(...)`; the fuller reviewer workflow adds `diagnose(...)`, `context_anchor(...)`, and `telemetry_summary(...)`.

@@ -170,4 +170,6 @@ At `0.8`, recency is topology-sensitive in this fixture (`{rows[('recency', 0.8)
 (results_dir / "VALIDATION_SUMMARY.md").write_text(summary, encoding="utf-8")
 PY
 
+"$ROOT_DIR/scripts/update_public_checksums.sh"
+
 echo "Refreshed mirrored validation artifacts in $RESULTS_DIR from $TROPICAL_DIR"

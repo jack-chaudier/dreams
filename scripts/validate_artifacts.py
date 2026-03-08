@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+from hashlib import sha256
 from functools import cache
 from pathlib import Path
 from typing import Iterable
@@ -36,8 +37,11 @@ PRIVATE_PATH_PATTERNS = (
 )
 
 REQUIRED_PUBLIC_DOCS = {
+    "docs/ARTIFACT_INDEX.md",
     "docs/CREDIBILITY_NOTES.md",
     "docs/PUBLIC_SURFACE_MAP.md",
+    "docs/SOURCE_OF_TRUTH.md",
+    "docs/THEORY_STATUS.md",
 }
 
 REQUIRED_ROOT_DOCS = {
@@ -293,6 +297,37 @@ def check_public_docs_surface() -> None:
     )
 
 
+def check_checksum_manifests() -> None:
+    for manifest_path in (ROOT / "papers" / "SHA256SUMS.txt", ROOT / "results" / "SHA256SUMS.txt"):
+        entries = manifest_path.read_text(encoding="utf-8").splitlines()
+        _assert(entries, f"{manifest_path.relative_to(ROOT)} must not be empty")
+
+        expected_files = sorted(
+            path.relative_to(ROOT).as_posix()
+            for path in manifest_path.parent.rglob("*")
+            if path.is_file() and path.name != "SHA256SUMS.txt"
+        )
+        seen_files: list[str] = []
+
+        for line in entries:
+            _assert("  " in line, f"Malformed checksum line in {manifest_path.relative_to(ROOT)}: {line}")
+            digest, rel = line.split("  ", 1)
+            _assert(
+                re.fullmatch(r"[0-9a-f]{64}", digest) is not None,
+                f"Invalid SHA-256 digest in {manifest_path.relative_to(ROOT)}: {digest}",
+            )
+            target = ROOT / rel
+            _assert(target.is_file(), f"Checksum target missing: {rel}")
+            actual = sha256(target.read_bytes()).hexdigest()
+            _assert(actual == digest, f"Checksum mismatch for {rel}")
+            seen_files.append(rel)
+
+        _assert(
+            seen_files == expected_files,
+            f"{manifest_path.relative_to(ROOT)} must cover exactly the files in {manifest_path.parent.relative_to(ROOT)}",
+        )
+
+
 def check_site_index_surface() -> None:
     site_base = _public_site_base()
     index_text = (ROOT / "site" / "index.html").read_text(encoding="utf-8")
@@ -300,7 +335,14 @@ def check_site_index_surface() -> None:
     sitemap_text = (ROOT / "site" / "sitemap.xml").read_text(encoding="utf-8")
     robots_text = (ROOT / "site" / "robots.txt").read_text(encoding="utf-8")
     vercel = _load_json(ROOT / "vercel.json")
+    headers = vercel.get("headers", [])
     rewrites = vercel.get("rewrites", [])
+    header_map: dict[str, str] = {}
+    for rule in headers:
+        if rule.get("source") != "/(.*)":
+            continue
+        for item in rule.get("headers", []):
+            header_map[str(item.get("key"))] = str(item.get("value"))
 
     _assert((ROOT / "site" / "evidence.html").exists(), "site/evidence.html missing")
     _assert((ROOT / "site" / "social-card.png").exists(), "site/social-card.png missing")
@@ -324,10 +366,38 @@ def check_site_index_surface() -> None:
     _assert("social-card.png" in index_text, "site/index.html must use the PNG social card")
     _assert("twitter:image:alt" in index_text, "site/index.html must define twitter:image:alt")
     _assert("og:image:alt" in index_text, "site/index.html must define og:image:alt")
+    _assert("fonts.googleapis.com" not in index_text, "site/index.html must not depend on Google Fonts")
+    _assert("fonts.gstatic.com" not in index_text, "site/index.html must not depend on Google Fonts")
     _assert("social-card.png" in evidence_text, "site/evidence.html must use the PNG social card")
     _assert("twitter:image:alt" in evidence_text, "site/evidence.html must define twitter:image:alt")
     _assert("og:image:alt" in evidence_text, "site/evidence.html must define og:image:alt")
+    _assert("fonts.googleapis.com" not in evidence_text, "site/evidence.html must not depend on Google Fonts")
+    _assert("fonts.gstatic.com" not in evidence_text, "site/evidence.html must not depend on Google Fonts")
     _assert("n=3" in evidence_text, "site/evidence.html must explain the replay witness denominator")
+    _assert(
+        "Content-Security-Policy" in header_map,
+        "vercel.json must define a site-wide Content-Security-Policy header",
+    )
+    _assert(
+        "default-src 'self'" in header_map["Content-Security-Policy"],
+        "Content-Security-Policy must default to self",
+    )
+    _assert(
+        "frame-ancestors 'none'" in header_map["Content-Security-Policy"],
+        "Content-Security-Policy must deny framing",
+    )
+    _assert(
+        "font-src 'self'" in header_map["Content-Security-Policy"],
+        "Content-Security-Policy must keep fonts same-origin",
+    )
+    for key in (
+        "Referrer-Policy",
+        "X-Content-Type-Options",
+        "X-Frame-Options",
+        "Permissions-Policy",
+        "Cross-Origin-Resource-Policy",
+    ):
+        _assert(key in header_map, f"vercel.json must define {key}")
 
 
 def check_structure() -> None:
@@ -338,6 +408,8 @@ def check_structure() -> None:
         ROOT / ".zenodo.json",
         ROOT / "README_ZENODO.md",
         ROOT / "papers" / "LICENSE_CC_BY_4_0.md",
+        ROOT / "papers" / "BUILD_NOTES.md",
+        ROOT / "papers" / "SHA256SUMS.txt",
         ROOT / "papers" / "manifest.json",
         ROOT / "results" / "ruff.txt",
         ROOT / "results" / "mypy.txt",
@@ -345,6 +417,8 @@ def check_structure() -> None:
         ROOT / "results" / "build.txt",
         ROOT / "results" / "installed_wheel.txt",
         ROOT / "results" / "full_validation.json",
+        ROOT / "results" / "SHA256SUMS.txt",
+        ROOT / "results" / "replay" / "README.md",
     ]
     for path in required_paths:
         _assert(path.exists(), f"Required public artifact missing: {path.relative_to(ROOT)}")
@@ -528,6 +602,7 @@ def main() -> None:
     check_certificate_sync()
     check_private_path_leaks()
     check_public_docs_surface()
+    check_checksum_manifests()
     check_site_index_surface()
     check_structure()
     check_no_symlinks_in_public_bundle()

@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MirageKit Research | validity mirage papers, witness, and guarded MCP tooling</title>
-    <meta name="description" content="First public MirageKit release: flagship paper, deterministic replay witness (n=3 per policy/fraction), raw validation logs, and a guarded-compaction MCP for Codex and Claude-style clients." />
+    <title>MirageKit Research | validity mirage papers, replay witness, and guarded compaction MCP</title>
+    <meta name="description" content="Public MirageKit research release: working papers, deterministic replay witness (n=3 per policy/fraction), mirrored validation logs, portable certificate artifact, and a guarded MCP evaluation workflow." />
     <meta name="author" content="Jack Chaudier Gaffney" />
     <meta id="themeColorMeta" name="theme-color" content="#1f3d63" />
     <meta name="color-scheme" content="light dark" />
@@ -12,21 +12,19 @@
     <link rel="canonical" href="https://dreams-dun.vercel.app/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="MirageKit Research" />
-    <meta property="og:title" content="MirageKit Research | validity mirage papers, witness, and guarded MCP tooling" />
-    <meta property="og:description" content="First public MirageKit release: flagship paper, deterministic replay witness (n=3 per policy/fraction), raw validation logs, and a guarded-compaction MCP for Codex and Claude-style clients." />
+    <meta property="og:title" content="MirageKit Research | validity mirage papers, replay witness, and guarded compaction MCP" />
+    <meta property="og:description" content="Public MirageKit research release: working papers, deterministic replay witness (n=3 per policy/fraction), mirrored validation logs, portable certificate artifact, and a guarded MCP evaluation workflow." />
     <meta property="og:url" content="https://dreams-dun.vercel.app/" />
     <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png" />
     <meta property="og:image:alt" content="MirageKit research card showing deterministic replay witness metrics and public release artifacts." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@J_C_Gaffney" />
     <meta name="twitter:creator" content="@J_C_Gaffney" />
-    <meta name="twitter:title" content="MirageKit Research | validity mirage papers, witness, and guarded MCP tooling" />
-    <meta name="twitter:description" content="First public MirageKit release: flagship paper, deterministic replay witness (n=3 per policy/fraction), raw validation logs, and a guarded-compaction MCP for Codex and Claude-style clients." />
+    <meta name="twitter:title" content="MirageKit Research | validity mirage papers, replay witness, and guarded compaction MCP" />
+    <meta name="twitter:description" content="Public MirageKit research release: working papers, deterministic replay witness (n=3 per policy/fraction), mirrored validation logs, portable certificate artifact, and a guarded MCP evaluation workflow." />
     <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png" />
     <meta name="twitter:image:alt" content="MirageKit research card showing deterministic replay witness metrics and public release artifacts." />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <script>
       (function () {
         try {
@@ -48,7 +46,6 @@
         }
       })();
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
     <script type="application/ld+json">
       {
@@ -82,7 +79,7 @@
       <h1 class="hero-title stagger" style="--i:1">MirageKit</h1>
       <p class="hero-subtitle stagger" style="--i:2">Your context compression looks valid. <span class="text-danger">It isn't.</span></p>
       <p class="hero-context stagger" style="--i:3">When LLM agents compress long conversations, they can silently lose track of <em>which task they're solving</em> while still producing confident answers. We call this a <strong>validity mirage</strong>. <strong>MirageKit</strong> is the research program; <strong>dreams</strong> is the public showcase for papers and artifacts; the evaluation MCP lives in the separate <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>.</p>
-      <p class="hero-context-note stagger" style="--i:4">Read this like a research packet: flagship paper, deterministic replay witness (<code>n=3</code> per policy and retention fraction), raw validation logs, certificate artifact, and a reproducible three-call verification path.</p>
+      <p class="hero-context-note stagger" style="--i:4">Read this like a research packet: flagship paper, deterministic replay witness (<code>n=3</code> per policy and retention fraction), mirrored validation logs, certificate artifact, and two verification paths: a three-call smoke test plus a fuller reviewer workflow.</p>
       <p class="hero-cta stagger" style="--i:5"><em>Start with the flagship paper, inspect the replayed witness, then run the local verify path to reproduce the divergence yourself.</em></p>
       <div class="bridge-panel stagger" style="--i:6" aria-label="Project map">
         <article class="bridge-card">
@@ -143,8 +140,8 @@
           </article>
           <article class="orientation-card">
             <span class="orientation-label">Verify The Tool</span>
-            <h3>Three Calls</h3>
-            <p>After registering the MCP, verify it with <code>runtime_info()</code>, <code>compact_auto(...)</code>, and <code>certificate(...)</code>.</p>
+            <h3>Smoke Test + Research Workflow</h3>
+            <p>Use the three-call smoke test for a fast implementation check, or extend to the fuller reviewer workflow when you want diagnostics, anchors, and telemetry.</p>
             <div class="orientation-links">
               <a href="#install-verify">Evaluate + verify section</a>
               <a href="/evidence#certificate">Certificate artifact</a>
@@ -158,8 +155,8 @@
         <p class="install-intro"><code>tropical-mcp</code> is the evaluation implementation. Use <code>dreams</code> for the paper set, replay witness, public certificate, and the broader research narrative.</p>
         <div class="install-summary" aria-label="Evaluation sequence">
           <span>1. Register the MCP</span>
-          <span>2. Run the three-call witness</span>
-          <span>3. Compare against the public certificate</span>
+          <span>2. Run the minimal smoke test</span>
+          <span>3. Expand to the research workflow</span>
         </div>
         <div class="install-grid">
           <article class="install-card">
@@ -185,11 +182,11 @@ codex mcp list</code></pre>
             <div class="install-card-header">
               <span class="install-step mono">02</span>
               <div>
-                <span class="install-card-label">Three-Call Witness</span>
+                <span class="install-card-label">Three-Call Smoke Test</span>
                 <h3>Minimal Verification</h3>
               </div>
             </div>
-            <p>Use a small explicit payload so the pivot and predecessor structure remain visible at a glance.</p>
+            <p>Use a small explicit payload so the pivot and predecessor structure remain visible at a glance. This verifies the packaged MCP surface; it is not the full research workflow.</p>
             <div class="install-codepair">
               <div class="install-codeframe">
                 <span class="install-codeframe-label">payload</span>
@@ -236,17 +233,22 @@ certificate(
 )</code></pre>
               </div>
             </div>
-            <p class="install-outcome"><span class="install-outcome-label">Expected signal</span><code>compact_auto(...)</code> should prefer the guarded policy on this witness payload.</p>
+            <p class="install-outcome"><span class="install-outcome-label">Expected signal</span><code>compact_auto(...)</code> should prefer the guarded policy on this witness payload, and <code>certificate(...)</code> should preserve a portable audit of the same comparison.</p>
+            <p>For a fuller reviewer pass, continue with <code>diagnose(...)</code>, <code>context_anchor(...)</code>, and <code>telemetry_summary(...)</code> so feasibility, protected chunks, and retention behavior remain explicit in the audit trail.</p>
           </article>
         </div>
         <div class="install-notes">
           <div class="install-note">
             <span class="install-note-label">Expected signals</span>
-            <p><code>runtime_info()</code> should report the resolved client and telemetry path. <code>compact_auto(...)</code> should choose <code>l2_guarded</code> on the sample. <code>certificate(...)</code> should show comparable recency vs guarded kept/dropped IDs.</p>
+            <p><code>runtime_info()</code> should report the resolved client and telemetry path. <code>compact_auto(...)</code> should choose <code>l2_guarded</code> on the sample. <code>certificate(...)</code> should show comparable recency vs guarded kept and dropped IDs.</p>
+          </div>
+          <div class="install-note">
+            <span class="install-note-label">Recommended research workflow</span>
+            <p>After the smoke test, the fuller review sequence is <code>runtime_info()</code>, <code>diagnose(...)</code>, <code>context_anchor(...)</code>, <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>. That path keeps witness feasibility, protected predecessors, and retained context visible instead of inferring them after the fact.</p>
           </div>
           <div class="install-note">
             <span class="install-note-label">Source of truth</span>
-            <p>Implementation docs and the Codex example bundle live in the <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>. The rendered evidence surface for this site lives in the <a href="/evidence#validation">evidence dossier</a>, with direct links there to the raw validation summary and certificate artifact when you want to inspect the underlying files.</p>
+            <p>Implementation docs and the Codex example bundle live in the <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>. The rendered evidence surface for this site lives in the <a href="/evidence#validation">evidence dossier</a>, with direct links there to the replay witness, validation summary, and certificate artifact when you want to inspect the underlying files.</p>
           </div>
           <div class="install-note">
             <span class="install-note-label">License boundary</span>

@@ -1150,13 +1150,14 @@ feasibility classes (from part~(a)).  L2 achieves this minimum while
 also being associative and dominance-monotone
 (\cref{thm:tropical-resolution}).
 
-We conjecture that L2 is, moreover, the \emph{initial object} in the
-category of valid summaries: every valid, dominance-monotone summary
+A stronger categorical statement remains open: whether L2 is the
+\emph{initial object} in the category of valid summaries.  More
+concretely, one can ask whether every valid, dominance-monotone summary
 $(\mathcal{S}, \otimes_S, \pi)$ factors through L2 via a natural map
 $f \colon \mathcal{S} \to (\R \cup \{-\infty\})^{k+1} \times \N$
 extracting the maximum focal weight achievable with at least $j$
 predecessors for each $j$.  The lower bound (part~(a)) and
-optimality (part~(b)) do not depend on this conjecture.
+optimality (part~(b)) do not depend on this stronger conjecture.
 \end{proof}
 
 % ══════════════════════════════════════════════════════════════
@@ -2026,8 +2027,9 @@ the number of equivalence classes of the syntactic right-congruence.
 Our adaptation replaces the DFA by an associative summary algebra and
 the acceptance predicate by feasibility at threshold~$k$.  The
 resulting $\Omega(k)$ lower bound is tight (L2 achieves it), making L2
-optimal among valid summaries (we conjecture it is, in fact, the
-initial object in the category of valid summaries).
+optimal among valid summaries at the thresholded feasibility level.
+Whether it is also the initial object in the category of valid
+summaries remains open.
 This contrasts with communication complexity lower bounds for
 related problems (e.g., set disjointness, gap Hamming) where the lower
 bound is typically information-theoretic.  Our bound is structural: it

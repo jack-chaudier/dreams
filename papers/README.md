@@ -11,6 +11,8 @@ All PDFs in this folder should be treated as **Working Paper / First Draft (2026
 - DOI-backed archive: <https://doi.org/10.5281/zenodo.18794293>
 - Current public `dreams` archive: `v0.1.1`
 - Paper metadata manifest: [`manifest.json`](./manifest.json)
+- Integrity manifest: [`SHA256SUMS.txt`](./SHA256SUMS.txt)
+- Build notes: [`BUILD_NOTES.md`](./BUILD_NOTES.md)
 
 ## License
 
@@ -40,6 +42,7 @@ Selected TeX/Bib sources are included for transparency and citation traceability
 
 - add the new PDF and TeX source under `papers/` and `papers/sources/`
 - register the paper in [`manifest.json`](./manifest.json)
+- refresh [`SHA256SUMS.txt`](./SHA256SUMS.txt)
 - rerun `python3 scripts/validate_artifacts.py`
 - rebuild the publication archive with `./scripts/package_zenodo_bundle.sh`
 
@@ -48,3 +51,4 @@ Selected TeX/Bib sources are included for transparency and citation traceability
 - Prefer claims that point to concrete artifacts in `../results/`.
 - Treat single-backend or small-sample validations as suggestive, not universal.
 - Use source TeX for caveats and denominator definitions.
+- For the tropical-algebra paper, read stronger categorical language through the clarification in [`../docs/THEORY_STATUS.md`](../docs/THEORY_STATUS.md).

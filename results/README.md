@@ -4,12 +4,14 @@ Reproducible public evidence artifacts mirrored from the canonical `tropical-mcp
 
 ## Files
 
+- `SHA256SUMS.txt` — integrity manifest for the public results bundle
 - `ruff.txt` — canonical lint output
 - `mypy.txt` — canonical type-check output
 - `pytest.txt` — canonical unit/property test output with a public pass count and machine-local paths removed
 - `build.txt` — canonical packaging build output
 - `installed_wheel.txt` — installed-wheel validation output
 - `full_validation.json` — canonical MCP functional validation report
+- `replay/README.md` — interpretation and regeneration notes for the replay witness
 - `replay/replay_rows.csv` — row-level replay output
 - `replay/replay_summary.csv` — aggregate replay metrics
 - `replay/replay_summary.json` — aggregate replay metrics (JSON)
@@ -29,6 +31,7 @@ cd ~/dreams
 ```
 
 The refresh script is the canonical maintainer path: it reruns the validation commands, refreshes the replay witness, rewrites `VALIDATION_SUMMARY.md`, and strips machine-local absolute paths from the mirrored logs before they become public artifacts.
+It also refreshes the public checksum manifests so the release surface stays auditable.
 
 ## Sync Notes
 
