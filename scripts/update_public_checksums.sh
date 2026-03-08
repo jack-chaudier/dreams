@@ -11,6 +11,7 @@ from pathlib import Path
 import sys
 
 root = Path(sys.argv[1])
+excluded_suffixes = {".aux", ".bbl", ".blg", ".log", ".out"}
 
 
 def write_manifest(folder_rel: str) -> None:
@@ -19,6 +20,8 @@ def write_manifest(folder_rel: str) -> None:
     for path in sorted(p for p in folder.rglob("*") if p.is_file()):
         rel = path.relative_to(root).as_posix()
         if path.name == "SHA256SUMS.txt":
+            continue
+        if path.suffix.lower() in excluded_suffixes:
             continue
         digest = sha256(path.read_bytes()).hexdigest()
         lines.append(f"{digest}  {rel}")

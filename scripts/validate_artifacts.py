@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import json
 import re
-import subprocess
+import subprocess  # nosec B404 - used only for controlled local tooling checks
 from hashlib import sha256
 from functools import cache
 from pathlib import Path
@@ -51,13 +51,15 @@ REQUIRED_ROOT_DOCS = {
     "SUPPORT.md",
 }
 
+MANIFEST_EXCLUDED_SUFFIXES = {".aux", ".bbl", ".blg", ".log", ".out"}
+
 
 def _load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _run(cmd: list[str], cwd: Path | None = None) -> str:
-    proc = subprocess.run(
+    proc = subprocess.run(  # nosec B603 - executes fixed local commands with no shell expansion
         cmd,
         cwd=str(cwd) if cwd else None,
         capture_output=True,
@@ -74,6 +76,14 @@ def _run(cmd: list[str], cwd: Path | None = None) -> str:
 def _assert(condition: bool, message: str) -> None:
     if not condition:
         raise AssertionError(message)
+
+
+def _is_manifest_file(path: Path) -> bool:
+    if not path.is_file() or path.name == "SHA256SUMS.txt":
+        return False
+    if path.suffix.lower() in MANIFEST_EXCLUDED_SUFFIXES:
+        return False
+    return True
 
 
 @cache
@@ -305,7 +315,7 @@ def check_checksum_manifests() -> None:
         expected_files = sorted(
             path.relative_to(ROOT).as_posix()
             for path in manifest_path.parent.rglob("*")
-            if path.is_file() and path.name != "SHA256SUMS.txt"
+            if _is_manifest_file(path)
         )
         seen_files: list[str] = []
 
