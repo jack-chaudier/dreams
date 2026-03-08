@@ -77,7 +77,7 @@
         </button>
       </div>
       <h1 class="hero-title stagger" style="--i:1">MirageKit</h1>
-      <p class="hero-subtitle stagger" style="--i:2">Your context compression looks valid. <span class="text-danger">It isn't.</span></p>
+      <p class="hero-subtitle stagger" style="--i:2">Context compression can look valid <span class="text-danger">while the governing task has drifted.</span></p>
       <p class="hero-context stagger" style="--i:3">When LLM agents compress long conversations, they can silently lose track of <em>which task they're solving</em> while still producing confident answers. We call this a <strong>validity mirage</strong>. <strong>MirageKit</strong> is the research program; <strong>dreams</strong> is the public showcase for papers and artifacts; the evaluation MCP lives in the separate <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>.</p>
       <p class="hero-context-note stagger" style="--i:4">Read this like a research packet: flagship paper, deterministic replay witness (<code>n=3</code> per policy and retention fraction), mirrored validation logs, certificate artifact, and two verification paths: a three-call smoke test plus a fuller reviewer workflow.</p>
       <p class="hero-cta stagger" style="--i:5"><em>Start with the flagship paper, inspect the replayed witness, then run the local verify path to reproduce the divergence yourself.</em></p>
@@ -346,8 +346,8 @@ certificate(
           </article>
           <article class="math-card">
             <h4>Frontier Feasibility</h4>
-            <p class="math-formula mono">W[k] = infinity -> infeasible</p>
-            <p>If the k-slot frontier is infinite, no valid completion exists for that retained context.</p>
+            <p class="math-formula mono">W[k] = -infinity -> infeasible</p>
+            <p>If the k-slot frontier is negative infinity, no valid completion exists for that retained context.</p>
           </article>
           <article class="math-card">
             <h4>Raw Validity</h4>
