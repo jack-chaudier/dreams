@@ -19,6 +19,7 @@ node_modules/
 
 # Local tooling
 .claude/
+x_drafts/
 
 # Local artifacts
 *.log

@@ -35,6 +35,13 @@ PRIVATE_PATH_PATTERNS = (
     re.compile(r"/home/[^\s\"'<>`]+"),
     re.compile(r"[A-Za-z]:\\\\Users\\\\[^\s\"'<>`]+"),
 )
+PARENT_RELATIVE_PATH_PATTERN = re.compile(r"\.\./[A-Za-z0-9._-]+/")
+ALLOWED_PARENT_RELATIVE_PATHS = {
+    "../docs/",
+    "../dreams/",
+    "../results/",
+    "../tropical-mcp/",
+}
 
 REQUIRED_PUBLIC_DOCS = {
     "docs/ARTIFACT_INDEX.md",
@@ -277,10 +284,9 @@ def check_certificate_sync() -> None:
 
 def check_private_path_leaks() -> None:
     forbidden = [
-        "../mirage/",
-        "/Users/jackg/mirage",
-        "/Users/jackg/dreams/../mirage",
         "/absolute/path/to/",
+        "/absolute/path/to/private-research-repo/",
+        "file:///absolute/path/to/private-research-repo/",
     ]
     for path in _iter_tracked_text_files():
         if path.resolve() == Path(__file__).resolve():
@@ -292,6 +298,11 @@ def check_private_path_leaks() -> None:
             match = pattern.search(text)
             if match is not None:
                 raise AssertionError(f"Forbidden absolute local path in {path}: {match.group(0)}")
+        for match in PARENT_RELATIVE_PATH_PATTERN.finditer(text):
+            if match.group(0) not in ALLOWED_PARENT_RELATIVE_PATHS:
+                raise AssertionError(
+                    f"Forbidden parent-relative sibling path in {path}: {match.group(0)}"
+                )
 
 
 def check_public_docs_surface() -> None:
