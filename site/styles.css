@@ -2594,6 +2594,14 @@ main > section {
   border-radius: 2px;
 }
 
+/* Anchor offset so sticky nav does not cover jump targets */
+html {
+  scroll-padding-top: 3.2rem;
+}
+@media (max-width: 680px) {
+  html { scroll-padding-top: 0; }
+}
+
 /* Section progress nav for both pages */
 .section-nav {
   position: sticky;
