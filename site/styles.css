@@ -1359,11 +1359,24 @@ main > section {
   color: var(--ink);
 }
 
+.install-codepair {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.install-codepair > .install-codeframe + .install-codeframe {
+  margin-top: 0;
+}
+
 .install-codeframe {
   border: 1px solid var(--rule-light);
   border-radius: 2px;
   background: var(--surface);
   overflow: hidden;
+}
+
+.install-codeframe-tight .install-pre {
+  padding-top: 0.82rem;
 }
 
 .install-codeframe-label {
@@ -2458,6 +2471,11 @@ html {
 
   .evidence-ledger {
     grid-template-columns: minmax(14rem, 0.75fr) minmax(0, 1.25fr);
+  }
+
+  .install-codepair {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+    align-items: start;
   }
 
   .evidence-repro {

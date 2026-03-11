@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MirageKit Evidence &amp; Validation | replay witness, certificate, and validation logs</title>
+    <title>Evidence &amp; Validation | The Validity Mirage</title>
     <meta
       name="description"
-      content="Curated MirageKit evidence dossier: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise local reproduction path."
+      content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise local reproduction path."
     />
     <meta name="author" content="Jack Chaudier Gaffney" />
     <meta id="themeColorMeta" name="theme-color" content="#1f3d63" />
@@ -14,19 +14,19 @@
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://dreams-dun.vercel.app/evidence" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="MirageKit Research" />
-    <meta property="og:title" content="MirageKit Evidence &amp; Validation | replay witness, certificate, and validation logs" />
-    <meta property="og:description" content="Deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path for MirageKit and tropical-mcp." />
+    <meta property="og:site_name" content="The Validity Mirage" />
+    <meta property="og:title" content="Evidence &amp; Validation | The Validity Mirage" />
+    <meta property="og:description" content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path." />
     <meta property="og:url" content="https://dreams-dun.vercel.app/evidence" />
     <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png" />
-    <meta property="og:image:alt" content="MirageKit research card showing deterministic replay witness metrics and public release artifacts." />
+    <meta property="og:image:alt" content="The Validity Mirage: evidence and validation for silent task drift under AI context compression." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@J_C_Gaffney" />
     <meta name="twitter:creator" content="@J_C_Gaffney" />
-    <meta name="twitter:title" content="MirageKit Evidence &amp; Validation | replay witness, certificate, and validation logs" />
-    <meta name="twitter:description" content="Deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path for MirageKit and tropical-mcp." />
+    <meta name="twitter:title" content="Evidence &amp; Validation | The Validity Mirage" />
+    <meta name="twitter:description" content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path." />
     <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png" />
-    <meta name="twitter:image:alt" content="MirageKit research card showing deterministic replay witness metrics and public release artifacts." />
+    <meta name="twitter:image:alt" content="The Validity Mirage: evidence and validation for silent task drift under AI context compression." />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <script>
       (function () {
@@ -97,7 +97,8 @@
           <p class="evidence-intro">
             The strongest public evidence right now is structural: under compression pressure, recency can preserve
             answerability while silently losing the governing pivot, while the guarded policy preserves the protected
-            arc on the committed replay witness.
+            arc on the committed replay witness. The goal here is not to look exhaustive. It is to make the current
+            public record inspectable in one pass.
           </p>
         </div>
 
@@ -167,7 +168,8 @@
               </div>
               <p>
                 At retention fractions <code>0.65</code>, <code>0.5</code>, and <code>0.4</code>, the committed replay keeps
-                the primary arc intact under <code>l2_guarded</code> while recency collapses it.
+                the primary arc intact under <code>l2_guarded</code> while recency collapses it. Paper-level model counts and
+                incident counts live in the PDFs and are intentionally separate from this witness.
               </p>
               <ul class="evidence-record-list">
                 <li><code>l2_guarded</code> pivot preservation stays at <strong>1.0</strong></li>
@@ -222,12 +224,13 @@
           <h2>Verification paths</h2>
           <p>
             Install and register <code>tropical-mcp</code>, then choose between the minimal smoke path and the fuller reviewer
-            workflow.
+            workflow. The public certificate on this page is a comparison target for your local run, not a substitute
+            for the reviewer workflow itself.
           </p>
           <ul class="evidence-repro-list">
             <li><strong>Smoke test:</strong> confirm the runtime with <code>runtime_info()</code>, then run <code>compact_auto(...)</code> and <code>certificate(...)</code>.</li>
-            <li><strong>Research workflow:</strong> run <code>diagnose(...)</code> to inspect feasible slots, then compare <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>.</li>
-            <li>Compare the resulting certificate against the public artifacts on this page.</li>
+            <li><strong>Research workflow:</strong> run <code>diagnose(...)</code> to inspect feasible slots, capture a <code>context_anchor(...)</code>, then compare <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>.</li>
+            <li>Compare the resulting certificate and replay behavior against the public artifacts on this page.</li>
           </ul>
           <div class="evidence-references evidence-repro-links">
             <a class="evidence-reference" href="https://github.com/jack-chaudier/tropical-mcp#quick-start-codex" target="_blank" rel="noopener">Codex quick-start <span class="evidence-reference-arrow">&nearr;</span></a>
@@ -254,7 +257,7 @@ certificate(                 # generate portable audit record
 # fuller reviewer workflow
 runtime_info()               # check your setup
 diagnose(messages=messages, k_max=2)    # find compression issues
-context_anchor(messages=messages, k=0)  # mark protected messages
+context_anchor(messages=messages, k=2)  # mark protected messages
 compact_auto(                # compress with policy selection
   messages=messages,
   token_budget=45,

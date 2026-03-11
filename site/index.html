@@ -3,27 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MirageKit Research | validity mirage papers, replay witness, and guarded compaction MCP</title>
-    <meta name="description" content="Public MirageKit research release: working papers, deterministic replay witness (n=3 per policy/fraction), mirrored validation logs, portable certificate artifact, and a guarded MCP evaluation workflow." />
+    <title>The Validity Mirage | silent task drift under AI context compression</title>
+    <meta name="description" content="Research on the validity mirage: AI agents silently lose their governing task under memory compression while still producing confident answers. Papers, replay witness, and the tropical-mcp evaluation tool." />
     <meta name="author" content="Jack Chaudier Gaffney" />
     <meta id="themeColorMeta" name="theme-color" content="#1f3d63" />
     <meta name="color-scheme" content="light dark" />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://dreams-dun.vercel.app/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="MirageKit Research" />
-    <meta property="og:title" content="MirageKit Research | validity mirage papers, replay witness, and guarded compaction MCP" />
-    <meta property="og:description" content="Public MirageKit research release: working papers, deterministic replay witness (n=3 per policy/fraction), mirrored validation logs, portable certificate artifact, and a guarded MCP evaluation workflow." />
+    <meta property="og:site_name" content="The Validity Mirage" />
+    <meta property="og:title" content="The Validity Mirage | silent task drift under AI context compression" />
+    <meta property="og:description" content="Research on the validity mirage: AI agents silently lose their governing task under memory compression while still producing confident answers. Papers, replay witness, and the tropical-mcp evaluation tool." />
     <meta property="og:url" content="https://dreams-dun.vercel.app/" />
     <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png" />
-    <meta property="og:image:alt" content="MirageKit research card showing deterministic replay witness metrics and public release artifacts." />
+    <meta property="og:image:alt" content="The Validity Mirage: research on silent task drift under AI context compression." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@J_C_Gaffney" />
     <meta name="twitter:creator" content="@J_C_Gaffney" />
-    <meta name="twitter:title" content="MirageKit Research | validity mirage papers, replay witness, and guarded compaction MCP" />
-    <meta name="twitter:description" content="Public MirageKit research release: working papers, deterministic replay witness (n=3 per policy/fraction), mirrored validation logs, portable certificate artifact, and a guarded MCP evaluation workflow." />
+    <meta name="twitter:title" content="The Validity Mirage | silent task drift under AI context compression" />
+    <meta name="twitter:description" content="Research on the validity mirage: AI agents silently lose their governing task under memory compression while still producing confident answers. Papers, replay witness, and the tropical-mcp evaluation tool." />
     <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png" />
-    <meta name="twitter:image:alt" content="MirageKit research card showing deterministic replay witness metrics and public release artifacts." />
+    <meta name="twitter:image:alt" content="The Validity Mirage: research on silent task drift under AI context compression." />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <script>
       (function () {
@@ -51,9 +51,9 @@
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "MirageKit Research",
+        "name": "The Validity Mirage",
         "url": "https://dreams-dun.vercel.app/",
-        "description": "Public showcase for the MirageKit research program, with papers, replay artifacts, and the guarded-compaction MCP implementation in tropical-mcp.",
+        "description": "Research on the validity mirage: AI agents silently lose their governing task under memory compression. Papers, replay witness, and the tropical-mcp evaluation tool.",
         "creator": {
           "@type": "Person",
           "name": "Jack Chaudier Gaffney",
@@ -77,8 +77,8 @@
 
       <div class="hero-finding stagger" style="--i:1">
         <span class="finding-kicker">Key Finding</span>
-        <p class="finding-stat"><span class="finding-number">21.95%</span> of AI responses are silently wrong</p>
-        <p class="finding-detail">Wilson 95% CI [16.30%, 28.89%] across real incidents &mdash; the model answers confidently, but about the wrong thing.</p>
+        <p class="finding-stat"><span class="finding-number">36 / 164</span> degraded responses lost their governing task</p>
+        <p class="finding-detail">21.95% silent-mirage rate (Wilson 95% CI [16.30%, 28.89%]) across degraded rows in the Paper 03 validation slice &mdash; the model answers confidently, but about the wrong thing.</p>
       </div>
 
       <h1 class="hero-title stagger" style="--i:2">The Validity Mirage</h1>
@@ -147,7 +147,7 @@
           </div>
           <div class="problem-stat">
             <span class="problem-stat-value mono">21.95%</span>
-            <span class="problem-stat-label">silent mirage rate in real incidents</span>
+            <span class="problem-stat-label">silent mirage rate (36/164 degraded rows, Paper 03)</span>
           </div>
           <div class="problem-stat">
             <span class="problem-stat-value mono">&Omega;(k)</span>
@@ -302,9 +302,40 @@ codex mcp add tropical-mcp \
                 <h3>Three-Call Smoke Test</h3>
               </div>
             </div>
-            <div class="install-codeframe">
-              <span class="install-codeframe-label">smoke test</span>
-              <pre class="install-pre install-pre-wrap"><code>runtime_info()
+            <p>Use a small explicit payload so the pivot and predecessor structure remain visible at a glance.</p>
+            <div class="install-codepair">
+              <div class="install-codeframe">
+                <span class="install-codeframe-label">payload</span>
+                <pre class="install-pre install-pre-wrap"><code>messages = [
+  {
+    "id": "goal",
+    "role": "user",
+    "content": "Build a long-running coding agent workflow for Codex.",
+    "role_hint": "pivot",
+  },
+  {
+    "id": "constraint_stdio",
+    "role": "user",
+    "content": "Use stdio transport and never emit JSON-RPC data to stdout logs.",
+    "role_hint": "predecessor",
+  },
+  {
+    "id": "constraint_clients",
+    "role": "user",
+    "content": "Support Codex and Claude-style clients through explicit MCP tool calls.",
+    "role_hint": "predecessor",
+  },
+  {
+    "id": "status",
+    "role": "assistant",
+    "content": "I am wiring the verification flow and docs.",
+    "role_hint": "noise",
+  },
+]</code></pre>
+              </div>
+              <div class="install-codeframe install-codeframe-tight">
+                <span class="install-codeframe-label">verify</span>
+                <pre class="install-pre install-pre-wrap"><code>runtime_info()
 compact_auto(
   messages=messages,
   token_budget=45,
@@ -316,6 +347,7 @@ certificate(
   token_budget=45,
   k=2,
 )</code></pre>
+              </div>
             </div>
           </article>
         </div>
@@ -427,8 +459,8 @@ certificate(
             </a>
             <a class="stat-card stat-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">21.95%</span>
-              <span class="stat-label">silent mirage / real incidents</span>
-              <span class="stat-detail">Wilson 95% CI [16.30%, 28.89%].</span>
+              <span class="stat-label">silent mirage rate (36/164 degraded rows)</span>
+              <span class="stat-detail">Wilson 95% CI [16.30%, 28.89%] in Paper 03 validation slice.</span>
               <span class="stat-source">Paper 03 <span class="stat-arrow">&nearr;</span></span>
             </a>
             <a class="stat-card stat-link" href="/papers/paper_i_tropical_algebra.pdf" target="_blank" rel="noopener">
