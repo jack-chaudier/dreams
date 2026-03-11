@@ -42,7 +42,7 @@
           document.documentElement.dataset.theme = theme;
           var themeColor = document.querySelector('meta[name="theme-color"]');
           if (themeColor) {
-            themeColor.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
+            themeColor.setAttribute('content', theme === 'dark' ? '#0c0f14' : '#faf8f4');
           }
         } catch (err) {
           document.documentElement.dataset.theme = 'light';
@@ -54,9 +54,7 @@
   <body>
     <header class="hero hero-subpage">
       <div class="hero-topline">
-        <div class="hero-brand">
-          <span class="brand-label">MirageKit Research Program</span>
-        </div>
+        <span class="brand-label">MirageKit Research Program</span>
         <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
           <span class="theme-toggle-label">Theme</span>
           <span class="theme-toggle-value mono" id="themeToggleValue">Light</span>
@@ -99,8 +97,7 @@
           <p class="evidence-intro">
             The strongest public evidence right now is structural: under compression pressure, recency can preserve
             answerability while silently losing the governing pivot, while the guarded policy preserves the protected
-            arc on the committed replay witness. The goal here is not to look exhaustive. It is to make the current
-            public record inspectable in one pass.
+            arc on the committed replay witness.
           </p>
         </div>
 
@@ -170,8 +167,7 @@
               </div>
               <p>
                 At retention fractions <code>0.65</code>, <code>0.5</code>, and <code>0.4</code>, the committed replay keeps
-                the primary arc intact under <code>l2_guarded</code> while recency collapses it. Paper-level model counts and
-                incident counts live in the PDFs and are intentionally separate from this witness.
+                the primary arc intact under <code>l2_guarded</code> while recency collapses it.
               </p>
               <ul class="evidence-record-list">
                 <li><code>l2_guarded</code> pivot preservation stays at <strong>1.0</strong></li>
@@ -226,13 +222,12 @@
           <h2>Verification paths</h2>
           <p>
             Install and register <code>tropical-mcp</code>, then choose between the minimal smoke path and the fuller reviewer
-            workflow. The public certificate on this page is meant to be compared against the latter, not treated as a
-            substitute for it.
+            workflow.
           </p>
           <ul class="evidence-repro-list">
-            <li><strong>Smoke test:</strong> confirm the runtime with <code>runtime_info()</code>, then run <code>compact_auto(...)</code> and <code>certificate(...)</code> on a small explicit witness payload.</li>
-            <li><strong>Research workflow:</strong> run <code>diagnose(...)</code> to inspect feasible slots, capture a <code>context_anchor(...)</code>, then compare <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>.</li>
-            <li>Compare the resulting certificate and replay behavior against the public artifacts on this page.</li>
+            <li><strong>Smoke test:</strong> confirm the runtime with <code>runtime_info()</code>, then run <code>compact_auto(...)</code> and <code>certificate(...)</code>.</li>
+            <li><strong>Research workflow:</strong> run <code>diagnose(...)</code> to inspect feasible slots, then compare <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>.</li>
+            <li>Compare the resulting certificate against the public artifacts on this page.</li>
           </ul>
           <div class="evidence-references evidence-repro-links">
             <a class="evidence-reference" href="https://github.com/jack-chaudier/tropical-mcp#quick-start-codex" target="_blank" rel="noopener">Codex quick-start <span class="evidence-reference-arrow">&nearr;</span></a>
@@ -308,7 +303,7 @@ telemetry_summary(limit=5)   # review retention behavior</code></pre>
             themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
           }
           if (themeColorMeta) {
-            themeColorMeta.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
+            themeColorMeta.setAttribute('content', theme === 'dark' ? '#0c0f14' : '#faf8f4');
           }
         }
 

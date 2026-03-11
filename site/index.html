@@ -67,226 +67,98 @@
   </head>
   <body>
     <header class="hero">
-      <div class="hero-topline">
-        <div class="hero-brand stagger" style="--i:0">
-          <span class="brand-label">MirageKit Research Program</span>
-          <span class="trust-badge">University of Michigan &middot; Working Paper 2026</span>
-        </div>
-        <button class="theme-toggle stagger" style="--i:0" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+      <div class="hero-topline stagger" style="--i:0">
+        <span class="brand-label">MirageKit Research Program</span>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
           <span class="theme-toggle-label">Theme</span>
           <span class="theme-toggle-value mono" id="themeToggleValue">Light</span>
         </button>
       </div>
-      <h1 class="hero-title stagger" style="--i:1">MirageKit</h1>
-      <p class="hero-lede stagger" style="--i:2">Research on how AI agents silently lose track of their goals when long conversations are compressed to save memory.</p>
-      <p class="hero-subtitle stagger" style="--i:3">Context compression can look valid <span class="text-danger">while the governing task has drifted.</span></p>
-      <p class="hero-context stagger" style="--i:4">When AI agents summarize long conversations to save memory, they can lose track of <em>which task they're solving</em> while still producing confident answers. We call this a <strong>validity mirage</strong>. This site presents the papers, data, and a tool you can run to reproduce the findings yourself.</p>
-      <p class="hero-context-note stagger" style="--i:5">This bundle includes: flagship paper, deterministic replay witness (<code>n=3</code> per policy and retention fraction), mirrored validation logs, certificate artifact, and two verification paths.</p>
-      <div class="hero-audience stagger" style="--i:6">
-        <span class="hero-audience-label">I want to&hellip;</span>
-        <a class="hero-audience-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Read the research</a>
-        <a class="hero-audience-link" href="#interactive">See it in action</a>
-        <a class="hero-audience-link" href="#install-verify">Run the tool</a>
-        <a class="hero-audience-link" href="./evidence.html#validation">Verify the claims</a>
+
+      <div class="hero-finding stagger" style="--i:1">
+        <span class="finding-kicker">Key Finding</span>
+        <p class="finding-stat"><span class="finding-number">21.95%</span> of AI responses are silently wrong</p>
+        <p class="finding-detail">Wilson 95% CI [16.30%, 28.89%] across real incidents &mdash; the model answers confidently, but about the wrong thing.</p>
       </div>
-      <div class="bridge-panel stagger" style="--i:7" aria-label="Project map">
-        <article class="bridge-card">
-          <span class="bridge-label">Papers &amp; Theory</span>
-          <h2>MirageKit</h2>
-          <p>Five working papers covering the validity mirage problem, detection methods, and mathematical foundations.</p>
-        </article>
-        <article class="bridge-card">
-          <span class="bridge-label">This Website</span>
-          <h2>dreams</h2>
-          <p>The site you're reading now&mdash;interactive demos, replay data, and all public evidence artifacts.</p>
-        </article>
-        <article class="bridge-card">
-          <span class="bridge-label">Tool You Can Run</span>
-          <h2>tropical-mcp</h2>
-          <p>An installable evaluation server for AI coding agents (Codex, Claude Desktop) that detects unsafe compressions in real time.</p>
-        </article>
+
+      <h1 class="hero-title stagger" style="--i:2">The Validity Mirage</h1>
+      <p class="hero-subtitle stagger" style="--i:3">When AI agents compress long conversations to save memory, they can lose track of <em>which task they're solving</em> while still producing confident answers. We call this a <strong>validity mirage</strong>.</p>
+
+      <div class="hero-abstract stagger" style="--i:4">
+        <span class="abstract-label">Abstract</span>
+        <p>Context compression can look valid while the governing task has drifted. This research program studies the structural failure, proves where each layer of reasoning breaks under memory pressure, and provides a tool (<code>tropical-mcp</code>) to detect and prevent it in real AI coding agents. Every claim links to committed artifacts and deterministic replay data.</p>
       </div>
-      <div class="hero-links stagger" style="--i:8">
-        <a class="hero-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship Paper <span class="link-arrow">&nearr;</span></a>
-        <a class="hero-link" href="./evidence.html">Evidence &amp; Data <span class="link-arrow">&searr;</span></a>
-        <a class="hero-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp Repo <span class="link-arrow">&nearr;</span></a>
-        <a class="hero-link" href="#interactive">Interactive Demo <span class="link-arrow">&searr;</span></a>
+
+      <div class="hero-meta stagger" style="--i:5">
+        <span class="meta-item">Jack Chaudier Gaffney</span>
+        <span class="meta-sep">&middot;</span>
+        <span class="meta-item">University of Michigan</span>
+        <span class="meta-sep">&middot;</span>
+        <span class="meta-item">Working Paper 2026</span>
+        <span class="meta-sep">&middot;</span>
+        <a class="meta-item meta-link" href="https://doi.org/10.5281/zenodo.18794293" target="_blank" rel="noopener">DOI: 10.5281/zenodo.18794293</a>
       </div>
-      <p class="research-status stagger" style="--i:9">First public release (working-paper stage, 2026) &middot; DOI-backed archive: <code>dreams v0.1.1</code> &middot; evaluation tool: <code>tropical-mcp v0.2.1</code> &middot; <a class="footer-doi" href="https://doi.org/10.5281/zenodo.18794293" target="_blank" rel="noopener">DOI: 10.5281/zenodo.18794293</a></p>
+
+      <nav class="hero-actions stagger" style="--i:6">
+        <a class="action-primary" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Read the Paper</a>
+        <a class="action-secondary" href="#interactive">See It Happen</a>
+        <a class="action-secondary" href="#install-verify">Run the Tool</a>
+        <a class="action-secondary" href="./evidence.html#validation">Verify Claims</a>
+      </nav>
     </header>
 
     <nav class="section-nav" aria-label="Page sections">
-      <a href="#start-here">Start Here</a>
+      <a href="#the-problem">The Problem</a>
       <span class="section-nav-sep">&middot;</span>
-      <a href="#install-verify">Evaluate + Verify</a>
+      <a href="#interactive">Live Demo</a>
       <span class="section-nav-sep">&middot;</span>
-      <a href="#interactive">Interactive Demo</a>
+      <a href="#install-verify">Run It</a>
       <span class="section-nav-sep">&middot;</span>
       <a href="#deep-analysis">Deep Analysis</a>
     </nav>
 
     <main>
-      <section class="orientation reveal" id="start-here" aria-label="How to navigate this project">
-        <h2>Start Here</h2>
-        <p class="orientation-intro">New to the project? Pick the path that matches what you want to do.</p>
-        <div class="orientation-grid">
-          <article class="orientation-card">
-            <span class="orientation-step">1</span>
-            <span class="orientation-label">Read The Research</span>
-            <h3>Papers + Results</h3>
-            <p>Start here for the working papers, replay artifacts, and committed evidence that support the current claims.</p>
-            <div class="orientation-links">
-              <a href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Validity Mirage paper</a>
-              <a href="./evidence.html#validation">Evidence &amp; validation</a>
-            </div>
-          </article>
-          <article class="orientation-card">
-            <span class="orientation-step">2</span>
-            <span class="orientation-label">View The Implementation</span>
-            <h3>Evaluate tropical-mcp</h3>
-            <p>The runnable MCP server is published in its own repository so install docs, changelog, tests, and examples stay close to the code.</p>
-            <div class="orientation-links">
-              <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">GitHub repo</a>
-              <a href="https://github.com/jack-chaudier/tropical-mcp/blob/main/README.md" target="_blank" rel="noopener">README + quick-start</a>
-            </div>
-          </article>
-          <article class="orientation-card">
-            <span class="orientation-step">3</span>
-            <span class="orientation-label">Explore The Demo</span>
-            <h3>Interactive Demo</h3>
-            <p>Move from the replay cards to the witness, certificate, and source papers. Every number on the page comes from committed artifacts.</p>
-            <div class="orientation-links">
-              <a href="#interactive">Retention explorer</a>
-              <a href="#deep-analysis">Witness + certificate</a>
-            </div>
-          </article>
-          <article class="orientation-card">
-            <span class="orientation-step">4</span>
-            <span class="orientation-label">Verify The Tool</span>
-            <h3>Smoke Test + Research Workflow</h3>
-            <p>Use the three-call smoke test for a fast implementation check, or extend to the fuller reviewer workflow when you want diagnostics, anchors, and telemetry.</p>
-            <div class="orientation-links">
-              <a href="#install-verify">Evaluate + verify section</a>
-              <a href="./evidence.html#certificate">Certificate artifact</a>
-            </div>
-          </article>
+      <section class="problem-section reveal" id="the-problem" aria-label="The problem">
+        <div class="problem-header">
+          <h2>The Problem</h2>
+          <p class="problem-lede">AI agents silently lose their governing task under memory pressure, then keep working as if nothing happened.</p>
         </div>
-      </section>
 
-      <section class="install-verify reveal" id="install-verify" aria-label="Evaluate and verify tropical-mcp">
-        <h2>Evaluate + Verify</h2>
-        <p class="install-intro"><code>tropical-mcp</code> is the evaluation implementation. Use <code>dreams</code> for the paper set, replay witness, public certificate, and the broader research narrative.</p>
-        <div class="install-prereq">
-          <span class="install-prereq-label">Prerequisites</span>
-          <p>Requires <a href="https://github.com/openai/codex" target="_blank" rel="noopener">Codex</a> or <a href="https://claude.ai/download" target="_blank" rel="noopener">Claude Desktop</a> with MCP support, plus <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a> (Python package manager). MCP registration lets the AI client call evaluation tools directly so you can inspect every step.</p>
-        </div>
-        <div class="install-summary" aria-label="Evaluation sequence">
-          <span>1. Register the MCP</span>
-          <span>2. Run the minimal smoke test</span>
-          <span>3. Expand to the research workflow</span>
-        </div>
-        <div class="install-grid">
-          <article class="install-card">
-            <div class="install-card-header">
-              <span class="install-step mono">01</span>
-              <div>
-                <span class="install-card-label">Codex Registration</span>
-                <h3>Register <code>tropical-mcp</code></h3>
-              </div>
-            </div>
-            <p>Clone the evaluation repo, then register the MCP in Codex so the tool calls stay explicit and auditable.</p>
-            <div class="install-codeframe">
-              <span class="install-codeframe-label">codex shell</span>
-              <pre class="install-pre install-pre-wrap"><code>git clone https://github.com/jack-chaudier/tropical-mcp.git ~/tropical-mcp
-codex mcp add tropical-mcp \
-  --env TROPICAL_MCP_CLIENT=codex -- \
-  uv --directory ~/tropical-mcp run tropical-mcp
-codex mcp list</code></pre>
-            </div>
-            <p class="install-outcome"><span class="install-outcome-label">Expected signal</span><code>codex mcp list</code> should show <code>tropical-mcp</code> as an available server.</p>
-          </article>
-          <article class="install-card">
-            <div class="install-card-header">
-              <span class="install-step mono">02</span>
-              <div>
-                <span class="install-card-label">Three-Call Smoke Test</span>
-                <h3>Minimal Verification</h3>
-              </div>
-            </div>
-            <p>Use a small explicit payload so the pivot and predecessor structure remain visible at a glance. This verifies the packaged MCP surface; it is not the full research workflow.</p>
-            <div class="install-codepair">
-              <div class="install-codeframe">
-                <span class="install-codeframe-label">payload</span>
-                <pre class="install-pre install-pre-wrap"><code>messages = [
-  {
-    "id": "goal",
-    "role": "user",
-    "content": "Build a long-running coding agent workflow for Codex.",
-    "role_hint": "pivot",
-  },
-  {
-    "id": "constraint_stdio",
-    "role": "user",
-    "content": "Use stdio transport and never emit JSON-RPC data to stdout logs.",
-    "role_hint": "predecessor",
-  },
-  {
-    "id": "constraint_clients",
-    "role": "user",
-    "content": "Support Codex and Claude-style clients through explicit MCP tool calls.",
-    "role_hint": "predecessor",
-  },
-  {
-    "id": "status",
-    "role": "assistant",
-    "content": "I am wiring the verification flow and docs.",
-    "role_hint": "noise",
-  },
-]</code></pre>
-              </div>
-              <div class="install-codeframe install-codeframe-tight">
-                <span class="install-codeframe-label">verify</span>
-                <pre class="install-pre install-pre-wrap"><code>runtime_info()
-compact_auto(
-  messages=messages,
-  token_budget=45,
-  k_target=2,
-  mode="adaptive",
-)
-certificate(
-  messages=messages,
-  token_budget=45,
-  k=2,
-)</code></pre>
-              </div>
-            </div>
-            <p class="install-outcome"><span class="install-outcome-label">Expected signal</span><code>compact_auto(...)</code> should prefer the guarded policy on this witness payload, and <code>certificate(...)</code> should preserve a portable audit of the same comparison.</p>
-            <p>For a fuller reviewer pass, continue with <code>diagnose(...)</code>, <code>context_anchor(...)</code>, and <code>telemetry_summary(...)</code> so feasibility, protected chunks, and retention behavior remain explicit in the audit trail.</p>
-          </article>
-        </div>
-        <div class="install-notes">
-          <div class="install-note">
-            <span class="install-note-label">Expected signals</span>
-            <p><code>runtime_info()</code> should report the resolved client and telemetry path. <code>compact_auto(...)</code> should choose <code>l2_guarded</code> on the sample. <code>certificate(...)</code> should show comparable recency vs guarded kept and dropped IDs.</p>
+        <div class="problem-columns">
+          <div class="problem-narrative">
+            <p>When you work with an AI coding agent on a complex task, you give constraints across many messages: <em>"use async I/O"</em>, <em>"target Python 3.10"</em>, <em>"don't break the public API"</em>. As the conversation grows, the client silently compresses older messages to stay within its context window.</p>
+            <p>The agent keeps working confidently. But it has lost 3 of your 7 requirements. You catch the drift, re-explain, and the agent refactors. This is the <strong>validity mirage</strong>: the context looks fine, the agent feels fine, but critical information is gone.</p>
           </div>
-          <div class="install-note">
-            <span class="install-note-label">Recommended research workflow</span>
-            <p>After the smoke test, the fuller review sequence is <code>runtime_info()</code>, <code>diagnose(...)</code>, <code>context_anchor(...)</code>, <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>. That path keeps witness feasibility, protected predecessors, and retained context visible instead of inferring them after the fact.</p>
+          <div class="problem-insight">
+            <span class="insight-label">The Mirage Shelf</span>
+            <p>Under memory constraints, correctness and justification come apart. There is a measurable zone where answers survive but the reasons behind them don't. A system can be right without knowing <em>why</em>.</p>
+            <p class="insight-source">Verified by exhaustive finite search across 6,336 configurations with 0 exceptions.</p>
           </div>
-          <div class="install-note">
-            <span class="install-note-label">Source of truth</span>
-            <p>Implementation docs and the Codex example bundle live in the <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>. The rendered evidence surface for this site lives in the <a href="./evidence.html#validation">evidence &amp; validation page</a>, with direct links there to the replay witness, validation summary, and certificate artifact when you want to inspect the underlying files.</p>
+        </div>
+
+        <div class="problem-stats">
+          <div class="problem-stat">
+            <span class="problem-stat-value mono">0</span>
+            <span class="problem-stat-label">false positives in 11,400 boundary instances</span>
           </div>
-          <div class="install-note">
-            <span class="install-note-label">License boundary</span>
-            <p><code>tropical-mcp</code> is currently source-available for academic and internal evaluation. For redistribution, derivative, or commercial rights, see the <a href="https://github.com/jack-chaudier/tropical-mcp/blob/main/LICENSE" target="_blank" rel="noopener">repository license</a> or <a href="mailto:jackgaff@umich.edu">contact the author</a>.</p>
+          <div class="problem-stat">
+            <span class="problem-stat-value mono">54.9%</span>
+            <span class="problem-stat-label">organic trap rate in 4,200 runs</span>
+          </div>
+          <div class="problem-stat">
+            <span class="problem-stat-value mono">21.95%</span>
+            <span class="problem-stat-label">silent mirage rate in real incidents</span>
+          </div>
+          <div class="problem-stat">
+            <span class="problem-stat-value mono">&Omega;(k)</span>
+            <span class="problem-stat-label">state bound via Myhill-Nerode</span>
           </div>
         </div>
       </section>
 
       <section class="interactive-panel stagger" style="--i:9" id="interactive">
-        <span class="figure-label">What happens when you compress a conversation?</span>
-        <p class="slider-hint">Drag the slider below to simulate increasing compression pressure and watch how each policy responds.</p>
+        <span class="figure-label">Figure 1 &mdash; What happens when you compress a conversation?</span>
+        <p class="slider-hint">Drag the slider to simulate increasing compression pressure and watch how each policy responds.</p>
         <div class="slider-area">
           <div class="slider-header">
             <div class="slider-heading">
@@ -333,9 +205,9 @@ certificate(
           <span class="cards-legend-item"><span class="card-icon">&#10005;</span> Baseline &mdash; keeps newest messages</span>
           <span class="cards-legend-item"><span class="card-icon">&#9670;</span> Guarded &mdash; keeps task-critical messages</span>
           <span class="cards-legend-sep">&middot;</span>
-          <span class="cards-legend-item"><span class="status-dot status-safe"></span> SAFE = pivot intact</span>
-          <span class="cards-legend-item"><span class="status-dot status-warn"></span> DEGRADED = weakening</span>
-          <span class="cards-legend-item"><span class="status-dot status-danger"></span> CRITICAL = pivot lost</span>
+          <span class="cards-legend-item"><span class="status-dot status-safe"></span> SAFE</span>
+          <span class="cards-legend-item"><span class="status-dot status-warn"></span> DEGRADED</span>
+          <span class="cards-legend-item"><span class="status-dot status-danger"></span> CRITICAL</span>
         </div>
         <div class="cards-container">
           <article class="card card-naive" id="cardNaive">
@@ -365,7 +237,7 @@ certificate(
           <span class="mirage-icon">&#9888;</span>
           <div class="mirage-text">
             <strong>VALIDITY MIRAGE DETECTED</strong>
-            <p>Raw validity still passes, but the causal anchor is gone. Example: the model can still answer an NTSB query, but now about the wrong incident after the original root-cause pivot was evicted.</p>
+            <p>Raw validity still passes, but the causal anchor is gone. The model can still answer an NTSB query, but now about the wrong incident after the original root-cause pivot was evicted.</p>
           </div>
         </div>
 
@@ -373,32 +245,97 @@ certificate(
       </section>
 
       <section class="math-snapshot reveal" aria-label="Math snapshot">
-        <h3>Math Snapshot</h3>
+        <h3>Mathematical Foundations</h3>
         <div class="math-grid">
           <article class="math-card">
             <h4>Core Contract</h4>
             <p class="math-formula mono">d_pre >= k</p>
             <p>Guarded compaction is certified safe only when the pivot retains its required predecessor depth.</p>
-            <p class="math-example">Example: <code>k=2</code> means the current task must keep at least 2 messages that led to it.</p>
           </article>
           <article class="math-card">
             <h4>Frontier Feasibility</h4>
             <p class="math-formula mono">W[k] = -infinity &rarr; infeasible</p>
             <p>If the k-slot frontier is negative infinity, no valid completion exists for that retained context.</p>
-            <p class="math-example">Example: <code>W[3] = -&infin;</code> means the predecessors were already evicted&mdash;no safe summary is possible.</p>
           </article>
           <article class="math-card">
             <h4>Raw Validity</h4>
             <p class="math-formula mono">raw = max(primary_full, decoy_full)</p>
             <p>Answerability alone can stay high even when pivot identity has silently changed.</p>
-            <p class="math-example">Example: the model still answers an NTSB query correctly, but about the wrong incident.</p>
           </article>
           <article class="math-card">
             <h4>Mirage Gap</h4>
             <p class="math-formula mono">delta = raw - pivot_preservation</p>
             <p>Large positive gap indicates a validity mirage regime rather than true semantic stability.</p>
-            <p class="math-example">Example: <code>delta = 100% - 0% = 100pp</code>&mdash;the answer sounds right but serves the wrong goal.</p>
           </article>
+        </div>
+      </section>
+
+      <section class="install-verify reveal" id="install-verify" aria-label="Evaluate and verify tropical-mcp">
+        <h2>Run It Yourself</h2>
+        <p class="install-intro"><code>tropical-mcp</code> gives AI coding agents explicit tools to detect and prevent the validity mirage. Register it as an MCP server, then inspect every compression step.</p>
+        <div class="install-prereq">
+          <span class="install-prereq-label">Prerequisites</span>
+          <p>Requires <a href="https://github.com/openai/codex" target="_blank" rel="noopener">Codex</a> or <a href="https://claude.ai/download" target="_blank" rel="noopener">Claude Desktop</a> with MCP support, plus <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a> (Python package manager).</p>
+        </div>
+        <div class="install-grid">
+          <article class="install-card">
+            <div class="install-card-header">
+              <span class="install-step mono">01</span>
+              <div>
+                <span class="install-card-label">Register</span>
+                <h3>Add <code>tropical-mcp</code> to Codex</h3>
+              </div>
+            </div>
+            <div class="install-codeframe">
+              <span class="install-codeframe-label">terminal</span>
+              <pre class="install-pre install-pre-wrap"><code>git clone https://github.com/jack-chaudier/tropical-mcp.git ~/tropical-mcp
+codex mcp add tropical-mcp \
+  --env TROPICAL_MCP_CLIENT=codex -- \
+  uv --directory ~/tropical-mcp run tropical-mcp</code></pre>
+            </div>
+          </article>
+          <article class="install-card">
+            <div class="install-card-header">
+              <span class="install-step mono">02</span>
+              <div>
+                <span class="install-card-label">Verify</span>
+                <h3>Three-Call Smoke Test</h3>
+              </div>
+            </div>
+            <div class="install-codeframe">
+              <span class="install-codeframe-label">smoke test</span>
+              <pre class="install-pre install-pre-wrap"><code>runtime_info()
+compact_auto(
+  messages=messages,
+  token_budget=45,
+  k_target=2,
+  mode="adaptive",
+)
+certificate(
+  messages=messages,
+  token_budget=45,
+  k=2,
+)</code></pre>
+            </div>
+          </article>
+        </div>
+        <div class="install-notes">
+          <div class="install-note">
+            <span class="install-note-label">Expected signals</span>
+            <p><code>compact_auto(...)</code> should choose <code>l2_guarded</code> on the sample. <code>certificate(...)</code> should show comparable kept and dropped IDs.</p>
+          </div>
+          <div class="install-note">
+            <span class="install-note-label">Full research workflow</span>
+            <p>After the smoke test: <code>diagnose(...)</code> &rarr; <code>context_anchor(...)</code> &rarr; <code>compact_auto(...)</code> &rarr; <code>certificate(...)</code> &rarr; <code>telemetry_summary(...)</code>.</p>
+          </div>
+          <div class="install-note">
+            <span class="install-note-label">Source of truth</span>
+            <p>Implementation docs live in the <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repo</a>. Evidence surface is on the <a href="./evidence.html#validation">evidence page</a>.</p>
+          </div>
+          <div class="install-note">
+            <span class="install-note-label">License</span>
+            <p>Source-available for academic and internal evaluation. See <a href="https://github.com/jack-chaudier/tropical-mcp/blob/main/LICENSE" target="_blank" rel="noopener">LICENSE</a> for terms.</p>
+          </div>
         </div>
       </section>
 
@@ -409,14 +346,14 @@ certificate(
           <span class="toggle-icon" id="toggleIcon">&#9656;</span>
         </button>
         <div class="deep-content hidden" id="deepContent">
-          <p class="deep-intro">Detailed diagnostics from committed artifacts: the deterministic replay witness (`n=3` per policy/fraction), the public certificate, and separate paper-level result cards. Each claim links to its source.</p>
+          <p class="deep-intro">Detailed diagnostics from committed artifacts: the deterministic replay witness (<code>n=3</code> per policy/fraction), the public certificate, and separate paper-level result cards.</p>
           <div class="deep-grid">
             <div class="deep-block">
               <h4>Exp58 Deterministic Witness</h4>
               <p class="witness-claim" id="witnessClaim"></p>
               <p class="witness-context">
                 The frontier vector W[0..k] measures whether the pivot and its k nearest predecessors can all survive a compaction pass.
-                When W[k] = &infin;, no valid configuration exists under that policy &mdash; the predecessors were already evicted.
+                When W[k] = &infin;, no valid configuration exists under that policy.
                 A finite W[k] means the guard found a feasible retention set.
               </p>
               <div class="witness-table">
@@ -475,31 +412,30 @@ certificate(
               </details>
             </div>
           </div>
-          <p class="deep-intro">The cards below are paper-level study results, not part of the small committed replay witness rendered above.</p>
           <div class="headline-stats">
             <a class="stat-card stat-link" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">0</span>
               <span class="stat-label">false positives / 11,400 boundary instances</span>
-              <span class="stat-detail">Paper-level study result: in the reported regime, the guard never blocked a compression that was actually safe.</span>
-              <span class="stat-source">from Paper 01, separate from the replay witness <span class="stat-arrow">&nearr;</span></span>
+              <span class="stat-detail">The guard never blocked a compression that was actually safe.</span>
+              <span class="stat-source">Paper 01 <span class="stat-arrow">&nearr;</span></span>
             </a>
             <a class="stat-card stat-link" href="/papers/paper_02_streaming_oscillation_traps.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">54.9%</span>
               <span class="stat-label">organic trap rate / 4,200 runs</span>
-              <span class="stat-detail">Paper-level study result: observed as 2,306 / 4,200, with traps emerging without explicit adversarial construction.</span>
-              <span class="stat-source">from Paper 02, separate from the replay witness <span class="stat-arrow">&nearr;</span></span>
+              <span class="stat-detail">Traps emerge without explicit adversarial construction.</span>
+              <span class="stat-source">Paper 02 <span class="stat-arrow">&nearr;</span></span>
             </a>
             <a class="stat-card stat-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">21.95%</span>
               <span class="stat-label">silent mirage / real incidents</span>
-              <span class="stat-detail">Paper-level study result: Wilson 95% CI [16.30%, 28.89%] in the reported real-incident sample.</span>
-              <span class="stat-source">from Paper 03, separate from the replay witness <span class="stat-arrow">&nearr;</span></span>
+              <span class="stat-detail">Wilson 95% CI [16.30%, 28.89%].</span>
+              <span class="stat-source">Paper 03 <span class="stat-arrow">&nearr;</span></span>
             </a>
             <a class="stat-card stat-link" href="/papers/paper_i_tropical_algebra.pdf" target="_blank" rel="noopener">
               <span class="stat-value mono">&Omega;(k)</span>
               <span class="stat-label">state bound / Myhill-Nerode</span>
-              <span class="stat-detail">Theory result: finite-memory controllers need state growth with retained predecessor depth.</span>
-              <span class="stat-source">from Paper I, separate from the replay witness <span class="stat-arrow">&nearr;</span></span>
+              <span class="stat-detail">Finite-memory controllers need state growth with retained predecessor depth.</span>
+              <span class="stat-source">Paper I <span class="stat-arrow">&nearr;</span></span>
             </a>
           </div>
         </div>
@@ -512,7 +448,7 @@ certificate(
         </p>
         <ul>
           <li>Replay cards are exact proportions on the committed deterministic witness in <code>results/replay/</code> with <code>n=3</code> variants per policy and retention fraction.</li>
-          <li>Paper-level result cards above link to the PDFs directly and should be read as separate studies with their own denominators.</li>
+          <li>Paper-level result cards link to the PDFs directly and should be read as separate studies with their own denominators.</li>
           <li>Use this site as a transparent research snapshot, not a universal benchmark leaderboard.</li>
         </ul>
       </section>
@@ -535,7 +471,7 @@ certificate(
       </div>
       <div class="paper-badges">
         <a class="paper-badge paper-badge-flagship" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
-          <span class="badge-num">03</span> Validity Mirage (Start Here) <span class="badge-arrow">&nearr;</span>
+          <span class="badge-num">03</span> Validity Mirage <span class="badge-arrow">&nearr;</span>
         </a>
         <a class="paper-badge" href="/papers/paper_00_continuous_control_structural_regularization.pdf" target="_blank" rel="noopener">
           <span class="badge-num">00</span> Continuous Control <span class="badge-arrow">&nearr;</span>

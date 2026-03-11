@@ -6,7 +6,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'sha256-qQ6eYvJm2NzhlWiNvBHRqaZjfo+mbN9vpS2A02D2fjA=' 'sha256-1nYsiS91NYnkHl32ugwBTUh6kaNHuGst6dYSe71H1B8=' 'sha256-KusmytVttnMKn2LGSK/Yg6yBKxiojB2j+FKKCB1AAzc='; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
+          "value": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'sha256-qQ6eYvJm2NzhlWiNvBHRqaZjfo+mbN9vpS2A02D2fjA=' 'sha256-gt8H30ldtXWZ3Tgw8OOt8uXOhdEpfuWn9zresudkRls=' 'sha256-9gMxVibWZY34dQokI/UP3xXf9u2TaGr2W21zo7wQFMQ='; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
         },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
