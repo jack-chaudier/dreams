@@ -70,6 +70,7 @@
       <div class="hero-topline">
         <div class="hero-brand stagger" style="--i:0">
           <span class="brand-label">MirageKit Research Program</span>
+          <span class="trust-badge">University of Michigan &middot; Working Paper 2026</span>
         </div>
         <button class="theme-toggle stagger" style="--i:0" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
           <span class="theme-toggle-label">Theme</span>
@@ -77,50 +78,70 @@
         </button>
       </div>
       <h1 class="hero-title stagger" style="--i:1">MirageKit</h1>
-      <p class="hero-subtitle stagger" style="--i:2">Context compression can look valid <span class="text-danger">while the governing task has drifted.</span></p>
-      <p class="hero-context stagger" style="--i:3">When LLM agents compress long conversations, they can silently lose track of <em>which task they're solving</em> while still producing confident answers. We call this a <strong>validity mirage</strong>. <strong>MirageKit</strong> is the research program; <strong>dreams</strong> is the public showcase for papers and artifacts; the evaluation MCP lives in the separate <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>.</p>
-      <p class="hero-context-note stagger" style="--i:4">Read this like a research packet: flagship paper, deterministic replay witness (<code>n=3</code> per policy and retention fraction), mirrored validation logs, certificate artifact, and two verification paths: a three-call smoke test plus a fuller reviewer workflow.</p>
-      <p class="hero-cta stagger" style="--i:5"><em>Start with the flagship paper, inspect the replayed witness, then run the local verify path to reproduce the divergence yourself.</em></p>
-      <div class="bridge-panel stagger" style="--i:6" aria-label="Project map">
+      <p class="hero-lede stagger" style="--i:2">Research on how AI agents silently lose track of their goals when long conversations are compressed to save memory.</p>
+      <p class="hero-subtitle stagger" style="--i:3">Context compression can look valid <span class="text-danger">while the governing task has drifted.</span></p>
+      <p class="hero-context stagger" style="--i:4">When AI agents summarize long conversations to save memory, they can lose track of <em>which task they're solving</em> while still producing confident answers. We call this a <strong>validity mirage</strong>. This site presents the papers, data, and a tool you can run to reproduce the findings yourself.</p>
+      <p class="hero-context-note stagger" style="--i:5">This bundle includes: flagship paper, deterministic replay witness (<code>n=3</code> per policy and retention fraction), mirrored validation logs, certificate artifact, and two verification paths.</p>
+      <div class="hero-audience stagger" style="--i:6">
+        <span class="hero-audience-label">I want to&hellip;</span>
+        <a class="hero-audience-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Read the research</a>
+        <a class="hero-audience-link" href="#interactive">See it in action</a>
+        <a class="hero-audience-link" href="#install-verify">Run the tool</a>
+        <a class="hero-audience-link" href="./evidence.html#validation">Verify the claims</a>
+      </div>
+      <div class="bridge-panel stagger" style="--i:7" aria-label="Project map">
         <article class="bridge-card">
-          <span class="bridge-label">Research Program</span>
+          <span class="bridge-label">Papers &amp; Theory</span>
           <h2>MirageKit</h2>
-          <p>The papers, theory, witness, and evaluation framing for validity mirage behavior.</p>
+          <p>Five working papers covering the validity mirage problem, detection methods, and mathematical foundations.</p>
         </article>
         <article class="bridge-card">
-          <span class="bridge-label">Showcase Repo</span>
+          <span class="bridge-label">This Website</span>
           <h2>dreams</h2>
-          <p>This website, working-paper bundle, and committed public artifacts live here.</p>
+          <p>The site you're reading now&mdash;interactive demos, replay data, and all public evidence artifacts.</p>
         </article>
         <article class="bridge-card">
-          <span class="bridge-label">Evaluation Implementation</span>
+          <span class="bridge-label">Tool You Can Run</span>
           <h2>tropical-mcp</h2>
-          <p>The source-available MCP server you register in Codex or Claude-style clients to evaluate guarded compaction directly.</p>
+          <p>An installable evaluation server for AI coding agents (Codex, Claude Desktop) that detects unsafe compressions in real time.</p>
         </article>
       </div>
-      <div class="hero-links stagger" style="--i:7">
+      <div class="hero-links stagger" style="--i:8">
         <a class="hero-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship Paper <span class="link-arrow">&nearr;</span></a>
-        <a class="hero-link" href="./evidence.html#validation">Evidence Dossier <span class="link-arrow">&searr;</span></a>
+        <a class="hero-link" href="./evidence.html">Evidence &amp; Data <span class="link-arrow">&searr;</span></a>
         <a class="hero-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp Repo <span class="link-arrow">&nearr;</span></a>
-        <a class="hero-link" href="#interactive">Live Proof Path <span class="link-arrow">&searr;</span></a>
+        <a class="hero-link" href="#interactive">Interactive Demo <span class="link-arrow">&searr;</span></a>
       </div>
-      <p class="research-status stagger" style="--i:8">First public release (working-paper stage, 2026) &middot; <code>dreams</code> = public evidence surface &middot; <code>tropical-mcp</code> = source-available evaluation MCP &middot; DOI-backed archive = <code>dreams v0.1.1</code> &middot; mirrored implementation release = <code>tropical-mcp v0.2.1</code>.</p>
+      <p class="research-status stagger" style="--i:9">First public release (working-paper stage, 2026) &middot; DOI-backed archive: <code>dreams v0.1.1</code> &middot; evaluation tool: <code>tropical-mcp v0.2.1</code> &middot; <a class="footer-doi" href="https://doi.org/10.5281/zenodo.18794293" target="_blank" rel="noopener">DOI: 10.5281/zenodo.18794293</a></p>
     </header>
 
+    <nav class="section-nav" aria-label="Page sections">
+      <a href="#start-here">Start Here</a>
+      <span class="section-nav-sep">&middot;</span>
+      <a href="#install-verify">Evaluate + Verify</a>
+      <span class="section-nav-sep">&middot;</span>
+      <a href="#interactive">Interactive Demo</a>
+      <span class="section-nav-sep">&middot;</span>
+      <a href="#deep-analysis">Deep Analysis</a>
+    </nav>
+
     <main>
-      <section class="orientation reveal" aria-label="How to navigate this project">
+      <section class="orientation reveal" id="start-here" aria-label="How to navigate this project">
         <h2>Start Here</h2>
+        <p class="orientation-intro">New to the project? Pick the path that matches what you want to do.</p>
         <div class="orientation-grid">
           <article class="orientation-card">
+            <span class="orientation-step">1</span>
             <span class="orientation-label">Read The Research</span>
             <h3>Papers + Results</h3>
-            <p>Use this repo for the working papers, replay artifacts, and committed evidence that support the current claims.</p>
+            <p>Start here for the working papers, replay artifacts, and committed evidence that support the current claims.</p>
             <div class="orientation-links">
               <a href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Validity Mirage paper</a>
-              <a href="./evidence.html#validation">Evidence dossier</a>
+              <a href="./evidence.html#validation">Evidence &amp; validation</a>
             </div>
           </article>
           <article class="orientation-card">
+            <span class="orientation-step">2</span>
             <span class="orientation-label">View The Implementation</span>
             <h3>Evaluate tropical-mcp</h3>
             <p>The runnable MCP server is published in its own repository so install docs, changelog, tests, and examples stay close to the code.</p>
@@ -130,8 +151,9 @@
             </div>
           </article>
           <article class="orientation-card">
-            <span class="orientation-label">Understand The Demo</span>
-            <h3>Interactive Proof Path</h3>
+            <span class="orientation-step">3</span>
+            <span class="orientation-label">Explore The Demo</span>
+            <h3>Interactive Demo</h3>
             <p>Move from the replay cards to the witness, certificate, and source papers. Every number on the page comes from committed artifacts.</p>
             <div class="orientation-links">
               <a href="#interactive">Retention explorer</a>
@@ -139,6 +161,7 @@
             </div>
           </article>
           <article class="orientation-card">
+            <span class="orientation-step">4</span>
             <span class="orientation-label">Verify The Tool</span>
             <h3>Smoke Test + Research Workflow</h3>
             <p>Use the three-call smoke test for a fast implementation check, or extend to the fuller reviewer workflow when you want diagnostics, anchors, and telemetry.</p>
@@ -153,6 +176,10 @@
       <section class="install-verify reveal" id="install-verify" aria-label="Evaluate and verify tropical-mcp">
         <h2>Evaluate + Verify</h2>
         <p class="install-intro"><code>tropical-mcp</code> is the evaluation implementation. Use <code>dreams</code> for the paper set, replay witness, public certificate, and the broader research narrative.</p>
+        <div class="install-prereq">
+          <span class="install-prereq-label">Prerequisites</span>
+          <p>Requires <a href="https://github.com/openai/codex" target="_blank" rel="noopener">Codex</a> or <a href="https://claude.ai/download" target="_blank" rel="noopener">Claude Desktop</a> with MCP support, plus <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a> (Python package manager). MCP registration lets the AI client call evaluation tools directly so you can inspect every step.</p>
+        </div>
         <div class="install-summary" aria-label="Evaluation sequence">
           <span>1. Register the MCP</span>
           <span>2. Run the minimal smoke test</span>
@@ -248,7 +275,7 @@ certificate(
           </div>
           <div class="install-note">
             <span class="install-note-label">Source of truth</span>
-            <p>Implementation docs and the Codex example bundle live in the <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>. The rendered evidence surface for this site lives in the <a href="./evidence.html#validation">evidence dossier</a>, with direct links there to the replay witness, validation summary, and certificate artifact when you want to inspect the underlying files.</p>
+            <p>Implementation docs and the Codex example bundle live in the <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp repository</a>. The rendered evidence surface for this site lives in the <a href="./evidence.html#validation">evidence &amp; validation page</a>, with direct links there to the replay witness, validation summary, and certificate artifact when you want to inspect the underlying files.</p>
           </div>
           <div class="install-note">
             <span class="install-note-label">License boundary</span>
@@ -259,6 +286,7 @@ certificate(
 
       <section class="interactive-panel stagger" style="--i:9" id="interactive">
         <span class="figure-label">What happens when you compress a conversation?</span>
+        <p class="slider-hint">Drag the slider below to simulate increasing compression pressure and watch how each policy responds.</p>
         <div class="slider-area">
           <div class="slider-header">
             <div class="slider-heading">
@@ -301,6 +329,14 @@ certificate(
           </div>
         </div>
 
+        <div class="cards-legend">
+          <span class="cards-legend-item"><span class="card-icon">&#10005;</span> Baseline &mdash; keeps newest messages</span>
+          <span class="cards-legend-item"><span class="card-icon">&#9670;</span> Guarded &mdash; keeps task-critical messages</span>
+          <span class="cards-legend-sep">&middot;</span>
+          <span class="cards-legend-item"><span class="status-dot status-safe"></span> SAFE = pivot intact</span>
+          <span class="cards-legend-item"><span class="status-dot status-warn"></span> DEGRADED = weakening</span>
+          <span class="cards-legend-item"><span class="status-dot status-danger"></span> CRITICAL = pivot lost</span>
+        </div>
         <div class="cards-container">
           <article class="card card-naive" id="cardNaive">
             <div class="card-header">
@@ -343,28 +379,33 @@ certificate(
             <h4>Core Contract</h4>
             <p class="math-formula mono">d_pre >= k</p>
             <p>Guarded compaction is certified safe only when the pivot retains its required predecessor depth.</p>
+            <p class="math-example">Example: <code>k=2</code> means the current task must keep at least 2 messages that led to it.</p>
           </article>
           <article class="math-card">
             <h4>Frontier Feasibility</h4>
-            <p class="math-formula mono">W[k] = -infinity -> infeasible</p>
+            <p class="math-formula mono">W[k] = -infinity &rarr; infeasible</p>
             <p>If the k-slot frontier is negative infinity, no valid completion exists for that retained context.</p>
+            <p class="math-example">Example: <code>W[3] = -&infin;</code> means the predecessors were already evicted&mdash;no safe summary is possible.</p>
           </article>
           <article class="math-card">
             <h4>Raw Validity</h4>
             <p class="math-formula mono">raw = max(primary_full, decoy_full)</p>
             <p>Answerability alone can stay high even when pivot identity has silently changed.</p>
+            <p class="math-example">Example: the model still answers an NTSB query correctly, but about the wrong incident.</p>
           </article>
           <article class="math-card">
             <h4>Mirage Gap</h4>
             <p class="math-formula mono">delta = raw - pivot_preservation</p>
             <p>Large positive gap indicates a validity mirage regime rather than true semantic stability.</p>
+            <p class="math-example">Example: <code>delta = 100% - 0% = 100pp</code>&mdash;the answer sounds right but serves the wrong goal.</p>
           </article>
         </div>
       </section>
 
       <section class="deep-section reveal" id="deep-analysis">
         <button class="deep-toggle" id="deepToggle" aria-expanded="false" aria-controls="deepContent">
-          <span>Deep analysis &mdash; witness, certificate, key results</span>
+          <span>Deep Analysis &mdash; witness, certificate, and key results</span>
+          <span class="deep-toggle-count">5 sections</span>
           <span class="toggle-icon" id="toggleIcon">&#9656;</span>
         </button>
         <div class="deep-content hidden" id="deepContent">
@@ -486,27 +527,27 @@ certificate(
       <div class="footer-links">
         <a class="footer-link" href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">Repo</a>
         <a class="footer-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship paper</a>
-        <a class="footer-link" href="./evidence.html">Evidence dossier</a>
+        <a class="footer-link" href="./evidence.html">Evidence &amp; validation</a>
         <a class="footer-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>
         <a class="footer-link" href="mailto:jackgaff@umich.edu">Correspondence</a>
         <a class="footer-link" href="https://x.com/J_C_Gaffney" target="_blank" rel="noopener">X / updates</a>
         <a class="footer-link" href="https://github.com/jack-chaudier" target="_blank" rel="noopener">GitHub</a>
       </div>
       <div class="paper-badges">
+        <a class="paper-badge paper-badge-flagship" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">03</span> Validity Mirage (Start Here) <span class="badge-arrow">&nearr;</span>
+        </a>
         <a class="paper-badge" href="/papers/paper_00_continuous_control_structural_regularization.pdf" target="_blank" rel="noopener">
-          <span class="badge-num">00</span> Continuous Control (Draft) <span class="badge-arrow">&nearr;</span>
+          <span class="badge-num">00</span> Continuous Control <span class="badge-arrow">&nearr;</span>
         </a>
         <a class="paper-badge" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">
-          <span class="badge-num">01</span> Absorbing States (Draft) <span class="badge-arrow">&nearr;</span>
+          <span class="badge-num">01</span> Absorbing States <span class="badge-arrow">&nearr;</span>
         </a>
         <a class="paper-badge" href="/papers/paper_02_streaming_oscillation_traps.pdf" target="_blank" rel="noopener">
-          <span class="badge-num">02</span> Streaming Traps (Draft) <span class="badge-arrow">&nearr;</span>
-        </a>
-        <a class="paper-badge" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
-          <span class="badge-num">03</span> Validity Mirage (Draft) <span class="badge-arrow">&nearr;</span>
+          <span class="badge-num">02</span> Streaming Traps <span class="badge-arrow">&nearr;</span>
         </a>
         <a class="paper-badge" href="/papers/paper_i_tropical_algebra.pdf" target="_blank" rel="noopener">
-          <span class="badge-num">I</span> Tropical Algebra (Draft) <span class="badge-arrow">&nearr;</span>
+          <span class="badge-num">I</span> Tropical Algebra <span class="badge-arrow">&nearr;</span>
         </a>
       </div>
     </footer>

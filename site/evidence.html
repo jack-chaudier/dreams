@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MirageKit Evidence Dossier | replay witness, certificate, and validation logs</title>
+    <title>MirageKit Evidence &amp; Validation | replay witness, certificate, and validation logs</title>
     <meta
       name="description"
       content="Curated MirageKit evidence dossier: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise local reproduction path."
@@ -15,7 +15,7 @@
     <link rel="canonical" href="https://dreams-dun.vercel.app/evidence" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="MirageKit Research" />
-    <meta property="og:title" content="MirageKit Evidence Dossier | replay witness, certificate, and validation logs" />
+    <meta property="og:title" content="MirageKit Evidence &amp; Validation | replay witness, certificate, and validation logs" />
     <meta property="og:description" content="Deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path for MirageKit and tropical-mcp." />
     <meta property="og:url" content="https://dreams-dun.vercel.app/evidence" />
     <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png" />
@@ -23,7 +23,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@J_C_Gaffney" />
     <meta name="twitter:creator" content="@J_C_Gaffney" />
-    <meta name="twitter:title" content="MirageKit Evidence Dossier | replay witness, certificate, and validation logs" />
+    <meta name="twitter:title" content="MirageKit Evidence &amp; Validation | replay witness, certificate, and validation logs" />
     <meta name="twitter:description" content="Deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path for MirageKit and tropical-mcp." />
     <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png" />
     <meta name="twitter:image:alt" content="MirageKit research card showing deterministic replay witness metrics and public release artifacts." />
@@ -62,11 +62,11 @@
           <span class="theme-toggle-value mono" id="themeToggleValue">Light</span>
         </button>
       </div>
-      <h1 class="hero-title">Evidence Dossier</h1>
-      <p class="hero-subtitle">The committed public record behind the claim.</p>
+      <h1 class="hero-title">Evidence &amp; Validation</h1>
+      <p class="hero-subtitle">All data and validation logs supporting the research claims.</p>
       <p class="hero-context">
-        This page is the curated research-facing entry point for the validation summary, replay witness, and
-        certificate artifact. Use it before dropping into raw markdown or JSON.
+        Browse this page to see what evidence exists, verify results yourself, or inspect the raw data.
+        Everything here is committed to the public repository&mdash;no claims without checkable artifacts.
       </p>
       <p class="hero-context-note">
         The research program lives in <strong>MirageKit</strong>, the public artifact surface lives in
@@ -80,6 +80,14 @@
         <a class="hero-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp Repo <span class="link-arrow">&nearr;</span></a>
       </div>
     </header>
+
+    <nav class="section-nav" aria-label="Page sections">
+      <a href="#validation">Validation Overview</a>
+      <span class="section-nav-sep">&middot;</span>
+      <a href="#certificate">Certificate</a>
+      <span class="section-nav-sep">&middot;</span>
+      <a href="./">Back to Overview</a>
+    </nav>
 
     <main class="evidence-page">
       <section class="evidence-overview" id="validation" aria-label="Validation overview">
@@ -235,35 +243,35 @@
         <div class="install-codeframe evidence-command">
           <span class="install-codeframe-label">verify</span>
           <pre class="install-pre install-pre-wrap"><code># minimal smoke path
-runtime_info()
-compact_auto(
+runtime_info()               # check your setup
+compact_auto(                # compress with policy selection
   messages=messages,
   token_budget=45,
   k_target=2,
   mode="adaptive",
 )
-certificate(
+certificate(                 # generate portable audit record
   messages=messages,
   token_budget=45,
   k=2,
 )
 
 # fuller reviewer workflow
-runtime_info()
-diagnose(messages=messages, k_max=2)
-context_anchor(messages=messages, k=0)
-compact_auto(
+runtime_info()               # check your setup
+diagnose(messages=messages, k_max=2)    # find compression issues
+context_anchor(messages=messages, k=0)  # mark protected messages
+compact_auto(                # compress with policy selection
   messages=messages,
   token_budget=45,
   k_target=2,
   mode="adaptive",
 )
-certificate(
+certificate(                 # generate portable audit record
   messages=messages,
   token_budget=45,
   k=2,
 )
-telemetry_summary(limit=5)</code></pre>
+telemetry_summary(limit=5)   # review retention behavior</code></pre>
         </div>
       </section>
     </main>
