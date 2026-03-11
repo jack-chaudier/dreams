@@ -313,7 +313,7 @@ main > section {
   max-width: var(--text-w);
   font-family: var(--sans);
   font-size: 0.78rem;
-  color: var(--ink-3);
+  color: var(--ink-2);
   line-height: 1.56;
   padding-left: 1.1rem;
 }
@@ -2373,6 +2373,290 @@ main > section {
 
   .stat-card:last-child {
     border-bottom: none;
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   Audit: First-Visitor Readability Improvements
+   ═════════════════════════════════════════════════ */
+
+/* Trust badge — surfaces affiliation in header area */
+.trust-badge {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Plain-English lede — one sentence summary */
+.hero-lede {
+  margin-top: 0.75rem;
+  max-width: var(--text-w);
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  line-height: 1.62;
+}
+
+/* Audience routing CTA in hero */
+.hero-audience {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.hero-audience-label {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero-audience-link {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 0.3rem 0.72rem;
+  border: 1px solid var(--accent-light);
+  border-radius: 3px;
+  background: var(--surface);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.hero-audience-link:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+
+/* Orientation step numbers */
+.orientation-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--surface);
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.orientation-intro {
+  margin-bottom: 0.7rem;
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  line-height: 1.58;
+}
+
+/* Slider hint text */
+.slider-hint {
+  margin-bottom: 1rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--ink-3);
+  line-height: 1.52;
+}
+
+/* Cards legend */
+.cards-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.85rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--rule-light);
+  border-radius: 3px;
+  background: var(--surface-muted);
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  color: var(--ink-3);
+}
+
+.cards-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cards-legend-item .card-icon {
+  font-size: 0.72rem;
+}
+
+.cards-legend-sep {
+  color: var(--rule);
+}
+
+.status-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.status-dot.status-safe { background: var(--safe); }
+.status-dot.status-warn { background: var(--warn); }
+.status-dot.status-danger { background: var(--danger); }
+
+/* Math examples */
+.math-example {
+  margin-top: 0.35rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--ink-3);
+  line-height: 1.48;
+}
+
+.math-example code {
+  font-style: normal;
+}
+
+/* Install prerequisites callout */
+.install-prereq {
+  margin-bottom: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--warn);
+  border-left-width: 3px;
+  border-radius: 3px;
+  background: var(--warn-bg);
+}
+
+.install-prereq-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warn);
+}
+
+.install-prereq p {
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  color: var(--ink-2);
+  line-height: 1.58;
+}
+
+.install-prereq a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-light);
+}
+
+.install-prereq a:hover {
+  color: var(--accent-hover);
+  border-bottom-color: currentColor;
+}
+
+/* Deep toggle count badge */
+.deep-toggle-count {
+  margin-left: auto;
+  margin-right: 0.75rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 2px;
+  background: var(--accent-light);
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* Flagship paper badge highlight */
+.paper-badge-flagship {
+  color: var(--accent);
+  font-weight: 600;
+  border-bottom-color: var(--accent-light);
+}
+
+.paper-badge-flagship .badge-num {
+  background: var(--accent);
+  color: var(--surface);
+  padding: 0.08rem 0.35rem;
+  border-radius: 2px;
+}
+
+/* Anchor offset so sticky nav does not cover jump targets */
+html {
+  scroll-padding-top: 3.2rem;
+}
+@media (max-width: 680px) {
+  html { scroll-padding-top: 0; }
+}
+
+/* Section progress nav for both pages */
+.section-nav {
+  position: sticky;
+  top: 6px;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 0.7rem;
+  margin: 0.75rem auto 0;
+  padding: 0.45rem 0.8rem;
+  width: var(--content-w);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--surface);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--paper-shadow-soft);
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.section-nav a {
+  color: var(--ink-3);
+  text-decoration: none;
+  padding: 0.2rem 0.35rem;
+  border-radius: 2px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.section-nav a:hover {
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.section-nav-sep {
+  color: var(--rule);
+}
+
+@media (max-width: 680px) {
+  .hero-audience {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cards-legend {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-nav {
+    position: static;
+    width: min(1000px, 100% - 1.5rem);
+    margin: 0.5rem auto 0;
   }
 }
 
