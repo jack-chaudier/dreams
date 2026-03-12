@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Validity Mirage — Same retention, different pivot</title>
-<meta name="description" content="A topological replay of the validity mirage, using real-incident results to compare recency against L2 guarded retention under compression.">
-<meta name="robots" content="index,follow">
+<meta name="description" content="A topological replay of the validity mirage, using real-incident results to compare recency against L2 Guarded retention under compression.">
+<meta name="robots" content="noindex,follow">
 <meta name="theme-color" content="#f7f1e7">
 <link rel="canonical" href="https://dreams-dun.vercel.app/topology-demo">
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
@@ -21,8 +21,8 @@
         This replay visualizes the paper's central mechanism: raw validity can stay high while pivot preservation degrades under compression. A taller hill only means the answer still looks coherent; if the diamond leaves the round pin, the model has switched to a substitute causal pivot while still sounding confident.
       </p>
       <div class="artifact-brief" aria-label="How to read this artifact">
-        <p><strong>Data</strong> 12 real incident graphs from NTSB aviation accident reports plus the Knight Capital 2012 failure.</p>
-        <p><strong>Mechanism</strong> At matched retention <code>0.686859</code> vs <code>0.686859</code>, naive shows <strong>12 / 51</strong> silent mirage while L2 guarded stays at <strong>0 / 4</strong>.</p>
+        <p><strong>Data</strong> 12 total real-incident graphs spanning NTSB aviation accident reports and the Knight Capital 2012 failure.</p>
+        <p><strong>Mechanism</strong> At matched retention <code>0.686859</code> vs <code>0.686859</code>, naive shows <strong>12 / 51</strong> silent mirage while L2 Guarded stays at <strong>0 / 4</strong>.</p>
         <p><strong>Reading rule</strong> Round = original pivot. Diamond = selected pivot after compression. If they split, meaning changed even if the hill stays tall.</p>
       </div>
       <div class="artifact-tools">
@@ -44,11 +44,11 @@
       </div>
 
       <div class="plate-label plate-label--right">
-        <span class="plate-name">Guarded</span>
+        <span class="plate-name">L2 Guarded</span>
         <span class="plate-sub" id="guardedStatus">Protected</span>
       </div>
 
-      <canvas id="mapCanvas" aria-label="Side-by-side topological maps of recency and guarded retention"></canvas>
+      <canvas id="mapCanvas" aria-label="Comparative topological maps of recency and L2 Guarded retention"></canvas>
     </section>
 
     <section class="figure-caption" aria-live="polite">
@@ -105,7 +105,7 @@
         <p class="modal-kicker">Real-Incident Snapshot</p>
         <h2 id="experimentTitle">What the experiment is actually showing</h2>
         <p class="modal-intro">
-          These numbers come from 12 real incident graphs built from NTSB aviation accident reports plus the Knight Capital 2012 trading failure.
+          These numbers come from 12 total real-incident graphs built from NTSB aviation accident reports and the Knight Capital 2012 trading failure.
           The terrain in the demo is interpretive, but every number below is literal Paper 03 output.
         </p>
       </div>
@@ -113,8 +113,8 @@
       <section class="modal-highlight" aria-label="Real-incident overview">
         <article class="modal-highlight-callout">
           <span class="modal-highlight-label">Data</span>
-          <strong>12 incident graphs</strong>
-          <p>NTSB aviation accident reports plus Knight Capital 2012.</p>
+          <strong>12 total incident graphs</strong>
+          <p>NTSB aviation accident reports and Knight Capital 2012.</p>
         </article>
         <article class="modal-highlight-stat">
           <span>Matched retention</span>
@@ -125,7 +125,7 @@
           <strong>12 / 51 silent mirage</strong>
         </article>
         <article class="modal-highlight-stat">
-          <span>L2 guarded</span>
+          <span>L2 Guarded</span>
           <strong>0 / 4 silent mirage</strong>
         </article>
       </section>
@@ -144,7 +144,7 @@
                 <th scope="col">Budget</th>
                 <th scope="col">Achieved retention</th>
                 <th scope="col">Naive / recency</th>
-                <th scope="col">L2 guarded</th>
+                <th scope="col">L2 Guarded</th>
               </tr>
             </thead>
             <tbody>
@@ -171,7 +171,7 @@
         </div>
       </section>
 
-      <p class="modal-footnote">Across degraded rows in this run, naive reaches <strong>36 / 164 = 21.95%</strong> silent mirage while contract stays at <strong>0%</strong> in every budget cell.</p>
+      <p class="modal-footnote">Across degraded rows in this run, naive reaches <strong>36 / 164 = 21.95%</strong> silent mirage while L2 Guarded stays at <strong>0%</strong> in every budget cell.</p>
     </section>
   </div>
 

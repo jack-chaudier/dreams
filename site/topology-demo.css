@@ -878,6 +878,10 @@ select {
     border-radius: 1.5rem;
   }
 
+  .stage.is-stacked {
+    min-height: 86svh;
+  }
+
   .artifact-brief {
     padding-left: 0.8rem;
   }
@@ -892,6 +896,20 @@ select {
 
   .plate-label--right {
     right: 1rem;
+  }
+
+  .stage.is-stacked .plate-label--left {
+    left: 1rem;
+    right: auto;
+    top: 0.9rem;
+    text-align: left;
+  }
+
+  .stage.is-stacked .plate-label--right {
+    left: 1rem;
+    right: auto;
+    top: calc(50% + 0.8rem);
+    text-align: left;
   }
 
   .scrubber-head {
@@ -965,5 +983,15 @@ select {
 
   .modal-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .plate-name {
+    font-size: 1.18rem;
+  }
+
+  .plate-sub {
+    max-width: 14rem;
   }
 }

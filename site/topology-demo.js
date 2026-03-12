@@ -11,7 +11,7 @@
     {
       label: "80% retention",
       title: "Early compression",
-      summary: "Recency broadens into a smoother shell, but the selected pivot still lands on the original causal pivot. Guarded stays centered too.",
+      summary: "Recency broadens into a smoother shell, but the selected pivot still lands on the original causal pivot. L2 Guarded stays centered too.",
       supportNote: "The retained predecessor support under recency is thinning, but it still feeds the original pivot rather than a substitute one.",
       recency: { status: "Support thinning", shell: 0.82, core: 0.8, links: 0.82, drift: 0.08, rupture: 0.12 },
       guarded: { status: "Original pivot", shell: 0.72, core: 0.96, links: 1.0, drift: 0.01, rupture: 0.02 },
@@ -48,6 +48,7 @@
   };
 
   const canvas = document.getElementById("mapCanvas");
+  const stage = document.querySelector(".stage");
   const context = canvas.getContext("2d");
   const slider = document.getElementById("checkpointSlider");
   const reliefSlider = document.getElementById("reliefSlider");
@@ -157,6 +158,10 @@
     state.targetIndex = clamp(index, 0, checkpoints.length - 1);
     slider.value = String(state.targetIndex);
     syncCheckpointUI();
+  }
+
+  function isStackedLayout(width) {
+    return width < 560;
   }
 
   function resize() {
@@ -1240,7 +1245,7 @@
       return null;
     }
 
-    return x < rect.width / 2 ? "recency" : "guarded";
+    return isStackedLayout(rect.width) ? (y < rect.height / 2 ? "recency" : "guarded") : (x < rect.width / 2 ? "recency" : "guarded");
   }
 
   function startDrag(event) {
@@ -1293,19 +1298,22 @@
 
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
+    const stacked = isStackedLayout(width);
 
     context.clearRect(0, 0, width, height);
     drawBackground(width, height);
+    stage.classList.toggle("is-stacked", stacked);
 
     const compact = width < 700;
-    const centerY = height * (compact ? 0.6 : 0.57);
-    const leftCenterX = width * (compact ? 0.285 : 0.26);
-    const rightCenterX = width * (compact ? 0.715 : 0.74);
-    const sideWidth = width * (compact ? 0.4 : 0.43);
+    const leftCenterX = stacked ? width * 0.5 : width * (compact ? 0.285 : 0.26);
+    const rightCenterX = stacked ? width * 0.5 : width * (compact ? 0.715 : 0.74);
+    const recencyCenterY = stacked ? height * 0.3 : height * (compact ? 0.6 : 0.57);
+    const guardedCenterY = stacked ? height * 0.74 : height * (compact ? 0.6 : 0.57);
+    const sideWidth = stacked ? width * 0.8 : width * (compact ? 0.4 : 0.43);
 
     drawMap(
       leftCenterX,
-      centerY,
+      recencyCenterY,
       sideWidth,
       state.recency,
       {
@@ -1322,7 +1330,7 @@
 
     drawMap(
       rightCenterX,
-      centerY,
+      guardedCenterY,
       sideWidth,
       state.guarded,
       {
@@ -1341,8 +1349,13 @@
     context.strokeStyle = "rgba(20, 24, 31, 0.04)";
     context.lineWidth = 1;
     context.beginPath();
-    context.moveTo(width / 2, height * 0.16);
-    context.lineTo(width / 2, height * 0.84);
+    if (stacked) {
+      context.moveTo(width * 0.16, height / 2);
+      context.lineTo(width * 0.84, height / 2);
+    } else {
+      context.moveTo(width / 2, height * 0.16);
+      context.lineTo(width / 2, height * 0.84);
+    }
     context.stroke();
     context.restore();
 
