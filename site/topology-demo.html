@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Validity Mirage — Same retention, different pivot</title>
+<meta name="description" content="A topological replay of the validity mirage, using real-incident results to compare recency against L2 guarded retention under compression.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#f7f1e7">
+<link rel="canonical" href="https://dreams-dun.vercel.app/topology-demo">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="stylesheet" href="./topology-demo.css">
+</head>
+<body>
+  <main class="artifact">
+    <header class="artifact-head">
+      <p class="artifact-return"><a href="./">Return to the main artifact</a></p>
+      <p class="artifact-kicker">Validity Mirage</p>
+      <h1 class="artifact-title">Same retention. Different pivot.</h1>
+      <p class="artifact-note">
+        This replay visualizes the paper's central mechanism: raw validity can stay high while pivot preservation degrades under compression. A taller hill only means the answer still looks coherent; if the diamond leaves the round pin, the model has switched to a substitute causal pivot while still sounding confident.
+      </p>
+      <div class="artifact-brief" aria-label="How to read this artifact">
+        <p><strong>Data</strong> 12 real incident graphs from NTSB aviation accident reports plus the Knight Capital 2012 failure.</p>
+        <p><strong>Mechanism</strong> At matched retention <code>0.686859</code> vs <code>0.686859</code>, naive shows <strong>12 / 51</strong> silent mirage while L2 guarded stays at <strong>0 / 4</strong>.</p>
+        <p><strong>Reading rule</strong> Round = original pivot. Diamond = selected pivot after compression. If they split, meaning changed even if the hill stays tall.</p>
+      </div>
+      <div class="artifact-tools">
+        <p class="artifact-axis-note"><strong>What the terrain means</strong> The terrain is interpretive; the metrics are literal. Left to right shows which causal pivot is being selected. Height shows surviving predecessor support for that choice. Solid flows feed the original pivot; dashed red flows feed a substitute pivot.</p>
+        <div class="artifact-actions">
+          <div class="view-toggle" role="group" aria-label="View mode">
+            <button class="view-toggle-button is-active" id="viewMode3d" type="button" aria-pressed="true">3D</button>
+            <button class="view-toggle-button" id="viewMode2d" type="button" aria-pressed="false">2D</button>
+          </div>
+          <button class="artifact-action" id="openExperiment" type="button">Open Real-Incident Table</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="stage">
+      <div class="plate-label plate-label--left">
+        <span class="plate-name">Recency</span>
+        <span class="plate-sub" id="recencyStatus">Aligned</span>
+      </div>
+
+      <div class="plate-label plate-label--right">
+        <span class="plate-name">Guarded</span>
+        <span class="plate-sub" id="guardedStatus">Protected</span>
+      </div>
+
+      <canvas id="mapCanvas" aria-label="Side-by-side topological maps of recency and guarded retention"></canvas>
+    </section>
+
+    <section class="figure-caption" aria-live="polite">
+      <div class="figure-caption-step">
+        <span class="caption-step" id="checkpointLabel">65% retention</span>
+        <span class="figure-caption-title" id="figureCheckpointTitle">Mirage shelf</span>
+      </div>
+      <p id="checkpointSummary">The mirage shelf appears: recency still looks coherent from the outside while the protected core begins to slip.</p>
+      <p class="caption-support" id="supportSummary">Solid flows are retained predecessor support. Faint dashed red flows show substitute support beginning to feed a substitute pivot.</p>
+      <div class="axis-legend" aria-label="How to read the axes">
+        <span class="axis-key"><strong>Horizontal</strong> selected causal pivot: original &rarr; substitute</span>
+        <span class="axis-key"><strong>Height</strong> surviving predecessor support</span>
+      </div>
+      <div class="ribbon-legend" aria-label="Ribbon legend">
+        <span class="ribbon-key"><span class="marker-swatch marker-swatch--pivot"></span>Original pivot</span>
+        <span class="ribbon-key"><span class="marker-swatch marker-swatch--selected"></span>Selected pivot</span>
+        <span class="ribbon-key"><span class="ribbon-swatch ribbon-swatch--support"></span>Predecessor support for the original pivot</span>
+        <span class="ribbon-key"><span class="ribbon-swatch ribbon-swatch--faux"></span>Substitute support for a wrong pivot</span>
+      </div>
+    </section>
+
+    <section class="scrubber" aria-label="Compression checkpoints">
+      <div class="scrubber-head">
+        <span>Compression checkpoint</span>
+        <span id="checkpointTitle">Mirage shelf</span>
+      </div>
+      <input id="checkpointSlider" class="checkpoint-slider" type="range" min="0" max="4" step="1" value="2" aria-label="Compression checkpoint">
+      <div class="slider-labels">
+        <button class="slider-label" data-step="0" type="button">100%</button>
+        <button class="slider-label" data-step="1" type="button">80%</button>
+        <button class="slider-label is-active" data-step="2" type="button">65%</button>
+        <button class="slider-label" data-step="3" type="button">50%</button>
+        <button class="slider-label" data-step="4" type="button">40%</button>
+      </div>
+      <div class="impact-controls">
+        <label class="impact-control">
+          <span class="impact-label">Support relief</span>
+          <input id="reliefSlider" class="mini-slider" type="range" min="0" max="100" step="1" value="64" aria-label="Support relief lens">
+        </label>
+        <label class="impact-control">
+          <span class="impact-label">Drift emphasis</span>
+          <input id="contrastSlider" class="mini-slider" type="range" min="0" max="100" step="1" value="78" aria-label="Drift emphasis lens">
+        </label>
+        <p class="impact-hint" id="impactHint">Display only. Support relief deepens predecessor-support terrain; drift emphasis widens the visible split between the original and substitute pivots.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-shell" id="experimentModal" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="experimentTitle">
+      <button class="modal-close" id="closeExperiment" type="button" aria-label="Close witness snapshot">Close</button>
+      <div class="modal-copy">
+        <p class="modal-kicker">Real-Incident Snapshot</p>
+        <h2 id="experimentTitle">What the experiment is actually showing</h2>
+        <p class="modal-intro">
+          These numbers come from 12 real incident graphs built from NTSB aviation accident reports plus the Knight Capital 2012 trading failure.
+          The terrain in the demo is interpretive, but every number below is literal Paper 03 output.
+        </p>
+      </div>
+
+      <section class="modal-highlight" aria-label="Real-incident overview">
+        <article class="modal-highlight-callout">
+          <span class="modal-highlight-label">Data</span>
+          <strong>12 incident graphs</strong>
+          <p>NTSB aviation accident reports plus Knight Capital 2012.</p>
+        </article>
+        <article class="modal-highlight-stat">
+          <span>Matched retention</span>
+          <strong>0.686859 vs 0.686859</strong>
+        </article>
+        <article class="modal-highlight-stat">
+          <span>Naive / recency</span>
+          <strong>12 / 51 silent mirage</strong>
+        </article>
+        <article class="modal-highlight-stat">
+          <span>L2 guarded</span>
+          <strong>0 / 4 silent mirage</strong>
+        </article>
+      </section>
+
+      <p class="modal-bridge"><strong>Mechanism</strong> This isolates prerequisite preservation as the mechanism, not raw retained volume. The round marker is the original pivot; the diamond is the selected pivot after compression. Solid flows denote predecessor support, while dashed red flows denote substitute support feeding a wrong pivot.</p>
+
+      <section class="modal-table-section" aria-label="Real-incident validation cells">
+        <div class="modal-table-head">
+          <h3>Real-incident validation cells</h3>
+          <p>Paper 03 tracks pivot preservation, information shift, and silent mirage. Silent mirage means a wrong pivot with no degraded-evidence flag.</p>
+        </div>
+        <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead>
+              <tr>
+                <th scope="col">Budget</th>
+                <th scope="col">Achieved retention</th>
+                <th scope="col">Naive / recency</th>
+                <th scope="col">L2 guarded</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">0.7</th>
+                <td>0.686859 vs 0.686859</td>
+                <td>Pivot preserve 60.0%; silent mirage 12 / 51 (23.5%)</td>
+                <td>Pivot preserve 100.0%; silent mirage 0 / 4 (0.0%)</td>
+              </tr>
+              <tr>
+                <th scope="row">0.5</th>
+                <td>0.478276 vs 0.487536</td>
+                <td>Pivot preserve 45.0%; silent mirage 11 / 56 (19.6%)</td>
+                <td>Pivot preserve 100.0%; silent mirage 0 / 8 (0.0%)</td>
+              </tr>
+              <tr>
+                <th scope="row">0.3</th>
+                <td>0.313141 vs 0.450570</td>
+                <td>Pivot preserve 23.3%; silent mirage 13 / 57 (22.8%)</td>
+                <td>Pivot preserve 100.0%; silent mirage 0 / 10 (0.0%)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <p class="modal-footnote">Across degraded rows in this run, naive reaches <strong>36 / 164 = 21.95%</strong> silent mirage while contract stays at <strong>0%</strong> in every budget cell.</p>
+    </section>
+  </div>
+
+  <script src="./topology-demo.js"></script>
+</body>
+</html>
