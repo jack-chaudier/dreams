@@ -393,14 +393,24 @@ def check_site_index_surface() -> None:
         {"source": "/evidence", "destination": "/site/evidence"} in rewrites,
         "vercel.json must route /evidence to site/evidence",
     )
-    _assert("social-card.png" in index_text, "site/index.html must use the PNG social card")
+    _assert(
+        "results/mirage-shelf-grok-2026-03/mirage_shelf.png" in index_text,
+        "site/index.html must use the public mirage-shelf chart for sharing metadata",
+    )
     _assert("twitter:image:alt" in index_text, "site/index.html must define twitter:image:alt")
     _assert("og:image:alt" in index_text, "site/index.html must define og:image:alt")
+    _assert("@jackcgaffney" in index_text, "site/index.html must use the live X handle")
+    _assert("J_C_Gaffney" not in index_text, "site/index.html must not reference the retired X handle")
     _assert("fonts.googleapis.com" not in index_text, "site/index.html must not depend on Google Fonts")
     _assert("fonts.gstatic.com" not in index_text, "site/index.html must not depend on Google Fonts")
-    _assert("social-card.png" in evidence_text, "site/evidence.html must use the PNG social card")
+    _assert(
+        "results/mirage-shelf-grok-2026-03/mirage_shelf.png" in evidence_text,
+        "site/evidence.html must use the public mirage-shelf chart for sharing metadata",
+    )
     _assert("twitter:image:alt" in evidence_text, "site/evidence.html must define twitter:image:alt")
     _assert("og:image:alt" in evidence_text, "site/evidence.html must define og:image:alt")
+    _assert("@jackcgaffney" in evidence_text, "site/evidence.html must use the live X handle")
+    _assert("J_C_Gaffney" not in evidence_text, "site/evidence.html must not reference the retired X handle")
     _assert("fonts.googleapis.com" not in evidence_text, "site/evidence.html must not depend on Google Fonts")
     _assert("fonts.gstatic.com" not in evidence_text, "site/evidence.html must not depend on Google Fonts")
     _assert("n=3" in evidence_text, "site/evidence.html must explain the replay witness denominator")
@@ -412,7 +422,10 @@ def check_site_index_surface() -> None:
         "mirage-shelf-grok-2026-03" in evidence_text,
         "site/evidence.html must link to the dedicated Grok experiment page",
     )
-    _assert("social-card.png" in experiment_text, "site/mirage-shelf-grok-2026-03.html must use the PNG social card")
+    _assert(
+        "results/mirage-shelf-grok-2026-03/mirage_shelf.png" in experiment_text,
+        "site/mirage-shelf-grok-2026-03.html must use the public mirage-shelf chart for sharing metadata",
+    )
     _assert(
         "twitter:image:alt" in experiment_text,
         "site/mirage-shelf-grok-2026-03.html must define twitter:image:alt",
@@ -420,6 +433,14 @@ def check_site_index_surface() -> None:
     _assert(
         "og:image:alt" in experiment_text,
         "site/mirage-shelf-grok-2026-03.html must define og:image:alt",
+    )
+    _assert(
+        "@jackcgaffney" in experiment_text,
+        "site/mirage-shelf-grok-2026-03.html must use the live X handle",
+    )
+    _assert(
+        "J_C_Gaffney" not in experiment_text,
+        "site/mirage-shelf-grok-2026-03.html must not reference the retired X handle",
     )
     _assert(
         "grok-4-1-fast-non-reasoning" in experiment_text,

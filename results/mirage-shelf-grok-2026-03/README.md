@@ -48,7 +48,7 @@ Limitations: single model (Grok), synthetic items, and witness scoring is a lowe
 - `manifest.json` - experiment metadata and headline metrics
 - `scores.json` - full aggregate metrics
 - `mirage_shelf.png` - main public figure
-- `mirage_shelf_experiment_v3.py` - exact script used for the run
+- `mirage_shelf_experiment_v3.py` - run script snapshot used for the experiment, including the public chart visibility fix
 - `scored_examples_sample.jsonl` - compact public sample of representative scored examples
 
 ## Notes On Scope

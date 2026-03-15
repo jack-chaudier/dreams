@@ -729,7 +729,7 @@ def cmd_plot(args):
                        font=dict(color="gray", size=11), row=1, col=2)
 
     fig.update_yaxes(range=[0.35, 1.02], row=1, col=1, title_text="Accuracy")
-    fig.update_yaxes(range=[0.35, 1.02], row=1, col=2)
+    fig.update_yaxes(range=[0.20, 1.02], row=1, col=2)
     fig.update_xaxes(title_text="Context Length", row=1, col=1)
     fig.update_xaxes(title_text="Context Length", row=1, col=2)
 

@@ -185,4 +185,4 @@ Open: `http://localhost:8080/site/`
 - Checksum refresh entry point: [`scripts/update_public_checksums.sh`](./scripts/update_public_checksums.sh)
 - Zenodo upload notes: [`README_ZENODO.md`](./README_ZENODO.md)
 - Correspondence: <mailto:jackgaff@umich.edu>
-- X / launch updates: <https://x.com/J_C_Gaffney>
+- X / launch updates: <https://x.com/jackcgaffney>
