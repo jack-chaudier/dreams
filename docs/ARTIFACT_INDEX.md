@@ -34,11 +34,16 @@ Use this file as the fastest reviewer path through the public MirageKit release.
 - `results/replay/replay_summary.json`
 - `results/certificates/memory_safety_certificate.json`
 - `results/full_validation.json`
+- `results/mirage-shelf-grok-2026-03/README.md`
+- `results/mirage-shelf-grok-2026-03/scores.json`
+- `results/mirage-shelf-grok-2026-03/mirage_shelf.png`
+- `results/mirage-shelf-grok-2026-03/scored_examples_sample.jsonl`
 
 ## Website and deployment surface
 
 - `site/index.html`
 - `site/evidence.html`
+- `site/mirage-shelf-grok-2026-03.html`
 - `site/data_miragekit.json`
 - `site/data_certificate.json`
 - `vercel.json`

@@ -241,6 +241,19 @@ main > section {
   color: var(--ink-2);
 }
 
+.hero-update {
+  margin-top: 0.7rem;
+  max-width: 44rem;
+  font-family: var(--serif);
+  font-size: 0.84rem;
+  color: var(--ink-2);
+  line-height: 1.58;
+}
+
+.hero-update a {
+  color: var(--accent);
+}
+
 /* ── Key finding callout ─────────────────────── */
 
 .hero-finding {
@@ -2468,6 +2481,32 @@ main > section {
 
 .evidence-command {
   margin-top: 0.8rem;
+}
+
+.experiment-figure {
+  margin-top: 0.85rem;
+  padding: 0.85rem;
+  border: 1px solid var(--rule-light);
+  border-radius: 2px;
+  background: var(--surface-muted);
+}
+
+.experiment-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+}
+
+.experiment-caption {
+  margin-top: 0.55rem;
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  line-height: 1.58;
+}
+
+.experiment-subnote {
+  margin-top: 0.85rem;
 }
 
 /* ══════════════════════════════════════════════════

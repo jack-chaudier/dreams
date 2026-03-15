@@ -6,7 +6,7 @@
     <title>Evidence &amp; Validation | The Validity Mirage</title>
     <meta
       name="description"
-      content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise local reproduction path."
+      content="Evidence for the validity mirage research: deterministic replay witness, a full Grok mirage-shelf experiment, a portable certificate artifact, mirrored validation logs, and precise reproduction paths."
     />
     <meta name="author" content="Jack Chaudier Gaffney" />
     <meta id="themeColorMeta" name="theme-color" content="#1f3d63" />
@@ -16,7 +16,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="The Validity Mirage" />
     <meta property="og:title" content="Evidence &amp; Validation | The Validity Mirage" />
-    <meta property="og:description" content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path." />
+    <meta property="og:description" content="Evidence for the validity mirage research: deterministic replay witness, a full Grok mirage-shelf experiment, a portable certificate artifact, mirrored validation logs, and a precise reproduction path." />
     <meta property="og:url" content="https://dreams-dun.vercel.app/evidence" />
     <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png" />
     <meta property="og:image:alt" content="The Validity Mirage: evidence and validation for silent task drift under AI context compression." />
@@ -24,7 +24,7 @@
     <meta name="twitter:site" content="@J_C_Gaffney" />
     <meta name="twitter:creator" content="@J_C_Gaffney" />
     <meta name="twitter:title" content="Evidence &amp; Validation | The Validity Mirage" />
-    <meta name="twitter:description" content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path." />
+    <meta name="twitter:description" content="Evidence for the validity mirage research: deterministic replay witness, a full Grok mirage-shelf experiment, a portable certificate artifact, mirrored validation logs, and a precise reproduction path." />
     <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png" />
     <meta name="twitter:image:alt" content="The Validity Mirage: evidence and validation for silent task drift under AI context compression." />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
@@ -72,16 +72,20 @@
         <strong>dreams</strong> (evidence &mdash; this site),
         <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a> (implementation), and
         <a href="https://github.com/jack-chaudier/immortal-baby" target="_blank" rel="noopener">immortal-baby</a> (product/runtime).
-        The replay rates below are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction.
+        The public record now includes both the deterministic replay witness with <code>n=3</code> variants per policy and retention fraction
+        and a 200-item long-context Grok experiment showing a widening answer-vs-witness gap.
       </p>
       <div class="hero-links">
         <a class="hero-link" href="./">Overview <span class="link-arrow">&nwarr;</span></a>
+        <a class="hero-link" href="./mirage-shelf-grok-2026-03.html">New Grok Experiment <span class="link-arrow">&nwarr;</span></a>
         <a class="hero-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship Paper <span class="link-arrow">&nearr;</span></a>
         <a class="hero-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp Repo <span class="link-arrow">&nearr;</span></a>
       </div>
     </header>
 
     <nav class="section-nav" aria-label="Page sections">
+      <a href="#mirage-shelf">Grok Experiment</a>
+      <span class="section-nav-sep">&middot;</span>
       <a href="#validation">Validation Overview</a>
       <span class="section-nav-sep">&middot;</span>
       <a href="#certificate">Certificate</a>
@@ -111,15 +115,15 @@
             <ul class="evidence-summary-list">
               <li>
                 <strong>Strongest claim</strong>
-                <span>Naive recency can preserve answerability while losing pivot integrity; the guarded policy keeps the protected arc on the committed witness.</span>
+                <span>Naive recency can preserve answerability while losing pivot integrity, and a full Grok experiment now shows the answer-vs-witness gap widening sharply at long context.</span>
               </li>
               <li>
                 <strong>Witness scope</strong>
-                <span>The rendered replay rates are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction.</span>
+                <span>The replay rates are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction; the Grok bundle adds <code>200</code> synthetic long-document items and <code>1600</code> scored responses.</span>
               </li>
               <li>
                 <strong>Public artifacts</strong>
-                <span>Lint, typing, test, build, installed-wheel, functional validation, replay summaries, and a portable certificate are all published directly from committed files.</span>
+                <span>Lint, typing, test, build, installed-wheel, functional validation, replay summaries, the Grok experiment bundle, and a portable certificate are all published directly from committed files.</span>
               </li>
             </ul>
             <p class="evidence-summary-note">
@@ -130,9 +134,37 @@
           </aside>
 
           <div class="evidence-records">
-            <article class="evidence-record">
+            <article class="evidence-record" id="mirage-shelf">
               <div class="evidence-record-head">
                 <span class="evidence-record-index mono">01</span>
+                <div>
+                  <span class="evidence-record-kicker">Long-context experiment</span>
+                  <h3>Full Grok mirage-shelf run</h3>
+                </div>
+              </div>
+              <p>
+                This bundle measures answer accuracy versus witness fidelity on <code>200</code> synthetic long-document items from
+                <code>4K</code> to <code>512K</code> context. In the normal condition, the mirage gap widens from <code>+0.038</code>
+                at <code>4K</code> to <code>+0.222</code> at <code>512K</code>. In the witness-removed control, answer accuracy falls to
+                <code>0.315</code> at <code>4K</code> and <code>0.275</code> at <code>256K</code>.
+              </p>
+              <ul class="evidence-record-list">
+                <li><code>1600</code> total scored responses across normal and witness-removed conditions</li>
+                <li>Normal-condition answer accuracy stays relatively high while witness fidelity degrades sharply by <code>512K</code></li>
+                <li>The full batch produced <code>1587</code> successes; <code>13</code> failed rows were replayed directly for a complete local result set</li>
+                <li>The public branch includes the chart, score table, run script, manifest, and a compact scored sample</li>
+              </ul>
+              <div class="evidence-references">
+                <a class="evidence-reference" href="./mirage-shelf-grok-2026-03.html">Experiment page <span class="evidence-reference-arrow">&nwarr;</span></a>
+                <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/README.md" target="_blank" rel="noopener">Experiment README <span class="evidence-reference-arrow">&nearr;</span></a>
+                <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/scores.json" target="_blank" rel="noopener">Scores JSON <span class="evidence-reference-arrow">&nearr;</span></a>
+                <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/scored_examples_sample.jsonl" target="_blank" rel="noopener">Scored sample <span class="evidence-reference-arrow">&nearr;</span></a>
+              </div>
+            </article>
+
+            <article class="evidence-record">
+              <div class="evidence-record-head">
+                <span class="evidence-record-index mono">02</span>
                 <div>
                   <span class="evidence-record-kicker">Implementation checks</span>
                   <h3>Build, tests, and functional validation</h3>
@@ -162,7 +194,7 @@
 
             <article class="evidence-record">
               <div class="evidence-record-head">
-                <span class="evidence-record-index mono">02</span>
+                <span class="evidence-record-index mono">03</span>
                 <div>
                   <span class="evidence-record-kicker">Replay witness</span>
                   <h3>Guarded compaction preserves the pivot</h3>
@@ -188,7 +220,7 @@
 
             <article class="evidence-record" id="certificate">
               <div class="evidence-record-head">
-                <span class="evidence-record-index mono">03</span>
+                <span class="evidence-record-index mono">04</span>
                 <div>
                   <span class="evidence-record-kicker">Portable artifact</span>
                   <h3>Certificate snapshot</h3>
