@@ -336,6 +336,84 @@ main > section {
   line-height: 1.7;
 }
 
+/* ── Program map ─────────────────────────────── */
+
+.program-map {
+  margin-top: 1.5rem;
+}
+
+.program-map-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--sans);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.program-map-intro {
+  margin-bottom: 0.7rem;
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+.program-map-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.program-map-item {
+  display: block;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--rule-light);
+  border-radius: 2px;
+  background: var(--surface-muted);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.program-map-item:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.program-map-item-current {
+  border-color: var(--accent);
+}
+
+.program-map-name {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.15rem;
+}
+
+.program-map-role {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 0.25rem;
+}
+
+.program-map-desc {
+  display: block;
+  font-family: var(--serif);
+  font-size: 0.72rem;
+  color: var(--ink-2);
+  line-height: 1.45;
+}
+
 /* ── Author/meta line ────────────────────────── */
 
 .hero-meta {
@@ -2548,6 +2626,10 @@ html {
 
   .problem-stat:nth-child(-n+2) {
     border-bottom: 1px solid var(--rule-light);
+  }
+
+  .program-map-grid {
+    grid-template-columns: 1fr;
   }
 
   .math-grid {
