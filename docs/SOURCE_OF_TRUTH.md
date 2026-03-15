@@ -18,6 +18,10 @@ This file defines what wins when public MirageKit artifacts disagree.
   `results/certificates/memory_safety_certificate.json`, mirrored into `site/data_certificate.json`
 - Mirrored implementation validation:
   `results/ruff.txt`, `results/mypy.txt`, `results/pytest.txt`, `results/build.txt`, `results/installed_wheel.txt`, and `results/full_validation.json`
+- Grok mirage-shelf experiment metrics:
+  `results/mirage-shelf-grok-2026-03/scores.json` and `results/mirage-shelf-grok-2026-03/manifest.json`
+- Grok mirage-shelf public sample:
+  `results/mirage-shelf-grok-2026-03/scored_examples_sample.jsonl`
 - Paper inventory and metadata:
   `papers/manifest.json`, the PDF bundle in `papers/`, and citation metadata in `CITATION.cff` plus `.zenodo.json`
 - Release integrity:

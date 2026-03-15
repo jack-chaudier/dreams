@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grok Mirage Shelf | The Validity Mirage</title>
+    <meta
+      name="description"
+      content="Full March 2026 Grok mirage-shelf experiment: 200 items, 4K to 512K context, widening answer-vs-witness gap, and a witness-removed causal control."
+    />
+    <meta name="author" content="Jack Chaudier Gaffney" />
+    <meta id="themeColorMeta" name="theme-color" content="#1f3d63" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://dreams-dun.vercel.app/mirage-shelf-grok-2026-03" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Validity Mirage" />
+    <meta property="og:title" content="Grok Mirage Shelf | The Validity Mirage" />
+    <meta property="og:description" content="A 200-item Grok long-context experiment showing answer accuracy staying relatively stable while witness fidelity degrades sharply." />
+    <meta property="og:url" content="https://dreams-dun.vercel.app/mirage-shelf-grok-2026-03" />
+    <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png" />
+    <meta property="og:image:alt" content="The Validity Mirage: full Grok mirage-shelf experiment and artifact bundle." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@J_C_Gaffney" />
+    <meta name="twitter:creator" content="@J_C_Gaffney" />
+    <meta name="twitter:title" content="Grok Mirage Shelf | The Validity Mirage" />
+    <meta name="twitter:description" content="A 200-item Grok long-context experiment showing answer accuracy staying relatively stable while witness fidelity degrades sharply." />
+    <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png" />
+    <meta name="twitter:image:alt" content="The Validity Mirage: full Grok mirage-shelf experiment and artifact bundle." />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script>
+      (function () {
+        try {
+          var queryTheme = new URLSearchParams(window.location.search).get('theme');
+          var storedTheme = localStorage.getItem('miragekit-theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = queryTheme === 'dark' || queryTheme === 'light'
+            ? queryTheme
+            : (storedTheme === 'dark' || storedTheme === 'light'
+              ? storedTheme
+              : (prefersDark ? 'dark' : 'light'));
+          document.documentElement.dataset.theme = theme;
+          var themeColor = document.querySelector('meta[name="theme-color"]');
+          if (themeColor) {
+            themeColor.setAttribute('content', theme === 'dark' ? '#0c0f14' : '#faf8f4');
+          }
+        } catch (err) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="hero hero-subpage">
+      <div class="hero-topline">
+        <span class="brand-label">MirageKit Research Program</span>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+          <span class="theme-toggle-label">Theme</span>
+          <span class="theme-toggle-value mono" id="themeToggleValue">Light</span>
+        </button>
+      </div>
+      <h1 class="hero-title">Grok Mirage Shelf</h1>
+      <p class="hero-subtitle">A 200-item long-context experiment showing answer accuracy surviving longer than witness fidelity.</p>
+      <p class="hero-context">
+        This run tested Grok on synthetic long-document decision items from <code>4K</code> to <code>512K</code> context.
+        The main empirical result is clean: in the normal condition, answer accuracy declines modestly while witness fidelity falls much faster,
+        widening the mirage gap from <code>+0.038</code> at <code>4K</code> to <code>+0.222</code> at <code>512K</code>.
+      </p>
+      <p class="hero-context-note">
+        The witness-removed causal control falls well below chance, from <code>0.315</code> at <code>4K</code> to
+        <code>0.275</code> at <code>256K</code>. The conservative interpretation is that nearby near-miss evidence can actively
+        pull the model toward the wrong answer when the true witness is missing.
+      </p>
+      <div class="hero-links">
+        <a class="hero-link" href="./">Overview <span class="link-arrow">&nwarr;</span></a>
+        <a class="hero-link" href="./evidence.html">Evidence Dossier <span class="link-arrow">&nwarr;</span></a>
+        <a class="hero-link" href="/results/mirage-shelf-grok-2026-03/README.md" target="_blank" rel="noopener">Artifact Bundle <span class="link-arrow">&nearr;</span></a>
+      </div>
+    </header>
+
+    <nav class="section-nav" aria-label="Page sections">
+      <a href="#findings">Findings</a>
+      <span class="section-nav-sep">&middot;</span>
+      <a href="#methods">Methods</a>
+      <span class="section-nav-sep">&middot;</span>
+      <a href="#artifacts">Artifacts</a>
+      <span class="section-nav-sep">&middot;</span>
+      <a href="./evidence.html">Back to Evidence</a>
+    </nav>
+
+    <main class="evidence-page">
+      <section class="evidence-overview" id="findings" aria-label="Findings">
+        <div class="evidence-overview-header">
+          <div>
+            <span class="section-kicker">Latest Experiment</span>
+            <h2>Answer fidelity stays relatively high while witness fidelity collapses</h2>
+          </div>
+          <p class="evidence-intro">
+            The shelf is small at short context, then widens sharply by <code>512K</code>. This is the core empirical bridge
+            from the theoretical mirage-gap story to a real frontier-model measurement.
+          </p>
+        </div>
+
+        <div class="evidence-ledger">
+          <aside class="evidence-summary" aria-label="Experiment summary">
+            <span class="evidence-summary-label">At A Glance</span>
+            <h3>March 2026 Grok run</h3>
+            <ul class="evidence-summary-list">
+              <li>
+                <strong>Scale</strong>
+                <span><code>200</code> items and <code>1600</code> scored responses across normal and witness-removed conditions.</span>
+              </li>
+              <li>
+                <strong>Headline</strong>
+                <span>The normal-condition mirage gap widens from <code>+0.038</code> at <code>4K</code> to <code>+0.222</code> at <code>512K</code>.</span>
+              </li>
+              <li>
+                <strong>Control</strong>
+                <span>With the witness removed, answer accuracy drops to <code>0.315</code> at <code>4K</code> and <code>0.275</code> at <code>256K</code>.</span>
+              </li>
+            </ul>
+            <p class="evidence-summary-note">
+              <strong>Model</strong><br />
+              <code>grok-4-1-fast-non-reasoning</code><br />
+              xAI batch run plus <code>13</code> replayed failures for a complete local result set.
+            </p>
+          </aside>
+
+          <div class="evidence-records">
+            <article class="evidence-record">
+              <div class="evidence-record-head">
+                <span class="evidence-record-index mono">01</span>
+                <div>
+                  <span class="evidence-record-kicker">Main figure</span>
+                  <h3>The mirage gap grows with context</h3>
+                </div>
+              </div>
+              <p>
+                Answer accuracy declines modestly across the normal condition, from <code>0.825</code> at <code>4K</code> to
+                <code>0.775</code> at <code>512K</code>. Witness fidelity declines much faster, from <code>0.7867</code> to
+                <code>0.5533</code>, producing a much larger answer-vs-witness gap at the longest context.
+              </p>
+              <figure class="experiment-figure">
+                <img
+                  src="/results/mirage-shelf-grok-2026-03/mirage_shelf.png"
+                  alt="Mirage shelf chart for Grok showing answer accuracy, witness accuracy, and their gap across context length."
+                />
+                <figcaption class="experiment-caption">
+                  Full run on <code>200</code> items. The strongest clean empirical pattern is the widening answer-vs-witness gap, not a monotone rise in corruption.
+                </figcaption>
+              </figure>
+            </article>
+
+            <article class="evidence-record">
+              <div class="evidence-record-head">
+                <span class="evidence-record-index mono">02</span>
+                <div>
+                  <span class="evidence-record-kicker">Key scores</span>
+                  <h3>Compact table</h3>
+                </div>
+              </div>
+              <p><strong>Normal condition</strong></p>
+              <div class="witness-table">
+                <div class="witness-row"><span class="witness-label">4K</span><span class="mono">answer 0.825 · witness 0.7867 · gap +0.0383 · corruption 0.2567</span></div>
+                <div class="witness-row"><span class="witness-label">16K</span><span class="mono">answer 0.8200 · witness 0.7767 · gap +0.0433 · corruption 0.2467</span></div>
+                <div class="witness-row"><span class="witness-label">64K</span><span class="mono">answer 0.8100 · witness 0.7517 · gap +0.0583 · corruption 0.2717</span></div>
+                <div class="witness-row"><span class="witness-label">256K</span><span class="mono">answer 0.8100 · witness 0.7150 · gap +0.0950 · corruption 0.2583</span></div>
+                <div class="witness-row"><span class="witness-label">512K</span><span class="mono">answer 0.7750 · witness 0.5533 · gap +0.2217 · corruption 0.2200</span></div>
+              </div>
+              <p class="experiment-subnote"><strong>Witness-removed control</strong></p>
+              <div class="witness-table">
+                <div class="witness-row"><span class="witness-label">4K</span><span class="mono">answer 0.3150 · witness 0.1100 · gap +0.2050 · corruption 0.6700</span></div>
+                <div class="witness-row"><span class="witness-label">64K</span><span class="mono">answer 0.2850 · witness 0.1083 · gap +0.1767 · corruption 0.6850</span></div>
+                <div class="witness-row"><span class="witness-label">256K</span><span class="mono">answer 0.2750 · witness 0.1050 · gap +0.1700 · corruption 0.6400</span></div>
+              </div>
+            </article>
+
+            <article class="evidence-record">
+              <div class="evidence-record-head">
+                <span class="evidence-record-index mono">03</span>
+                <div>
+                  <span class="evidence-record-kicker">Interpretation</span>
+                  <h3>What the full run supports</h3>
+                </div>
+              </div>
+              <ul class="evidence-record-list">
+                <li>The normal-condition shelf is real: answer fidelity is relatively preserved while witness fidelity degrades materially.</li>
+                <li>The <code>512K</code> point is a clear cliff: the mirage gap reaches <code>+0.2217</code>, the largest value in the run.</li>
+                <li>The control result is stronger than simple “drop to chance” language. The below-chance answers suggest the near-miss lines are often actively misleading once the true witness is removed.</li>
+                <li>Corruption in the normal condition is consistently present, but the strongest monotone signal in the full run is witness loss, not rising corruption.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="evidence-note" aria-label="Caveats">
+        <p>
+          <strong>Caveats</strong>
+          Limitations: single model, synthetic items, and witness scoring should be treated as a lower bound because exact-sentence
+          matching misses paraphrases, with a roughly <code>79%</code> ceiling at <code>4K</code>. The public bundle keeps the branch
+          readable by publishing the chart, scores, script, and a scored sample, not the full raw output dump.
+        </p>
+      </section>
+
+      <section class="evidence-repro" id="methods" aria-label="Methods and artifacts">
+        <div class="evidence-repro-copy">
+          <span class="section-kicker">Methods</span>
+          <h2>Experiment design</h2>
+          <p>
+            The run used <code>200</code> synthetic long-document items with a binary decision question, exact witness lines, near-miss lines,
+            and distractor paragraphs. Each normal-condition request asked the model to choose an answer and copy the exact evidence sentences.
+            The causal control removed the true witness while leaving the near-miss structure in place.
+          </p>
+          <ul class="evidence-repro-list">
+            <li><strong>Model:</strong> <code>grok-4-1-fast-non-reasoning</code></li>
+            <li><strong>Contexts:</strong> normal at <code>4K</code>, <code>16K</code>, <code>64K</code>, <code>256K</code>, <code>512K</code>; witness-removed at <code>4K</code>, <code>64K</code>, <code>256K</code></li>
+            <li><strong>Scoring:</strong> answer correctness, witness recovery, corruption, and mixed-evidence rate</li>
+            <li><strong>Execution:</strong> xAI batch API with direct replay for <code>13</code> failed rows to produce a complete local output set</li>
+          </ul>
+          <div class="evidence-references evidence-repro-links" id="artifacts">
+            <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/README.md" target="_blank" rel="noopener">Experiment README <span class="evidence-reference-arrow">&nearr;</span></a>
+            <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/manifest.json" target="_blank" rel="noopener">Manifest JSON <span class="evidence-reference-arrow">&nearr;</span></a>
+            <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/scores.json" target="_blank" rel="noopener">Scores JSON <span class="evidence-reference-arrow">&nearr;</span></a>
+            <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/scored_examples_sample.jsonl" target="_blank" rel="noopener">Scored sample <span class="evidence-reference-arrow">&nearr;</span></a>
+            <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/mirage_shelf_experiment_v3.py" target="_blank" rel="noopener">Run script <span class="evidence-reference-arrow">&nearr;</span></a>
+          </div>
+        </div>
+
+        <div class="install-codeframe evidence-command">
+          <span class="install-codeframe-label">headline</span>
+          <pre class="install-pre install-pre-wrap"><code>{
+  "normal_4k_gap": 0.0383,
+  "normal_512k_gap": 0.2217,
+  "normal_4k_answer_accuracy": 0.825,
+  "normal_512k_answer_accuracy": 0.775,
+  "normal_4k_witness_accuracy": 0.7867,
+  "normal_512k_witness_accuracy": 0.5533,
+  "removed_4k_answer_accuracy": 0.315,
+  "removed_256k_answer_accuracy": 0.275
+}</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="footer-quote"><em>The public record should be easier to inspect than the claim it supports.</em></p>
+      <p class="footer-credit">
+        Jack Chaudier Gaffney &middot; University of Michigan &middot; 2026 &middot;
+        <a class="footer-doi" href="https://doi.org/10.5281/zenodo.18794293" target="_blank" rel="noopener">DOI: 10.5281/zenodo.18794293</a>
+      </p>
+      <div class="footer-links">
+        <a class="footer-link" href="./">Overview</a>
+        <a class="footer-link" href="./evidence.html">Evidence</a>
+        <a class="footer-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>
+        <a class="footer-link" href="mailto:jackgaff@umich.edu">Correspondence</a>
+        <a class="footer-link" href="https://x.com/J_C_Gaffney" target="_blank" rel="noopener">X / updates</a>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var themeToggle = document.getElementById('themeToggle');
+        var themeToggleValue = document.getElementById('themeToggleValue');
+        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+        function setTheme(theme) {
+          document.documentElement.dataset.theme = theme;
+          localStorage.setItem('miragekit-theme', theme);
+          if (themeToggleValue) {
+            themeToggleValue.textContent = theme === 'dark' ? 'Dark' : 'Light';
+          }
+          if (themeToggle) {
+            themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+            themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+          }
+          if (themeColorMeta) {
+            themeColorMeta.setAttribute('content', theme === 'dark' ? '#0c0f14' : '#faf8f4');
+          }
+        }
+
+        setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+
+        if (themeToggle) {
+          themeToggle.addEventListener('click', function () {
+            var nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            setTheme(nextTheme);
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

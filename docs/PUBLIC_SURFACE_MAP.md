@@ -7,6 +7,7 @@ Use this file as the shortest path to the place that should change when the publ
 - `README.md` is the repo landing page for researchers, press, and cold outreach.
 - `site/index.html` is the overview page and should stay aligned with the README's scope language.
 - `site/evidence.html` is the curated evidence dossier and should be the place where raw artifact links are introduced.
+- `site/mirage-shelf-grok-2026-03.html` is the dedicated public page for the March 2026 Grok long-context experiment.
 - `docs/ARTIFACT_INDEX.md` is the reviewer-facing entry point when someone wants the shortest path through the release.
 - `docs/SOURCE_OF_TRUTH.md` defines what wins when narrative prose, scripts, and artifacts disagree.
 - `docs/THEORY_STATUS.md` is where theory-boundary corrections should land before they are echoed elsewhere.
@@ -14,6 +15,7 @@ Use this file as the shortest path to the place that should change when the publ
 ## Data-backed public artifacts
 
 - `results/replay/` is the committed replay witness.
+- `results/mirage-shelf-grok-2026-03/` is the committed empirical bundle for the March 2026 Grok mirage-shelf experiment.
 - `results/certificates/memory_safety_certificate.json` is the public memory-safety certificate snapshot.
 - `results/ruff.txt`, `results/mypy.txt`, `results/pytest.txt`, `results/build.txt`, `results/installed_wheel.txt`, and `results/full_validation.json` mirror the canonical validation outputs from `tropical-mcp`.
 - `results/VALIDATION_SUMMARY.md` is the human-readable summary that sits on top of those raw files.
@@ -42,6 +44,7 @@ Use this file as the shortest path to the place that should change when the publ
 - `results/SHA256SUMS.txt` and `results/replay/README.md` should be refreshed whenever mirrored evidence files change.
 - If the validation shape changes in `tropical-mcp`, refresh both `results/` and the checks in `scripts/validate_artifacts.py`.
 - If the replay witness changes, refresh `results/replay/`, `results/SHA256SUMS.txt`, `site/data_miragekit.json`, and the scope language in `site/index.html`, `site/evidence.html`, `README.md`, and `docs/CREDIBILITY_NOTES.md` together.
+- If the Grok experiment bundle changes, refresh `results/mirage-shelf-grok-2026-03/`, `results/SHA256SUMS.txt`, `site/mirage-shelf-grok-2026-03.html`, `site/evidence.html`, `site/index.html`, and the reviewer docs together.
 - If the public verification workflow wording changes, keep the smoke-test versus reviewer-workflow distinction aligned across `README.md`, `site/index.html`, `site/evidence.html`, and `docs/SOURCE_OF_TRUTH.md`.
 
 ## Companion implementation

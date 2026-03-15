@@ -353,6 +353,7 @@ def check_site_index_surface() -> None:
     site_base = _public_site_base()
     index_text = (ROOT / "site" / "index.html").read_text(encoding="utf-8")
     evidence_text = (ROOT / "site" / "evidence.html").read_text(encoding="utf-8")
+    experiment_text = (ROOT / "site" / "mirage-shelf-grok-2026-03.html").read_text(encoding="utf-8")
     sitemap_text = (ROOT / "site" / "sitemap.xml").read_text(encoding="utf-8")
     robots_text = (ROOT / "site" / "robots.txt").read_text(encoding="utf-8")
     vercel = _load_json(ROOT / "vercel.json")
@@ -366,10 +367,18 @@ def check_site_index_surface() -> None:
             header_map[str(item.get("key"))] = str(item.get("value"))
 
     _assert((ROOT / "site" / "evidence.html").exists(), "site/evidence.html missing")
+    _assert(
+        (ROOT / "site" / "mirage-shelf-grok-2026-03.html").exists(),
+        "site/mirage-shelf-grok-2026-03.html missing",
+    )
     _assert((ROOT / "site" / "social-card.png").exists(), "site/social-card.png missing")
     _assert(
         f"{site_base}/evidence" in sitemap_text,
         "sitemap.xml must include the rendered evidence page",
+    )
+    _assert(
+        f"{site_base}/mirage-shelf-grok-2026-03" in sitemap_text,
+        "sitemap.xml must include the rendered Grok experiment page",
     )
     _assert(
         f"{site_base}/results/VALIDATION_SUMMARY.md" not in sitemap_text,
@@ -395,6 +404,27 @@ def check_site_index_surface() -> None:
     _assert("fonts.googleapis.com" not in evidence_text, "site/evidence.html must not depend on Google Fonts")
     _assert("fonts.gstatic.com" not in evidence_text, "site/evidence.html must not depend on Google Fonts")
     _assert("n=3" in evidence_text, "site/evidence.html must explain the replay witness denominator")
+    _assert(
+        "mirage-shelf-grok-2026-03" in index_text,
+        "site/index.html must link to the dedicated Grok experiment page",
+    )
+    _assert(
+        "mirage-shelf-grok-2026-03" in evidence_text,
+        "site/evidence.html must link to the dedicated Grok experiment page",
+    )
+    _assert("social-card.png" in experiment_text, "site/mirage-shelf-grok-2026-03.html must use the PNG social card")
+    _assert(
+        "twitter:image:alt" in experiment_text,
+        "site/mirage-shelf-grok-2026-03.html must define twitter:image:alt",
+    )
+    _assert(
+        "og:image:alt" in experiment_text,
+        "site/mirage-shelf-grok-2026-03.html must define og:image:alt",
+    )
+    _assert(
+        "grok-4-1-fast-non-reasoning" in experiment_text,
+        "site/mirage-shelf-grok-2026-03.html must name the evaluated model",
+    )
     _assert(
         "Content-Security-Policy" in header_map,
         "vercel.json must define a site-wide Content-Security-Policy header",
@@ -440,6 +470,12 @@ def check_structure() -> None:
         ROOT / "results" / "full_validation.json",
         ROOT / "results" / "SHA256SUMS.txt",
         ROOT / "results" / "replay" / "README.md",
+        ROOT / "results" / "mirage-shelf-grok-2026-03" / "README.md",
+        ROOT / "results" / "mirage-shelf-grok-2026-03" / "manifest.json",
+        ROOT / "results" / "mirage-shelf-grok-2026-03" / "scores.json",
+        ROOT / "results" / "mirage-shelf-grok-2026-03" / "mirage_shelf.png",
+        ROOT / "results" / "mirage-shelf-grok-2026-03" / "mirage_shelf_experiment_v3.py",
+        ROOT / "results" / "mirage-shelf-grok-2026-03" / "scored_examples_sample.jsonl",
     ]
     for path in required_paths:
         _assert(path.exists(), f"Required public artifact missing: {path.relative_to(ROOT)}")

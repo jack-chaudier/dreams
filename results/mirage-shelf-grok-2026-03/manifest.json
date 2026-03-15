@@ -1,0 +1,39 @@
+{
+  "title": "Mirage Shelf on Grok (March 2026)",
+  "model": "grok-4-1-fast-non-reasoning",
+  "batch_id": "batch_f24d365a-366c-4e04-baf8-b01b639ed986",
+  "items": 200,
+  "responses": 1600,
+  "normal_contexts": [
+    4000,
+    16000,
+    64000,
+    256000,
+    512000
+  ],
+  "witness_removed_contexts": [
+    4000,
+    64000,
+    256000
+  ],
+  "batch_successes": 1587,
+  "batch_replayed": 13,
+  "bundle_files": [
+    "README.md",
+    "manifest.json",
+    "scores.json",
+    "mirage_shelf.png",
+    "mirage_shelf_experiment_v3.py",
+    "scored_examples_sample.jsonl"
+  ],
+  "headline_metrics": {
+    "normal_4k_answer_accuracy": 0.825,
+    "normal_4k_witness_accuracy": 0.7867,
+    "normal_512k_answer_accuracy": 0.775,
+    "normal_512k_witness_accuracy": 0.5533,
+    "normal_4k_gap": 0.0383,
+    "normal_512k_gap": 0.2217,
+    "removed_4k_answer_accuracy": 0.315,
+    "removed_256k_answer_accuracy": 0.275
+  }
+}

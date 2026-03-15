@@ -68,6 +68,18 @@ Research-facing summary: <https://dreams-dun.vercel.app/evidence>
 Raw validation summary: [`results/VALIDATION_SUMMARY.md`](./results/VALIDATION_SUMMARY.md)
 Public surface map: [`docs/PUBLIC_SURFACE_MAP.md`](./docs/PUBLIC_SURFACE_MAP.md)
 
+## New Empirical Result
+
+The public bundle now also includes a full long-context mirage-shelf experiment on Grok:
+
+- Normal-condition answer accuracy declines from `0.825` at `4K` to `0.775` at `512K`
+- Normal-condition witness fidelity declines from `0.7867` at `4K` to `0.5533` at `512K`
+- The mirage gap widens from `+0.0383` at `4K` to `+0.2217` at `512K`
+- In the witness-removed causal control, answer accuracy falls to `0.315` at `4K` and `0.275` at `256K`
+
+Canonical bundle: [`results/mirage-shelf-grok-2026-03/README.md`](./results/mirage-shelf-grok-2026-03/README.md)
+Public page: <https://dreams-dun.vercel.app/mirage-shelf-grok-2026-03>
+
 ## Interpretation Notes
 
 - The strongest public evidence in this repo is the deterministic replay witness plus the mirrored validation logs in `results/`.
@@ -155,10 +167,12 @@ Open: `http://localhost:8080/site/`
 - Live site: <https://dreams-dun.vercel.app>
 - Flagship paper: <https://dreams-dun.vercel.app/papers/paper_03_validity_mirage_compression.pdf>
 - Evidence dossier: <https://dreams-dun.vercel.app/evidence>
+- Grok mirage-shelf experiment: <https://dreams-dun.vercel.app/mirage-shelf-grok-2026-03>
 - Implementation repo: <https://github.com/jack-chaudier/tropical-mcp>
 - Site source: [`site/`](./site/)
 - Paper bundle: [`papers/`](./papers/)
 - Repro artifacts: [`results/`](./results/)
+- Grok experiment bundle: [`results/mirage-shelf-grok-2026-03/`](./results/mirage-shelf-grok-2026-03/)
 - Notebook workspace: [`notebooks/`](./notebooks/)
 - Interpretation notes: [`docs/CREDIBILITY_NOTES.md`](./docs/CREDIBILITY_NOTES.md)
 - Artifact index: [`docs/ARTIFACT_INDEX.md`](./docs/ARTIFACT_INDEX.md)
