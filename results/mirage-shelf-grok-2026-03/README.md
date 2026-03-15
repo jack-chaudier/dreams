@@ -37,6 +37,8 @@ In the witness-removed control, answer accuracy fell well below chance, from `0.
 
 ## Caveats
 
+Limitations: single model (Grok), synthetic items, and witness scoring is a lower bound due to paraphrasing, with a roughly `79%` ceiling at `4K`.
+
 - This is a single-model result.
 - Witness recovery should be read as a lower bound because exact-sentence scoring misses some paraphrases.
 - In the full run, corruption in the normal condition is consistently present but not monotone with context. The strongest clean empirical story is the widening answer-vs-witness gap.
