@@ -6,10 +6,16 @@ First public release of the MirageKit research surface: website, working-paper b
 
 ## 15-Second Map
 
-- `MirageKit` is the research program.
-- `dreams` is the public showcase repo: website, papers, replay witness, and reproducible evidence.
-- `tropical-mcp` is the source-available evaluation implementation repo for Codex and Claude-style clients.
-- If you want to verify the implementation directly, use `runtime_info()`, `compact_auto(...)`, and `certificate(...)` as the minimum smoke flow; for a fuller review add `diagnose(...)`, `context_anchor(...)`, and `telemetry_summary(...)`.
+`MirageKit` is the research program. It spans four public repos, each owning one layer:
+
+| Repo | Layer | What it owns |
+|------|-------|--------------|
+| [`stark`](https://github.com/jack-chaudier/stark) | Theory | Structural regularization and the algebraic foundations behind the mirage |
+| [`dreams`](https://github.com/jack-chaudier/dreams) | Evidence | This site, paper bundle, replay witness, and reproducible artifacts |
+| [`tropical-mcp`](https://github.com/jack-chaudier/tropical-mcp) | Implementation | Source-available MCP server for guarded compaction in Codex and Claude-style clients |
+| [`immortal-baby`](https://github.com/jack-chaudier/immortal-baby) | Product / Runtime | Runtime artifact and experiments that close the loop from theory to deployed agent |
+
+If you want to verify the implementation directly, use `runtime_info()`, `compact_auto(...)`, and `certificate(...)` as the minimum smoke flow; for a fuller review add `diagnose(...)`, `context_anchor(...)`, and `telemetry_summary(...)`.
 
 ## Public Release Status
 
