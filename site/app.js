@@ -18,9 +18,10 @@
     }
 
     var links = [
-      { href: '/',         label: 'Overview',  pattern: '/' },
-      { href: '/evidence', label: 'Evidence',  pattern: 'evidence' },
-      { href: '/papers',   label: 'Papers',    pattern: 'papers' },
+      { href: '/',              label: 'Overview',  pattern: '/' },
+      { href: '/evidence',      label: 'Evidence',  pattern: 'evidence' },
+      { href: '/topology-demo', label: 'Demo',      pattern: 'topology' },
+      { href: '/papers',        label: 'Papers',    pattern: 'papers' },
     ];
 
     var linksHtml = '';
