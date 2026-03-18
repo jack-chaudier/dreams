@@ -1,0 +1,82 @@
+{
+  "normal_4000": {
+    "condition": "normal",
+    "context_tokens": 4000,
+    "n": 200,
+    "answer_accuracy": 0.825,
+    "witness_accuracy": 0.7867,
+    "mirage_gap": 0.0383,
+    "corruption_rate": 0.2567,
+    "mixed_rate": 0.345
+  },
+  "normal_16000": {
+    "condition": "normal",
+    "context_tokens": 16000,
+    "n": 200,
+    "answer_accuracy": 0.82,
+    "witness_accuracy": 0.7767,
+    "mirage_gap": 0.0433,
+    "corruption_rate": 0.2467,
+    "mixed_rate": 0.315
+  },
+  "normal_64000": {
+    "condition": "normal",
+    "context_tokens": 64000,
+    "n": 200,
+    "answer_accuracy": 0.81,
+    "witness_accuracy": 0.7517,
+    "mirage_gap": 0.0583,
+    "corruption_rate": 0.2717,
+    "mixed_rate": 0.31
+  },
+  "normal_256000": {
+    "condition": "normal",
+    "context_tokens": 256000,
+    "n": 200,
+    "answer_accuracy": 0.81,
+    "witness_accuracy": 0.715,
+    "mirage_gap": 0.095,
+    "corruption_rate": 0.2583,
+    "mixed_rate": 0.285
+  },
+  "normal_512000": {
+    "condition": "normal",
+    "context_tokens": 512000,
+    "n": 200,
+    "answer_accuracy": 0.775,
+    "witness_accuracy": 0.5533,
+    "mirage_gap": 0.2217,
+    "corruption_rate": 0.22,
+    "mixed_rate": 0.19
+  },
+  "witness_removed_4000": {
+    "condition": "witness_removed",
+    "context_tokens": 4000,
+    "n": 200,
+    "answer_accuracy": 0.315,
+    "witness_accuracy": 0.11,
+    "mirage_gap": 0.205,
+    "corruption_rate": 0.67,
+    "mixed_rate": 0.14
+  },
+  "witness_removed_64000": {
+    "condition": "witness_removed",
+    "context_tokens": 64000,
+    "n": 200,
+    "answer_accuracy": 0.285,
+    "witness_accuracy": 0.1083,
+    "mirage_gap": 0.1767,
+    "corruption_rate": 0.685,
+    "mixed_rate": 0.145
+  },
+  "witness_removed_256000": {
+    "condition": "witness_removed",
+    "context_tokens": 256000,
+    "n": 200,
+    "answer_accuracy": 0.275,
+    "witness_accuracy": 0.105,
+    "mirage_gap": 0.17,
+    "corruption_rate": 0.64,
+    "mixed_rate": 0.135
+  }
+}

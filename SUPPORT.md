@@ -18,4 +18,4 @@ Use the public artifacts first:
 
 For questions about collaboration, citation, or licensing, email <mailto:jackgaff@umich.edu>.
 
-For public launch updates and short-form research notes, see <https://x.com/J_C_Gaffney>.
+For public launch updates and short-form research notes, see <https://x.com/jackcgaffney>.
