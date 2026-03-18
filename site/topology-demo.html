@@ -6,15 +6,38 @@
 <title>The Validity Mirage — Same retention, different pivot</title>
 <meta name="description" content="A topological replay of the validity mirage, using real-incident results to compare recency against L2 Guarded retention under compression.">
 <meta name="robots" content="noindex,follow">
-<meta name="theme-color" content="#f7f1e7">
+<meta id="themeColorMeta" name="theme-color" content="#f7f1e7">
 <link rel="canonical" href="https://dreams-dun.vercel.app/topology-demo">
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<script>
+  (function () {
+    try {
+      var queryTheme = new URLSearchParams(window.location.search).get('theme');
+      var storedTheme = localStorage.getItem('miragekit-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = queryTheme === 'dark' || queryTheme === 'light'
+        ? queryTheme
+        : (storedTheme === 'dark' || storedTheme === 'light'
+          ? storedTheme
+          : (prefersDark ? 'dark' : 'light'));
+      document.documentElement.dataset.theme = theme;
+      var themeColor = document.querySelector('meta[name="theme-color"]');
+      if (themeColor) {
+        themeColor.setAttribute('content', theme === 'dark' ? '#0c0f14' : '#faf8f4');
+      }
+    } catch (err) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+<link rel="stylesheet" href="./styles.css" />
 <link rel="stylesheet" href="./topology-demo.css">
+<script defer src="./app.js"></script>
+<script defer src="./topology-demo.js"></script>
 </head>
 <body>
   <main class="artifact">
-    <header class="artifact-head">
-      <p class="artifact-return"><a href="./">Return to the main artifact</a></p>
+    <header class="artifact-head fade-up">
       <p class="artifact-kicker">Validity Mirage</p>
       <h1 class="artifact-title">Same retention. Different pivot.</h1>
       <p class="artifact-note">
@@ -37,7 +60,7 @@
       </div>
     </header>
 
-    <section class="stage">
+    <section class="stage fade-up">
       <div class="plate-label plate-label--left">
         <span class="plate-name">Recency</span>
         <span class="plate-sub" id="recencyStatus">Aligned</span>
@@ -51,7 +74,7 @@
       <canvas id="mapCanvas" aria-label="Comparative topological maps of recency and L2 Guarded retention"></canvas>
     </section>
 
-    <section class="figure-caption" aria-live="polite">
+    <section class="figure-caption fade-up" aria-live="polite">
       <div class="figure-caption-step">
         <span class="caption-step" id="checkpointLabel">65% retention</span>
         <span class="figure-caption-title" id="figureCheckpointTitle">Mirage shelf</span>
@@ -70,7 +93,7 @@
       </div>
     </section>
 
-    <section class="scrubber" aria-label="Compression checkpoints">
+    <section class="scrubber fade-up" aria-label="Compression checkpoints">
       <div class="scrubber-head">
         <span>Compression checkpoint</span>
         <span id="checkpointTitle">Mirage shelf</span>
@@ -175,6 +198,5 @@
     </section>
   </div>
 
-  <script src="./topology-demo.js"></script>
 </body>
 </html>

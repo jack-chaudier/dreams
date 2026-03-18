@@ -19,14 +19,14 @@
     <meta property="og:description" content="A 200-item Grok long-context experiment showing answer accuracy staying relatively stable while witness fidelity degrades sharply." />
     <meta property="og:url" content="https://dreams-dun.vercel.app/mirage-shelf-grok-2026-03" />
     <meta property="og:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png" />
-    <meta property="og:image:alt" content="March 2026 Grok mirage-shelf chart showing a widening answer-vs-witness gap and the below-chance witness-removed control." />
+    <meta property="og:image:alt" content="The Validity Mirage: full Grok mirage-shelf experiment and artifact bundle." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@jackcgaffney" />
     <meta name="twitter:creator" content="@jackcgaffney" />
     <meta name="twitter:title" content="Grok Mirage Shelf | The Validity Mirage" />
     <meta name="twitter:description" content="A 200-item Grok long-context experiment showing answer accuracy staying relatively stable while witness fidelity degrades sharply." />
     <meta name="twitter:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png" />
-    <meta name="twitter:image:alt" content="March 2026 Grok mirage-shelf chart showing a widening answer-vs-witness gap and the below-chance witness-removed control." />
+    <meta name="twitter:image:alt" content="The Validity Mirage: full Grok mirage-shelf experiment and artifact bundle." />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <script>
       (function () {
@@ -50,16 +50,10 @@
       })();
     </script>
     <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./app.js"></script>
   </head>
   <body>
-    <header class="hero hero-subpage">
-      <div class="hero-topline">
-        <span class="brand-label">MirageKit Research Program</span>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
-          <span class="theme-toggle-label">Theme</span>
-          <span class="theme-toggle-value mono" id="themeToggleValue">Light</span>
-        </button>
-      </div>
+    <header class="hero hero-subpage fade-up">
       <h1 class="hero-title">Grok Mirage Shelf</h1>
       <p class="hero-subtitle">A 200-item long-context experiment showing answer accuracy surviving longer than witness fidelity.</p>
       <p class="hero-context">
@@ -75,7 +69,7 @@
       <div class="hero-links">
         <a class="hero-link" href="./">Overview <span class="link-arrow">&nwarr;</span></a>
         <a class="hero-link" href="./evidence.html">Evidence Dossier <span class="link-arrow">&nwarr;</span></a>
-        <a class="hero-link" href="https://github.com/jack-chaudier/dreams/tree/main/results/mirage-shelf-grok-2026-03" target="_blank" rel="noopener">Artifact Bundle <span class="link-arrow">&nearr;</span></a>
+        <a class="hero-link" href="/results/mirage-shelf-grok-2026-03/README.md" target="_blank" rel="noopener">Artifact Bundle <span class="link-arrow">&nearr;</span></a>
       </div>
     </header>
 
@@ -90,7 +84,7 @@
     </nav>
 
     <main class="evidence-page">
-      <section class="evidence-overview" id="findings" aria-label="Findings">
+      <section class="evidence-overview fade-up" id="findings" aria-label="Findings">
         <div class="evidence-overview-header">
           <div>
             <span class="section-kicker">Latest Experiment</span>
@@ -195,7 +189,7 @@
         </div>
       </section>
 
-      <section class="evidence-note" aria-label="Caveats">
+      <section class="evidence-note fade-up" aria-label="Caveats">
         <p>
           <strong>Caveats</strong>
           Limitations: single model, synthetic items, and witness scoring should be treated as a lower bound because exact-sentence
@@ -204,7 +198,7 @@
         </p>
       </section>
 
-      <section class="evidence-repro" id="methods" aria-label="Methods and artifacts">
+      <section class="evidence-repro fade-up" id="methods" aria-label="Methods and artifacts">
         <div class="evidence-repro-copy">
           <span class="section-kicker">Methods</span>
           <h2>Experiment design</h2>
@@ -220,7 +214,7 @@
             <li><strong>Execution:</strong> xAI batch API with direct replay for <code>13</code> failed rows to produce a complete local output set</li>
           </ul>
           <div class="evidence-references evidence-repro-links" id="artifacts">
-            <a class="evidence-reference" href="https://github.com/jack-chaudier/dreams/blob/main/results/mirage-shelf-grok-2026-03/README.md" target="_blank" rel="noopener">Experiment README <span class="evidence-reference-arrow">&nearr;</span></a>
+            <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/README.md" target="_blank" rel="noopener">Experiment README <span class="evidence-reference-arrow">&nearr;</span></a>
             <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/manifest.json" target="_blank" rel="noopener">Manifest JSON <span class="evidence-reference-arrow">&nearr;</span></a>
             <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/scores.json" target="_blank" rel="noopener">Scores JSON <span class="evidence-reference-arrow">&nearr;</span></a>
             <a class="evidence-reference" href="/results/mirage-shelf-grok-2026-03/scored_examples_sample.jsonl" target="_blank" rel="noopener">Scored sample <span class="evidence-reference-arrow">&nearr;</span></a>
@@ -244,7 +238,7 @@
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer fade-up">
       <p class="footer-quote"><em>The public record should be easier to inspect than the claim it supports.</em></p>
       <p class="footer-credit">
         Jack Chaudier Gaffney &middot; University of Michigan &middot; 2026 &middot;
@@ -259,36 +253,5 @@
       </div>
     </footer>
 
-    <script>
-      (function () {
-        var themeToggle = document.getElementById('themeToggle');
-        var themeToggleValue = document.getElementById('themeToggleValue');
-        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
-
-        function setTheme(theme) {
-          document.documentElement.dataset.theme = theme;
-          localStorage.setItem('miragekit-theme', theme);
-          if (themeToggleValue) {
-            themeToggleValue.textContent = theme === 'dark' ? 'Dark' : 'Light';
-          }
-          if (themeToggle) {
-            themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-            themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-          }
-          if (themeColorMeta) {
-            themeColorMeta.setAttribute('content', theme === 'dark' ? '#0c0f14' : '#faf8f4');
-          }
-        }
-
-        setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
-
-        if (themeToggle) {
-          themeToggle.addEventListener('click', function () {
-            var nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-            setTheme(nextTheme);
-          });
-        }
-      })();
-    </script>
   </body>
 </html>
