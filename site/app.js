@@ -1,6 +1,243 @@
 (function () {
   'use strict';
 
+  var THEME_STORAGE_KEY = 'miragekit-theme';
+
+  /* ==========================================================
+     Shared Nav Injection
+     ========================================================== */
+
+  function injectNav() {
+    var currentPath = window.location.pathname;
+
+    function isActive(pattern) {
+      if (pattern === '/') {
+        return currentPath === '/' || currentPath === '/index.html' || currentPath.match(/\/index\.html$/);
+      }
+      return currentPath.indexOf(pattern) !== -1;
+    }
+
+    var links = [
+      { href: '/',         label: 'Overview',  pattern: '/' },
+      { href: '/evidence', label: 'Evidence',  pattern: 'evidence' },
+      { href: '/papers',   label: 'Papers',    pattern: 'papers' },
+    ];
+
+    var linksHtml = '';
+    for (var i = 0; i < links.length; i++) {
+      var l = links[i];
+      var ariaCurrent = isActive(l.pattern) ? ' aria-current="page"' : '';
+      linksHtml += '<li><a href="' + l.href + '"' + ariaCurrent + '>' + l.label + '</a></li>';
+    }
+    linksHtml += '<li><a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">GitHub <span aria-hidden="true">&nearr;</span></a></li>';
+
+    var savedTheme = null;
+    try { savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY); } catch (e) { /* noop */ }
+    var theme = document.documentElement.dataset.theme || savedTheme || 'light';
+    var isDark = theme === 'dark';
+
+    var navHtml =
+      '<nav class="site-nav" role="navigation" aria-label="Main">' +
+        '<a class="nav-wordmark" href="/">MIRAGEKIT</a>' +
+        '<button class="nav-burger" aria-label="Toggle menu" aria-expanded="false">' +
+          '<span aria-hidden="true">&#9776;</span>' +
+        '</button>' +
+        '<ul class="nav-links">' +
+          linksHtml +
+          '<li>' +
+            '<button class="theme-toggle" id="themeToggle" type="button"' +
+              ' aria-pressed="' + (isDark ? 'true' : 'false') + '"' +
+              ' aria-label="' + (isDark ? 'Switch to light mode' : 'Switch to dark mode') + '">' +
+              '<span class="theme-toggle-label" aria-hidden="true">Theme</span>' +
+              '<span class="theme-toggle-value" id="themeToggleValue">' + (isDark ? 'Dark' : 'Light') + '</span>' +
+            '</button>' +
+          '</li>' +
+        '</ul>' +
+      '</nav>';
+
+    document.body.insertAdjacentHTML('afterbegin', navHtml);
+  }
+
+  /* ==========================================================
+     Mobile Burger Toggle
+     ========================================================== */
+
+  function initBurgerMenu() {
+    var burger = document.querySelector('.nav-burger');
+    var navLinks = document.querySelector('.nav-links');
+    if (!burger || !navLinks) return;
+
+    burger.addEventListener('click', function () {
+      var isOpen = navLinks.classList.toggle('open');
+      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close menu when a link is clicked
+    navLinks.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        navLinks.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ==========================================================
+     Scroll-triggered Fade-up Animations
+     ========================================================== */
+
+  function initScrollAnimations() {
+    var fadeEls = document.querySelectorAll('.fade-up');
+    if (!fadeEls.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: reveal everything immediately
+      for (var i = 0; i < fadeEls.length; i++) {
+        fadeEls[i].classList.add('visible');
+      }
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
+  /* ==========================================================
+     Legacy Scroll Reveal (for .reveal class)
+     ========================================================== */
+
+  function initScrollReveal() {
+    var revealEls = document.querySelectorAll('.reveal');
+    if (!revealEls.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      for (var i = 0; i < revealEls.length; i++) {
+        revealEls[i].classList.add('revealed');
+      }
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          entries[i].target.classList.add('revealed');
+          observer.unobserve(entries[i].target);
+        }
+      }
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    for (var j = 0; j < revealEls.length; j++) {
+      observer.observe(revealEls[j]);
+    }
+  }
+
+  /* ==========================================================
+     Theme Toggle
+     ========================================================== */
+
+  function getSavedTheme() {
+    try {
+      return window.localStorage.getItem(THEME_STORAGE_KEY);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function systemTheme() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+
+  function resolveTheme() {
+    var queryTheme = null;
+    try {
+      queryTheme = new URLSearchParams(window.location.search).get('theme');
+    } catch (err) {
+      queryTheme = null;
+    }
+    if (queryTheme === 'dark' || queryTheme === 'light') {
+      return queryTheme;
+    }
+    var savedTheme = getSavedTheme();
+    return savedTheme === 'dark' || savedTheme === 'light'
+      ? savedTheme
+      : systemTheme();
+  }
+
+  function syncTheme(theme) {
+    var themeToggle = document.getElementById('themeToggle');
+    var themeToggleValueEl = document.getElementById('themeToggleValue');
+    var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+    document.documentElement.dataset.theme = theme;
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
+    }
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    }
+    if (themeToggleValueEl) {
+      themeToggleValueEl.textContent = theme === 'dark' ? 'Dark' : 'Light';
+    }
+  }
+
+  function initThemeToggle() {
+    var themeToggle = document.getElementById('themeToggle');
+    var mediaQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    syncTheme(resolveTheme());
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function () {
+        var queryTheme = null;
+        try {
+          queryTheme = new URLSearchParams(window.location.search).get('theme');
+        } catch (err) {
+          queryTheme = null;
+        }
+        var currentTheme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+        var nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        if (queryTheme !== 'dark' && queryTheme !== 'light') {
+          try {
+            window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+          } catch (err) {
+            // Ignore storage failures and still apply the toggled theme for this session.
+          }
+        }
+        syncTheme(nextTheme);
+      });
+    }
+
+    if (!mediaQuery) return;
+
+    var syncSystemTheme = function () {
+      var savedTheme = getSavedTheme();
+      if (savedTheme !== 'dark' && savedTheme !== 'light') {
+        syncTheme(systemTheme());
+      }
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', syncSystemTheme);
+    } else if (mediaQuery.addListener) {
+      mediaQuery.addListener(syncSystemTheme);
+    }
+  }
+
+  /* ==========================================================
+     Slider Demo Data & Metrics (index page only)
+     ========================================================== */
+
   var METRICS = [
     { key: 'raw_validity', label: 'Raw Validity' },
     { key: 'pivot_preservation_rate', label: 'Pivot Preserved' },
@@ -13,49 +250,6 @@
   var EXPLAINER_MID = 'Degradation zone: predecessor support is thinning. Guarded retention preserves the governing pivot.';
   var EXPLAINER_LOW = 'Mirage active: naive recency still scores high on raw validity while answering for the wrong pivot.';
   var MIRAGE_NOTE = 'Still high while pivot collapses: this is the mirage.';
-  var THEME_STORAGE_KEY = 'miragekit-theme';
-
-  // DOM refs
-  var slider = document.getElementById('retentionSlider');
-  var sliderTicksEl = document.getElementById('sliderTicks');
-  var retentionDisplay = document.getElementById('retentionValue');
-  var sliderContextEl = document.getElementById('sliderContext');
-  var sliderTrackProgressEl = document.getElementById('sliderTrackProgress');
-  var sliderRegimeEl = document.getElementById('sliderRegime');
-  var sliderRegimeValueEl = document.getElementById('sliderRegimeValue');
-  var naiveMetricsEl = document.getElementById('naiveMetrics');
-  var guardedMetricsEl = document.getElementById('guardedMetrics');
-  var naiveContractEl = document.getElementById('naiveContract');
-  var guardedContractEl = document.getElementById('guardedContract');
-  var cardNaive = document.getElementById('cardNaive');
-  var cardGuarded = document.getElementById('cardGuarded');
-  var naiveStatusEl = document.getElementById('naiveStatus');
-  var guardedStatusEl = document.getElementById('guardedStatus');
-  var mirageWarning = document.getElementById('mirageWarning');
-  var explainerText = document.getElementById('explainerText');
-  var deepToggle = document.getElementById('deepToggle');
-  var deepContent = document.getElementById('deepContent');
-  var toggleIcon = document.getElementById('toggleIcon');
-  var witnessClaimEl = document.getElementById('witnessClaim');
-  var witnessTropicalEl = document.getElementById('witnessTropical');
-  var witnessRegretEl = document.getElementById('witnessRegret');
-  var witnessRegretContextValueEl = document.getElementById('witnessRegretContextValue');
-  var witnessNotesEl = document.getElementById('witnessNotes');
-  var recencyKeptListEl = document.getElementById('recencyKeptList');
-  var recencyDroppedListEl = document.getElementById('recencyDroppedList');
-  var guardedKeptListEl = document.getElementById('guardedKeptList');
-  var guardedDroppedListEl = document.getElementById('guardedDroppedList');
-  var recencyNoteEl = document.getElementById('recencyNote');
-  var guardedNoteEl = document.getElementById('guardedNote');
-  var recencyBadgeEl = document.getElementById('recencyBadge');
-  var guardedBadgeEl = document.getElementById('guardedBadge');
-  var certificateTokenSummaryEl = document.getElementById('certificateTokenSummary');
-  var certificateJsonEl = document.getElementById('certificateJson');
-  var semanticRegretEl = document.getElementById('semanticRegret');
-  var semanticRegretValueEl = document.getElementById('semanticRegretValue');
-  var themeToggle = document.getElementById('themeToggle');
-  var themeToggleValueEl = document.getElementById('themeToggleValue');
-  var themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
   function metricColor(value) {
     if (value >= 0.8) return 'var(--safe)';
@@ -71,7 +265,6 @@
     return Math.round(value * 100) + '%';
   }
 
-  // String(1.0) -> "1" but JSON key is "1.0", so normalize
   function levelKey(level) {
     var s = String(level);
     if (s.indexOf('.') === -1) s += '.0';
@@ -227,6 +420,17 @@
   }
 
   function renderCertificateComparison(cert) {
+    var recencyKeptListEl = document.getElementById('recencyKeptList');
+    var recencyDroppedListEl = document.getElementById('recencyDroppedList');
+    var guardedKeptListEl = document.getElementById('guardedKeptList');
+    var guardedDroppedListEl = document.getElementById('guardedDroppedList');
+    var recencyNoteEl = document.getElementById('recencyNote');
+    var guardedNoteEl = document.getElementById('guardedNote');
+    var recencyBadgeEl = document.getElementById('recencyBadge');
+    var guardedBadgeEl = document.getElementById('guardedBadge');
+    var certificateTokenSummaryEl = document.getElementById('certificateTokenSummary');
+    var certificateJsonEl = document.getElementById('certificateJson');
+
     var recency = cert.policies && cert.policies.recency ? cert.policies.recency : {};
     var guarded = cert.policies && cert.policies.l2_guarded ? cert.policies.l2_guarded : {};
     var recencyAudit = recency.audit || {};
@@ -272,10 +476,12 @@
         recencyDroppedPred.push(recencyDropped[i]);
       }
     }
-    if (recencyDroppedPred.length) {
-      recencyNoteEl.textContent = 'Dropped ' + joinIds(recencyDroppedPred) + ' — the pivot\'s causal predecessors.';
-    } else {
-      recencyNoteEl.textContent = 'No predecessor-chain drops in this fixture.';
+    if (recencyNoteEl) {
+      if (recencyDroppedPred.length) {
+        recencyNoteEl.textContent = 'Dropped ' + joinIds(recencyDroppedPred) + ' — the pivot\'s causal predecessors.';
+      } else {
+        recencyNoteEl.textContent = 'No predecessor-chain drops in this fixture.';
+      }
     }
 
     var guardedProtectedKept = [];
@@ -286,12 +492,18 @@
         }
       }
     }
-    guardedNoteEl.textContent = 'Protected chain retained: ' + joinIds(guardedProtectedKept) + '.';
+    if (guardedNoteEl) {
+      guardedNoteEl.textContent = 'Protected chain retained: ' + joinIds(guardedProtectedKept) + '.';
+    }
 
-    recencyBadgeEl.textContent = 'No contract \u00b7 guard not applicable';
-    guardedBadgeEl.textContent = guardedAudit.contract_satisfied
-      ? '\u2726 Contract satisfied \u00b7 guard active'
-      : '\u2727 Contract not satisfied';
+    if (recencyBadgeEl) {
+      recencyBadgeEl.textContent = 'No contract \u00b7 guard not applicable';
+    }
+    if (guardedBadgeEl) {
+      guardedBadgeEl.textContent = guardedAudit.contract_satisfied
+        ? '\u2726 Contract satisfied \u00b7 guard active'
+        : '\u2727 Contract not satisfied';
+    }
 
     var recencyBefore = typeof recencyAudit.tokens_before === 'number' ? recencyAudit.tokens_before : null;
     var recencyAfter = typeof recencyAudit.tokens_after === 'number' ? recencyAudit.tokens_after : null;
@@ -306,15 +518,19 @@
     var recencyPhrase = (recKeptNoise > 0 && recLostPred > 0) ? 'kept noise, lost predecessors' : 'retained mostly recent context';
     var guardPhrase = (guardKeptPred > 0 && guardDroppedNoise > 0) ? 'kept predecessors, dropped noise' : 'preserved protected context';
 
-    if (recencyBefore !== null && recencyAfter !== null && guardedBefore !== null && guardedAfter !== null) {
-      certificateTokenSummaryEl.textContent =
-        'Recency: ' + recencyBefore + ' \u2192 ' + recencyAfter + ' tokens (' + recencyPhrase + ') | ' +
-        'Guard: ' + guardedBefore + ' \u2192 ' + guardedAfter + ' tokens (' + guardPhrase + ')';
-    } else {
-      certificateTokenSummaryEl.textContent = 'Token accounting unavailable for this certificate.';
+    if (certificateTokenSummaryEl) {
+      if (recencyBefore !== null && recencyAfter !== null && guardedBefore !== null && guardedAfter !== null) {
+        certificateTokenSummaryEl.textContent =
+          'Recency: ' + recencyBefore + ' \u2192 ' + recencyAfter + ' tokens (' + recencyPhrase + ') | ' +
+          'Guard: ' + guardedBefore + ' \u2192 ' + guardedAfter + ' tokens (' + guardPhrase + ')';
+      } else {
+        certificateTokenSummaryEl.textContent = 'Token accounting unavailable for this certificate.';
+      }
     }
 
-    certificateJsonEl.textContent = JSON.stringify(cert, null, 2);
+    if (certificateJsonEl) {
+      certificateJsonEl.textContent = JSON.stringify(cert, null, 2);
+    }
   }
 
   function updateMetrics(bars, data, options) {
@@ -425,117 +641,30 @@
     return { label: 'Mirage Active', tone: 'danger' };
   }
 
-  function getSavedTheme() {
-    try {
-      return window.localStorage.getItem(THEME_STORAGE_KEY);
-    } catch (err) {
-      return null;
-    }
-  }
+  /* ==========================================================
+     Slider Demo Init (index page only)
+     ========================================================== */
 
-  function systemTheme() {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-  }
-
-  function resolveTheme() {
-    var queryTheme = null;
-    try {
-      queryTheme = new URLSearchParams(window.location.search).get('theme');
-    } catch (err) {
-      queryTheme = null;
-    }
-    if (queryTheme === 'dark' || queryTheme === 'light') {
-      return queryTheme;
-    }
-    var savedTheme = getSavedTheme();
-    return savedTheme === 'dark' || savedTheme === 'light'
-      ? savedTheme
-      : systemTheme();
-  }
-
-  function syncTheme(theme) {
-    document.documentElement.dataset.theme = theme;
-    if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
-    }
-    if (themeToggle) {
-      themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-    }
-    if (themeToggleValueEl) {
-      themeToggleValueEl.textContent = theme === 'dark' ? 'Dark' : 'Light';
-    }
-  }
-
-  function initThemeToggle() {
-    var mediaQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-    syncTheme(resolveTheme());
-
-    if (themeToggle) {
-      themeToggle.addEventListener('click', function () {
-        var queryTheme = null;
-        try {
-          queryTheme = new URLSearchParams(window.location.search).get('theme');
-        } catch (err) {
-          queryTheme = null;
-        }
-        var currentTheme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-        var nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        if (queryTheme !== 'dark' && queryTheme !== 'light') {
-          try {
-            window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-          } catch (err) {
-            // Ignore storage failures and still apply the toggled theme for this session.
-          }
-        }
-        syncTheme(nextTheme);
-      });
-    }
-
-    if (!mediaQuery) return;
-
-    var syncSystemTheme = function () {
-      var savedTheme = getSavedTheme();
-      if (savedTheme !== 'dark' && savedTheme !== 'light') {
-        syncTheme(systemTheme());
-      }
-    };
-
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', syncSystemTheme);
-    } else if (mediaQuery.addListener) {
-      mediaQuery.addListener(syncSystemTheme);
-    }
-  }
-
-  // Scroll reveal with IntersectionObserver
-  function initScrollReveal() {
-    var revealEls = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)) {
-      // Fallback: just reveal everything
-      for (var i = 0; i < revealEls.length; i++) {
-        revealEls[i].classList.add('revealed');
-      }
-      return;
-    }
-    var observer = new IntersectionObserver(function (entries) {
-      for (var i = 0; i < entries.length; i++) {
-        if (entries[i].isIntersecting) {
-          entries[i].target.classList.add('revealed');
-          observer.unobserve(entries[i].target);
-        }
-      }
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    for (var j = 0; j < revealEls.length; j++) {
-      observer.observe(revealEls[j]);
-    }
-  }
-
-  async function init() {
-    initThemeToggle();
+  async function initSliderDemo() {
+    var slider = document.getElementById('retentionSlider');
+    var sliderTicksEl = document.getElementById('sliderTicks');
+    var retentionDisplay = document.getElementById('retentionValue');
+    var sliderContextEl = document.getElementById('sliderContext');
+    var sliderTrackProgressEl = document.getElementById('sliderTrackProgress');
+    var sliderRegimeEl = document.getElementById('sliderRegime');
+    var sliderRegimeValueEl = document.getElementById('sliderRegimeValue');
+    var naiveMetricsEl = document.getElementById('naiveMetrics');
+    var guardedMetricsEl = document.getElementById('guardedMetrics');
+    var naiveContractEl = document.getElementById('naiveContract');
+    var guardedContractEl = document.getElementById('guardedContract');
+    var cardNaive = document.getElementById('cardNaive');
+    var cardGuarded = document.getElementById('cardGuarded');
+    var naiveStatusEl = document.getElementById('naiveStatus');
+    var guardedStatusEl = document.getElementById('guardedStatus');
+    var mirageWarning = document.getElementById('mirageWarning');
+    var explainerText = document.getElementById('explainerText');
+    var semanticRegretEl = document.getElementById('semanticRegret');
+    var semanticRegretValueEl = document.getElementById('semanticRegretValue');
 
     var responses = await Promise.all([
       fetch('./data_miragekit.json'),
@@ -565,13 +694,19 @@
     var naiveBars = buildMetricBars(naiveMetricsEl);
     var guardedBars = buildMetricBars(guardedMetricsEl);
 
-    // Populate deep section
-    witnessClaimEl.textContent = mirage.witness.claim;
-    witnessTropicalEl.textContent = cert.full_context.W[cert.full_context.W.length - 1].toFixed(1);
-    witnessRegretEl.textContent = mirage.witness.semantic_regret_example.toFixed(3);
-    witnessRegretContextValueEl.textContent = mirage.witness.semantic_regret_example.toFixed(3);
+    // Populate deep section (witness data)
+    var witnessClaimEl = document.getElementById('witnessClaim');
+    var witnessTropicalEl = document.getElementById('witnessTropical');
+    var witnessRegretEl = document.getElementById('witnessRegret');
+    var witnessRegretContextValueEl = document.getElementById('witnessRegretContextValue');
+    var witnessNotesEl = document.getElementById('witnessNotes');
 
-    if (mirage.witness.notes && mirage.witness.notes.length) {
+    if (witnessClaimEl) witnessClaimEl.textContent = mirage.witness.claim;
+    if (witnessTropicalEl) witnessTropicalEl.textContent = cert.full_context.W[cert.full_context.W.length - 1].toFixed(1);
+    if (witnessRegretEl) witnessRegretEl.textContent = mirage.witness.semantic_regret_example.toFixed(3);
+    if (witnessRegretContextValueEl) witnessRegretContextValueEl.textContent = mirage.witness.semantic_regret_example.toFixed(3);
+
+    if (witnessNotesEl && mirage.witness.notes && mirage.witness.notes.length) {
       var html = '';
       for (var n = 0; n < mirage.witness.notes.length; n++) {
         html += '<p>\u2014 ' + mirage.witness.notes[n] + '</p>';
@@ -600,7 +735,6 @@
           pct(naive.pivot_preservation_rate) + '; guarded pivot ' + pct(guarded.pivot_preservation_rate)
       );
 
-      // Color the retention display based on danger level
       if (retention < 0.5) {
         retentionDisplay.classList.add('danger');
       } else {
@@ -640,7 +774,6 @@
       var shouldShowMirage = naive.pivot_preservation_rate < 0.05 && naive.raw_validity > 0.9;
       if (shouldShowMirage && !prevMirageVisible) {
         mirageWarning.classList.remove('hidden');
-        // Re-trigger animation by cloning
         var icon = mirageWarning.querySelector('.mirage-icon');
         if (icon) {
           icon.style.animation = 'none';
@@ -652,37 +785,80 @@
       }
       prevMirageVisible = shouldShowMirage;
 
-      // Mirage gap is data-backed at each replay checkpoint
       if (semanticRegretEl && semanticRegretValueEl) {
         semanticRegretEl.classList.remove('hidden', 'neutral', 'warn', 'danger');
         semanticRegretEl.classList.add(mirageGap >= 0.4 ? 'danger' : mirageGap >= 0.1 ? 'warn' : 'neutral');
         semanticRegretValueEl.textContent = (mirageGap * 100).toFixed(1) + ' pp';
       }
 
-      explainerText.textContent = getExplainer(retention);
+      if (explainerText) {
+        explainerText.textContent = getExplainer(retention);
+      }
     }
 
     slider.addEventListener('input', function () {
       render(Number(slider.value));
     });
     render(Number(slider.value));
+  }
 
-    // Deep toggle
+  /* ==========================================================
+     Deep Analysis Toggle (evidence page)
+     ========================================================== */
+
+  function initDeepAnalysis() {
+    var deepToggle = document.getElementById('deepToggle');
+    var deepContent = document.getElementById('deepContent');
+    var toggleIcon = document.getElementById('toggleIcon');
+    if (!deepToggle || !deepContent) return;
+
     deepToggle.addEventListener('click', function () {
       var isHidden = deepContent.classList.contains('hidden');
       deepContent.classList.toggle('hidden');
-      toggleIcon.classList.toggle('open');
+      if (toggleIcon) toggleIcon.classList.toggle('open');
       deepToggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
     });
-
-    // Init scroll reveals
-    initScrollReveal();
   }
 
-  init().catch(function (err) {
-    console.error('Failed to load demo data:', err);
-    if (explainerText) {
-      explainerText.textContent = 'Failed to load demo data: ' + err.message;
+  /* ==========================================================
+     Main Init
+     ========================================================== */
+
+  function init() {
+    // 1. Inject shared nav into every page
+    injectNav();
+
+    // 2. Init theme toggle (finds button in injected nav)
+    initThemeToggle();
+
+    // 3. Init mobile burger menu
+    initBurgerMenu();
+
+    // 4. Init scroll animations
+    initScrollAnimations();
+    initScrollReveal();
+
+    // 5. Page-specific: slider demo (index page)
+    if (document.getElementById('retentionSlider')) {
+      initSliderDemo().catch(function (err) {
+        console.error('Failed to load demo data:', err);
+        var explainerText = document.getElementById('explainerText');
+        if (explainerText) {
+          explainerText.textContent = 'Failed to load demo data: ' + err.message;
+        }
+      });
     }
-  });
+
+    // 6. Page-specific: deep analysis toggle (evidence page)
+    if (document.getElementById('deepToggle')) {
+      initDeepAnalysis();
+    }
+  }
+
+  // Run on DOMContentLoaded if not already loaded, otherwise run immediately
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
