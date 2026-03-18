@@ -50,16 +50,10 @@
       })();
     </script>
     <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./app.js"></script>
   </head>
   <body>
-    <header class="hero hero-subpage">
-      <div class="hero-topline">
-        <span class="brand-label">MirageKit Research Program</span>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
-          <span class="theme-toggle-label">Theme</span>
-          <span class="theme-toggle-value mono" id="themeToggleValue">Light</span>
-        </button>
-      </div>
+    <header class="hero hero-subpage fade-up">
       <h1 class="hero-title">Grok Mirage Shelf</h1>
       <p class="hero-subtitle">A 200-item long-context experiment showing answer accuracy surviving longer than witness fidelity.</p>
       <p class="hero-context">
@@ -90,7 +84,7 @@
     </nav>
 
     <main class="evidence-page">
-      <section class="evidence-overview" id="findings" aria-label="Findings">
+      <section class="evidence-overview fade-up" id="findings" aria-label="Findings">
         <div class="evidence-overview-header">
           <div>
             <span class="section-kicker">Latest Experiment</span>
@@ -195,7 +189,7 @@
         </div>
       </section>
 
-      <section class="evidence-note" aria-label="Caveats">
+      <section class="evidence-note fade-up" aria-label="Caveats">
         <p>
           <strong>Caveats</strong>
           Limitations: single model, synthetic items, and witness scoring should be treated as a lower bound because exact-sentence
@@ -204,7 +198,7 @@
         </p>
       </section>
 
-      <section class="evidence-repro" id="methods" aria-label="Methods and artifacts">
+      <section class="evidence-repro fade-up" id="methods" aria-label="Methods and artifacts">
         <div class="evidence-repro-copy">
           <span class="section-kicker">Methods</span>
           <h2>Experiment design</h2>
@@ -244,7 +238,7 @@
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer fade-up">
       <p class="footer-quote"><em>The public record should be easier to inspect than the claim it supports.</em></p>
       <p class="footer-credit">
         Jack Chaudier Gaffney &middot; University of Michigan &middot; 2026 &middot;
@@ -259,36 +253,5 @@
       </div>
     </footer>
 
-    <script>
-      (function () {
-        var themeToggle = document.getElementById('themeToggle');
-        var themeToggleValue = document.getElementById('themeToggleValue');
-        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
-
-        function setTheme(theme) {
-          document.documentElement.dataset.theme = theme;
-          localStorage.setItem('miragekit-theme', theme);
-          if (themeToggleValue) {
-            themeToggleValue.textContent = theme === 'dark' ? 'Dark' : 'Light';
-          }
-          if (themeToggle) {
-            themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-            themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-          }
-          if (themeColorMeta) {
-            themeColorMeta.setAttribute('content', theme === 'dark' ? '#0c0f14' : '#faf8f4');
-          }
-        }
-
-        setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
-
-        if (themeToggle) {
-          themeToggle.addEventListener('click', function () {
-            var nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-            setTheme(nextTheme);
-          });
-        }
-      })();
-    </script>
   </body>
 </html>
