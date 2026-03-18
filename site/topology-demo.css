@@ -1,3 +1,9 @@
+/* ==========================================================
+   Topology Demo — Canvas Visualization
+   Standalone styles for the tectonic-plate topology viewer.
+   References design-system tokens from styles.css where possible.
+   ========================================================== */
+
 *,
 *::before,
 *::after {
@@ -5,16 +11,19 @@
 }
 
 :root {
+  /* Topology-specific palette (canvas colors used by JS) */
   --paper: #f7f1e7;
   --paper-shadow: #ece3d5;
-  --ink: #14181f;
-  --muted: #6b717a;
-  --faint: #9aa2ad;
-  --line: rgba(20, 24, 31, 0.1);
   --recency: #d46c55;
   --guarded: #23789a;
   --core: #18354a;
-  --safe: #2f6f67;
+
+  /* Map to design-system tokens */
+  --ink: var(--ink, #14181f);
+  --muted: var(--ink-3, #6b717a);
+  --faint: #9aa2ad;
+  --line: rgba(20, 24, 31, 0.1);
+  --safe: var(--safe, #2f6f67);
 }
 
 html {
@@ -26,7 +35,7 @@ html {
 body {
   margin: 0;
   min-height: 100svh;
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--sans, "Helvetica Neue", Arial, sans-serif);
   color: var(--ink);
   background:
     radial-gradient(circle at top, rgba(255, 255, 255, 0.7), transparent 28%),
@@ -39,6 +48,10 @@ textarea,
 select {
   font: inherit;
 }
+
+/* ==========================================================
+   Artifact Layout
+   ========================================================== */
 
 .artifact {
   min-height: 100svh;
@@ -85,7 +98,7 @@ select {
 
 .artifact-title {
   margin: 0;
-  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-family: var(--serif, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif);
   font-size: clamp(2.6rem, 5.5vw, 5rem);
   line-height: 0.98;
   letter-spacing: -0.05em;
@@ -97,7 +110,7 @@ select {
 .artifact-note {
   margin: 0;
   max-width: 28rem;
-  color: #46505b;
+  color: var(--ink-2, #46505b);
   font-size: clamp(1rem, 1.6vw, 1.1rem);
   line-height: 1.62;
   grid-column: 1;
@@ -108,14 +121,14 @@ select {
   gap: 0.46rem;
   align-self: start;
   padding-left: 0.95rem;
-  border-left: 1px solid rgba(20, 24, 31, 0.12);
+  border-left: 1px solid var(--rule, rgba(20, 24, 31, 0.12));
   grid-column: 2;
   grid-row: 1 / span 2;
 }
 
 .artifact-brief p {
   margin: 0;
-  color: #5a6570;
+  color: var(--ink-2, #5a6570);
   font-size: 0.94rem;
   line-height: 1.5;
 }
@@ -137,7 +150,7 @@ select {
 
 .artifact-axis-note {
   margin: 0;
-  color: #65707b;
+  color: var(--ink-3, #65707b);
   font-size: 0.84rem;
   line-height: 1.5;
   max-width: 28rem;
@@ -148,11 +161,15 @@ select {
   margin-right: 0.35rem;
 }
 
+/* ==========================================================
+   Action Buttons
+   ========================================================== */
+
 .artifact-action,
 .modal-close {
   appearance: none;
   -webkit-appearance: none;
-  border: 1px solid rgba(20, 24, 31, 0.12);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.12));
   background: rgba(255, 255, 255, 0.72);
   color: var(--ink);
   border-radius: 999px;
@@ -178,6 +195,10 @@ select {
   gap: 0.65rem;
 }
 
+/* ==========================================================
+   View Toggle
+   ========================================================== */
+
 .view-toggle {
   display: inline-flex;
   align-items: center;
@@ -185,7 +206,7 @@ select {
   padding: 0.18rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.68);
-  border: 1px solid rgba(20, 24, 31, 0.1);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.1));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.56);
 }
 
@@ -194,7 +215,7 @@ select {
   -webkit-appearance: none;
   border: 0;
   background: transparent;
-  color: #5a6570;
+  color: var(--ink-3, #5a6570);
   border-radius: 999px;
   padding: 0.5rem 0.78rem;
   font-size: 0.78rem;
@@ -213,6 +234,10 @@ select {
   color: #fffdf9;
   box-shadow: 0 6px 14px rgba(20, 24, 31, 0.14);
 }
+
+/* ==========================================================
+   Stage (Canvas Container)
+   ========================================================== */
 
 .stage {
   position: relative;
@@ -257,12 +282,13 @@ select {
   cursor: default;
 }
 
+/* ==========================================================
+   Plate Labels
+   ========================================================== */
+
 .plate-label {
   position: absolute;
   z-index: 1;
-}
-
-.plate-label {
   top: 1.25rem;
   display: grid;
   gap: 0.12rem;
@@ -278,18 +304,22 @@ select {
 }
 
 .plate-name {
-  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-family: var(--serif, "Iowan Old Style", "Palatino Linotype", Georgia, serif);
   font-size: 1.35rem;
 }
 
 .plate-sub {
-  color: #47515d;
+  color: var(--ink-2, #47515d);
   font-size: 0.8rem;
   letter-spacing: 0.03em;
   font-weight: 600;
   line-height: 1.35;
   max-width: 12rem;
 }
+
+/* ==========================================================
+   Figure Caption
+   ========================================================== */
 
 .caption-step {
   display: block;
@@ -308,7 +338,7 @@ select {
   padding: 0.95rem 1.05rem;
   border-radius: 1.35rem;
   background: rgba(255, 255, 255, 0.44);
-  border: 1px solid rgba(20, 24, 31, 0.08);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.08));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
 }
 
@@ -333,17 +363,21 @@ select {
 
 .caption-support {
   grid-column: 2;
-  color: #5b6671;
+  color: var(--ink-2, #5b6671);
   font-size: 0.85rem;
   line-height: 1.4;
 }
+
+/* ==========================================================
+   Axis & Ribbon Legends
+   ========================================================== */
 
 .axis-legend {
   grid-column: 2;
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1rem;
-  color: #64707a;
+  color: var(--ink-3, #64707a);
   font-size: 0.78rem;
   line-height: 1.45;
 }
@@ -365,7 +399,7 @@ select {
   flex-wrap: wrap;
   gap: 0.9rem 1.2rem;
   margin-top: 0.1rem;
-  color: #66717b;
+  color: var(--ink-3, #66717b);
   font-size: 0.78rem;
 }
 
@@ -379,7 +413,7 @@ select {
   display: inline-block;
   width: 0.7rem;
   height: 0.7rem;
-  border: 1px solid rgba(20, 24, 31, 0.12);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.12));
   background: rgba(250, 246, 239, 0.96);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
 }
@@ -409,6 +443,10 @@ select {
   background: repeating-linear-gradient(90deg, rgba(181, 62, 43, 0.94) 0 0.42rem, rgba(181, 62, 43, 0.18) 0.42rem 0.72rem);
 }
 
+/* ==========================================================
+   Scrubber / Slider Controls
+   ========================================================== */
+
 .scrubber {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(13rem, 16rem);
@@ -416,7 +454,7 @@ select {
   padding: 0.82rem 0.95rem 0.88rem;
   border-radius: 1.5rem;
   background: rgba(255, 255, 255, 0.42);
-  border: 1px solid rgba(20, 24, 31, 0.08);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.08));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
 }
 
@@ -437,7 +475,7 @@ select {
 
 .scrubber-note {
   margin: -0.2rem 0 0.1rem;
-  color: #616b76;
+  color: var(--ink-2, #616b76);
   font-size: 0.88rem;
   line-height: 1.45;
 }
@@ -460,7 +498,7 @@ select {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2px solid rgba(20, 24, 31, 0.14);
+  border: 2px solid var(--rule, rgba(20, 24, 31, 0.14));
   background: #fffdf9;
   box-shadow: 0 6px 18px rgba(20, 24, 31, 0.16);
 }
@@ -469,7 +507,7 @@ select {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2px solid rgba(20, 24, 31, 0.14);
+  border: 2px solid var(--rule, rgba(20, 24, 31, 0.14));
   background: #fffdf9;
   box-shadow: 0 6px 18px rgba(20, 24, 31, 0.16);
 }
@@ -498,13 +536,17 @@ select {
 }
 
 .slider-label:hover {
-  color: #5f6872;
+  color: var(--ink-2, #5f6872);
 }
 
 .slider-label.is-active {
   color: var(--ink);
   transform: translateY(-1px);
 }
+
+/* ==========================================================
+   Impact Controls
+   ========================================================== */
 
 .impact-controls {
   display: grid;
@@ -514,7 +556,7 @@ select {
   gap: 0.52rem;
   align-content: center;
   padding-left: 0.9rem;
-  border-left: 1px solid rgba(20, 24, 31, 0.08);
+  border-left: 1px solid var(--rule, rgba(20, 24, 31, 0.08));
 }
 
 .impact-control {
@@ -553,7 +595,7 @@ select {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 1px solid rgba(20, 24, 31, 0.12);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.12));
   background: #fffdf9;
   box-shadow: 0 3px 12px rgba(20, 24, 31, 0.12);
 }
@@ -562,7 +604,7 @@ select {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 1px solid rgba(20, 24, 31, 0.12);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.12));
   background: #fffdf9;
   box-shadow: 0 3px 12px rgba(20, 24, 31, 0.12);
 }
@@ -574,6 +616,10 @@ select {
   font-size: 0.76rem;
   line-height: 1.45;
 }
+
+/* ==========================================================
+   Modal
+   ========================================================== */
 
 .modal-shell[hidden] {
   display: none;
@@ -607,7 +653,7 @@ select {
     linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.68)),
     var(--paper);
   box-shadow: 0 24px 90px rgba(19, 24, 31, 0.22);
-  border: 1px solid rgba(20, 24, 31, 0.08);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.08));
   padding: 1.4rem;
 }
 
@@ -631,7 +677,7 @@ select {
 
 .modal-copy h2 {
   margin: 0;
-  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-family: var(--serif, "Iowan Old Style", "Palatino Linotype", Georgia, serif);
   font-size: clamp(1.8rem, 3vw, 2.5rem);
   line-height: 1.02;
   letter-spacing: -0.04em;
@@ -640,9 +686,11 @@ select {
 
 .modal-intro {
   margin: 0.72rem 0 0;
-  color: #56606b;
+  color: var(--ink-2, #56606b);
   line-height: 1.58;
 }
+
+/* ── Modal Highlight Grid ─────────────────────── */
 
 .modal-highlight {
   display: grid;
@@ -654,7 +702,7 @@ select {
 .modal-highlight-callout,
 .modal-highlight-stat {
   border-radius: 1.1rem;
-  border: 1px solid rgba(20, 24, 31, 0.08);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.08));
   background: rgba(255, 255, 255, 0.7);
   padding: 0.82rem 0.92rem;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.56);
@@ -692,20 +740,24 @@ select {
 
 .modal-highlight-callout p {
   margin: 0.4rem 0 0;
-  color: #55606b;
+  color: var(--ink-2, #55606b);
   line-height: 1.45;
   font-size: 0.92rem;
 }
+
+/* ── Modal Bridge ─────────────────────────────── */
 
 .modal-bridge {
   margin: -0.08rem 0 0;
   padding: 0.7rem 0.82rem 0.76rem;
   border-radius: 1rem;
-  border: 1px solid rgba(20, 24, 31, 0.07);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.07));
   background: rgba(255, 255, 255, 0.46);
-  color: #4e5964;
+  color: var(--ink-2, #4e5964);
   line-height: 1.54;
 }
+
+/* ── Modal Table ──────────────────────────────── */
 
 .modal-table-section {
   display: grid;
@@ -724,14 +776,14 @@ select {
 
 .modal-table-head p {
   margin: 0;
-  color: #58636e;
+  color: var(--ink-2, #58636e);
   line-height: 1.5;
 }
 
 .modal-table-wrap {
   overflow: hidden;
   border-radius: 1.15rem;
-  border: 1px solid rgba(20, 24, 31, 0.08);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.08));
   background: rgba(255, 255, 255, 0.68);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.56);
 }
@@ -747,7 +799,7 @@ select {
   padding: 0.82rem 0.9rem;
   text-align: left;
   vertical-align: top;
-  border-bottom: 1px solid rgba(20, 24, 31, 0.08);
+  border-bottom: 1px solid var(--rule, rgba(20, 24, 31, 0.08));
 }
 
 .modal-table thead th {
@@ -766,7 +818,7 @@ select {
 }
 
 .modal-table tbody td {
-  color: #55606b;
+  color: var(--ink-2, #55606b);
   line-height: 1.45;
 }
 
@@ -777,10 +829,12 @@ select {
 
 .modal-footnote {
   margin: -0.06rem 0 0;
-  color: #55606b;
+  color: var(--ink-2, #55606b);
   font-size: 0.9rem;
   line-height: 1.48;
 }
+
+/* ── Modal Grid & Panels ─────────────────────── */
 
 .modal-grid {
   display: grid;
@@ -790,7 +844,7 @@ select {
 
 .modal-panel {
   border-radius: 1.35rem;
-  border: 1px solid rgba(20, 24, 31, 0.08);
+  border: 1px solid var(--rule, rgba(20, 24, 31, 0.08));
   background: rgba(255, 255, 255, 0.62);
   padding: 0.88rem 0.92rem;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.56);
@@ -826,7 +880,7 @@ select {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  color: #56606b;
+  color: var(--ink-2, #56606b);
   font-size: 0.92rem;
 }
 
@@ -837,7 +891,7 @@ select {
 
 .modal-panel-note {
   margin: 0.68rem 0 0;
-  color: #5a6570;
+  color: var(--ink-2, #5a6570);
   line-height: 1.55;
 }
 
@@ -849,6 +903,10 @@ select {
   padding: 0.48rem 0.78rem;
   font-size: 0.76rem;
 }
+
+/* ==========================================================
+   Responsive
+   ========================================================== */
 
 @media (max-width: 820px) {
   .artifact {
@@ -921,14 +979,8 @@ select {
     grid-template-columns: 1fr;
   }
 
-  .caption-support {
-    grid-column: auto;
-  }
-
-  .axis-legend {
-    grid-column: auto;
-  }
-
+  .caption-support,
+  .axis-legend,
   .ribbon-legend {
     grid-column: auto;
   }
