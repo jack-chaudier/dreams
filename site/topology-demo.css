@@ -1053,3 +1053,133 @@ select {
     max-width: 14rem;
   }
 }
+
+/* ==========================================================
+   Dark Mode
+   ========================================================== */
+
+[data-theme="dark"] {
+  --paper: #1a1e26;
+  --paper-shadow: #12151b;
+  --line: rgba(255, 255, 255, 0.08);
+  --faint: #5a6370;
+}
+
+[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.03), transparent 28%),
+    linear-gradient(180deg, var(--bg, #0a0a0f), #0d1017);
+}
+
+/* Stage */
+[data-theme="dark"] .stage {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+    var(--surface, #13161d);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 60px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .stage::before {
+  background:
+    radial-gradient(48% 72% at 24% 56%, rgba(212, 108, 85, 0.06), transparent 70%),
+    radial-gradient(48% 72% at 76% 56%, rgba(35, 120, 154, 0.08), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 40%);
+}
+
+/* Plate labels */
+[data-theme="dark"] .plate-label-bg {
+  background: rgba(15, 18, 24, 0.88);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Buttons & toggles */
+[data-theme="dark"] .artifact-action,
+[data-theme="dark"] .modal-close {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .artifact-action:hover,
+[data-theme="dark"] .modal-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme="dark"] .view-toggle {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .view-toggle-button.is-active {
+  background: rgba(255, 255, 255, 0.92);
+  color: #14181f;
+}
+
+/* Figure caption */
+[data-theme="dark"] .figure-caption {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+/* Legend swatches */
+[data-theme="dark"] .marker-swatch {
+  background: rgba(30, 35, 44, 0.9);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+
+/* Scrubber */
+[data-theme="dark"] .scrubber {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .checkpoint-slider {
+  box-shadow: none;
+}
+
+[data-theme="dark"] .checkpoint-slider::-webkit-slider-thumb {
+  background: var(--surface, #1a1e26);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .checkpoint-slider::-moz-range-thumb {
+  background: var(--surface, #1a1e26);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .slider-label.is-active {
+  color: var(--accent, #e8927c);
+}
+
+/* Experiment table modal */
+[data-theme="dark"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .modal-panel {
+  background: var(--surface, #13161d);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .modal-panel th {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .modal-panel td {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .modal-panel tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
