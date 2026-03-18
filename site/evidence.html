@@ -42,7 +42,7 @@
           document.documentElement.dataset.theme = theme;
           var themeColor = document.querySelector('meta[name="theme-color"]');
           if (themeColor) {
-            themeColor.setAttribute('content', theme === 'dark' ? '#0c0f14' : '#faf8f4');
+            themeColor.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
           }
         } catch (err) {
           document.documentElement.dataset.theme = 'light';
@@ -50,195 +50,192 @@
       })();
     </script>
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+    <script defer src="./app.js"></script>
   </head>
   <body>
-    <header class="hero hero-subpage">
-      <div class="hero-topline">
-        <span class="brand-label">MirageKit Research Program</span>
-        <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
-          <span class="theme-toggle-label">Theme</span>
-          <span class="theme-toggle-value mono" id="themeToggleValue">Light</span>
-        </button>
-      </div>
-      <h1 class="hero-title">Evidence &amp; Validation</h1>
-      <p class="hero-subtitle">All data and validation logs supporting the research claims.</p>
-      <p class="hero-context">
-        Browse this page to see what evidence exists, verify results yourself, or inspect the raw data.
-        Everything here is committed to the public repository&mdash;no claims without checkable artifacts.
-      </p>
-      <p class="hero-context-note">
-        The research program lives in <strong>MirageKit</strong>, the public artifact surface lives in
-        <strong>dreams</strong>, and the evaluation MCP implementation lives in
-        <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>.
-        The replay rates below are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction.
-      </p>
-      <div class="hero-links">
-        <a class="hero-link" href="./">Overview <span class="link-arrow">&nwarr;</span></a>
-        <a class="hero-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship Paper <span class="link-arrow">&nearr;</span></a>
-        <a class="hero-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp Repo <span class="link-arrow">&nearr;</span></a>
-      </div>
-    </header>
-
-    <nav class="section-nav" aria-label="Page sections">
-      <a href="#validation">Validation Overview</a>
-      <span class="section-nav-sep">&middot;</span>
-      <a href="#certificate">Certificate</a>
-      <span class="section-nav-sep">&middot;</span>
-      <a href="./">Back to Overview</a>
-    </nav>
 
     <main class="evidence-page">
-      <section class="evidence-overview" id="validation" aria-label="Validation overview">
-        <div class="evidence-overview-header">
-          <div>
-            <span class="section-kicker">Validation Surface</span>
-            <h2>What the public bundle currently supports</h2>
-          </div>
-          <p class="evidence-intro">
-            The strongest public evidence right now is structural: under compression pressure, recency can preserve
-            answerability while silently losing the governing pivot, while the guarded policy preserves the protected
-            arc on the committed replay witness. The goal here is not to look exhaustive. It is to make the current
-            public record inspectable in one pass.
-          </p>
-        </div>
 
-        <div class="evidence-ledger">
-          <aside class="evidence-summary" aria-label="Evidence summary">
-            <span class="evidence-summary-label">At A Glance</span>
-            <h3>Current public record</h3>
-            <ul class="evidence-summary-list">
-              <li>
-                <strong>Strongest claim</strong>
-                <span>Naive recency can preserve answerability while losing pivot integrity; the guarded policy keeps the protected arc on the committed witness.</span>
-              </li>
-              <li>
-                <strong>Witness scope</strong>
-                <span>The rendered replay rates are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction.</span>
-              </li>
-              <li>
-                <strong>Public artifacts</strong>
-                <span>Lint, typing, test, build, installed-wheel, functional validation, replay summaries, and a portable certificate are all published directly from committed files.</span>
-              </li>
-            </ul>
-            <p class="evidence-summary-note">
-              <strong>Version map</strong><br />
-              DOI-backed archive: <code>dreams v0.1.1</code><br />
-              Mirrored implementation release: <code>tropical-mcp v0.2.1</code>
-            </p>
-          </aside>
-
-          <div class="evidence-records">
-            <article class="evidence-record">
-              <div class="evidence-record-head">
-                <span class="evidence-record-index mono">01</span>
-                <div>
-                  <span class="evidence-record-kicker">Implementation checks</span>
-                  <h3>Build, tests, and functional validation</h3>
-                </div>
-              </div>
-              <p>
-                The implementation repo is published with the raw outputs needed to inspect software quality and the
-                installable wheel path, not just a summary claim.
-              </p>
-              <ul class="evidence-record-list">
-                <li><code>ruff check .</code> and <code>mypy src/tropical_mcp</code> run on the canonical implementation repo</li>
-                <li><code>pytest</code> publishes a pass count in the mirrored validation log</li>
-                <li><code>uv build</code> verifies wheel + sdist packaging</li>
-                <li><code>./scripts/validate_installed_wheel.sh</code> confirms the built wheel still validates after install</li>
-                <li><code>uv run tropical-mcp-full-validate</code> exercises the MCP-facing validation path</li>
-              </ul>
-              <div class="evidence-references">
-                <a class="evidence-reference" href="/results/ruff.txt" target="_blank" rel="noopener">Ruff log <span class="evidence-reference-arrow">&nearr;</span></a>
-                <a class="evidence-reference" href="/results/mypy.txt" target="_blank" rel="noopener">Mypy log <span class="evidence-reference-arrow">&nearr;</span></a>
-                <a class="evidence-reference" href="/results/pytest.txt" target="_blank" rel="noopener">Pytest log <span class="evidence-reference-arrow">&nearr;</span></a>
-                <a class="evidence-reference" href="/results/build.txt" target="_blank" rel="noopener">Build log <span class="evidence-reference-arrow">&nearr;</span></a>
-                <a class="evidence-reference" href="/results/installed_wheel.txt" target="_blank" rel="noopener">Installed-wheel log <span class="evidence-reference-arrow">&nearr;</span></a>
-                <a class="evidence-reference" href="/results/VALIDATION_SUMMARY.md" target="_blank" rel="noopener">Validation summary <span class="evidence-reference-arrow">&nearr;</span></a>
-                <a class="evidence-reference" href="/results/full_validation.json" target="_blank" rel="noopener">Full validation report <span class="evidence-reference-arrow">&nearr;</span></a>
-              </div>
-            </article>
-
-            <article class="evidence-record">
-              <div class="evidence-record-head">
-                <span class="evidence-record-index mono">02</span>
-                <div>
-                  <span class="evidence-record-kicker">Replay witness</span>
-                  <h3>Guarded compaction preserves the pivot</h3>
-                </div>
-              </div>
-              <p>
-                At retention fractions <code>0.65</code>, <code>0.5</code>, and <code>0.4</code>, the committed replay keeps
-                the primary arc intact under <code>l2_guarded</code> while recency collapses it. Paper-level model counts and
-                incident counts live in the PDFs and are intentionally separate from this witness.
-              </p>
-              <ul class="evidence-record-list">
-                <li><code>l2_guarded</code> pivot preservation stays at <strong>1.0</strong></li>
-                <li><code>recency</code> pivot preservation falls to <strong>0.0</strong></li>
-                <li>The overview page witness cards are rendered from the same committed replay data published here</li>
-                <li>The witness is intentionally small so every reported value remains inspectable</li>
-              </ul>
-              <div class="evidence-references">
-                <a class="evidence-reference" href="./" target="_blank" rel="noopener">Open live witness view <span class="evidence-reference-arrow">&nwarr;</span></a>
-                <a class="evidence-reference" href="/results/replay/replay_summary.csv" target="_blank" rel="noopener">Replay summary CSV <span class="evidence-reference-arrow">&nearr;</span></a>
-                <a class="evidence-reference" href="/results/replay/replay_summary.json" target="_blank" rel="noopener">Replay summary JSON <span class="evidence-reference-arrow">&nearr;</span></a>
-              </div>
-            </article>
-
-            <article class="evidence-record" id="certificate">
-              <div class="evidence-record-head">
-                <span class="evidence-record-index mono">03</span>
-                <div>
-                  <span class="evidence-record-kicker">Portable artifact</span>
-                  <h3>Certificate snapshot</h3>
-                </div>
-              </div>
-              <p>
-                The public certificate captures the recency-vs-guarded kept and dropped IDs, audit flags, and
-                contract/protection status in a portable shape that can be compared against a local verification run.
-              </p>
-              <ul class="evidence-record-list">
-                <li>Pivot and protected IDs are recorded from the full context</li>
-                <li>Each policy exposes its kept and dropped IDs separately</li>
-                <li>Feasibility, breach, and contract status stay visible in the audit trail</li>
-              </ul>
-              <div class="evidence-references">
-                <a class="evidence-reference" href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener">Certificate JSON <span class="evidence-reference-arrow">&nearr;</span></a>
-                <a class="evidence-reference" href="https://github.com/jack-chaudier/tropical-mcp#minimal-smoke-test" target="_blank" rel="noopener">Verification snippet <span class="evidence-reference-arrow">&nearr;</span></a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="evidence-note" aria-label="How to read this bundle">
-        <p>
-          <strong>Suggested reading order</strong>
-          Start with the flagship paper, then this dossier, then the live replay witness. Drop into the raw logs or
-          JSON only when you want to inspect the committed record directly.
+      <!-- 1. Page Header -->
+      <header class="hero hero-subpage">
+        <span class="section-label accent">University of Michigan &middot; Working Paper 2026</span>
+        <h1 class="hero-title">Evidence and Validation</h1>
+        <p class="hero-body">
+          All data and validation logs supporting the research claims.
+          Browse this page to see what evidence exists, verify results yourself, or inspect the raw data.
+          Everything here is committed to the public repository &mdash; no claims without checkable artifacts.
         </p>
+        <div class="hero-cta">
+          <a class="btn-outline" href="./">Overview</a>
+          <a class="btn-outline" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship Paper <span class="external-arrow">&nearr;</span></a>
+          <a class="btn-outline" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp Repo <span class="external-arrow">&nearr;</span></a>
+        </div>
+      </header>
+
+      <!-- 2. Replay Witness -->
+      <section class="section fade-up" id="replay-witness">
+        <span class="section-label accent">Replay Witness</span>
+        <h2 class="section-intro">Guarded compaction preserves the pivot</h2>
+        <div class="evidence-records">
+          <article class="evidence-record">
+            <div class="evidence-record-head">
+              <span class="evidence-record-index mono">01</span>
+              <div>
+                <span class="evidence-record-kicker">Deterministic replay</span>
+                <h3>Policy comparison on committed witness</h3>
+              </div>
+            </div>
+            <p>
+              At retention fractions <code>0.65</code>, <code>0.5</code>, and <code>0.4</code>, the committed replay keeps
+              the primary arc intact under <code>l2_guarded</code> while recency collapses it. Paper-level model counts and
+              incident counts live in the PDFs and are intentionally separate from this witness.
+            </p>
+            <ul class="evidence-record-list">
+              <li><code>l2_guarded</code> pivot preservation stays at <strong>1.0</strong></li>
+              <li><code>recency</code> pivot preservation falls to <strong>0.0</strong></li>
+              <li>The overview page witness cards are rendered from the same committed replay data published here</li>
+              <li>The witness is intentionally small so every reported value remains inspectable</li>
+              <li>The rendered replay rates are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction</li>
+            </ul>
+            <div class="evidence-references">
+              <a class="evidence-reference" href="./">Open live witness view <span class="evidence-reference-arrow">&nwarr;</span></a>
+              <a class="evidence-reference" href="/results/replay/replay_summary.csv" target="_blank" rel="noopener">Replay summary CSV <span class="evidence-reference-arrow">&nearr;</span></a>
+              <a class="evidence-reference" href="/results/replay/replay_summary.json" target="_blank" rel="noopener">Replay summary JSON <span class="evidence-reference-arrow">&nearr;</span></a>
+            </div>
+          </article>
+        </div>
       </section>
 
-      <section class="evidence-repro" aria-label="Reproduction path">
-        <div class="evidence-repro-copy">
-          <span class="section-kicker">Reproduce</span>
-          <h2>Verification paths</h2>
-          <p>
-            Install and register <code>tropical-mcp</code>, then choose between the minimal smoke path and the fuller reviewer
-            workflow. The public certificate on this page is a comparison target for your local run, not a substitute
-            for the reviewer workflow itself.
-          </p>
-          <ul class="evidence-repro-list">
+      <!-- 3. Certificate Viewer -->
+      <section class="section fade-up" id="certificate">
+        <span class="section-label accent">Portable Artifact</span>
+        <h2 class="section-intro">Certificate snapshot</h2>
+        <div class="evidence-records">
+          <article class="evidence-record">
+            <div class="evidence-record-head">
+              <span class="evidence-record-index mono">02</span>
+              <div>
+                <span class="evidence-record-kicker">Certificate</span>
+                <h3>Recency vs. guarded kept/dropped IDs</h3>
+              </div>
+            </div>
+            <p>
+              The public certificate captures the recency-vs-guarded kept and dropped IDs, audit flags, and
+              contract/protection status in a portable shape that can be compared against a local verification run.
+            </p>
+            <ul class="evidence-record-list">
+              <li>Pivot and protected IDs are recorded from the full context</li>
+              <li>Each policy exposes its kept and dropped IDs separately</li>
+              <li>Feasibility, breach, and contract status stay visible in the audit trail</li>
+            </ul>
+            <div class="evidence-references">
+              <a class="evidence-reference" href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener">Certificate JSON <span class="evidence-reference-arrow">&nearr;</span></a>
+              <a class="evidence-reference" href="https://github.com/jack-chaudier/tropical-mcp#minimal-smoke-test" target="_blank" rel="noopener">Verification snippet <span class="evidence-reference-arrow">&nearr;</span></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 4. Mathematical Foundations (NEW) -->
+      <section class="section fade-up" id="mathematical-foundations">
+        <span class="section-label accent">Mathematical Foundations</span>
+        <h2 class="section-intro">Core Formulas</h2>
+        <div class="math-grid">
+          <div class="math-card">
+            <h4>Core Contract</h4>
+            <div class="math-formula katex-section">$$d_{\text{pre}} \geq k$$</div>
+            <p>Guarded compaction is certified safe only when the pivot retains its required predecessor depth.</p>
+          </div>
+          <div class="math-card">
+            <h4>Frontier Feasibility</h4>
+            <div class="math-formula katex-section">$$W[k] = -\infty \implies \text{infeasible}$$</div>
+            <p>If the k-slot frontier is negative infinity, no valid completion exists for that retained context.</p>
+          </div>
+          <div class="math-card">
+            <h4>Raw Validity</h4>
+            <div class="math-formula katex-section">$$\text{raw} = \max(\text{primary\_full}, \text{decoy\_full})$$</div>
+            <p>Answerability alone can stay high even when pivot identity has silently changed.</p>
+          </div>
+          <div class="math-card">
+            <h4>Mirage Gap</h4>
+            <div class="math-formula katex-section">$$\delta = \text{raw} - \text{pivot\_preservation}$$</div>
+            <p>Large positive gap indicates a validity mirage regime rather than true semantic stability.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Validation Pipeline -->
+      <section class="section fade-up" id="validation">
+        <span class="section-label accent">Validation Pipeline</span>
+        <h2 class="section-intro">Build, tests, and functional validation</h2>
+        <div class="evidence-records">
+          <article class="evidence-record">
+            <div class="evidence-record-head">
+              <span class="evidence-record-index mono">03</span>
+              <div>
+                <span class="evidence-record-kicker">Implementation checks</span>
+                <h3>Continuous validation surface</h3>
+              </div>
+            </div>
+            <p>
+              The implementation repo is published with the raw outputs needed to inspect software quality and the
+              installable wheel path, not just a summary claim.
+            </p>
+            <ul class="evidence-record-list">
+              <li><code>ruff check .</code> and <code>mypy src/tropical_mcp</code> run on the canonical implementation repo</li>
+              <li><code>pytest</code> publishes a pass count in the mirrored validation log</li>
+              <li><code>uv build</code> verifies wheel + sdist packaging</li>
+              <li><code>./scripts/validate_installed_wheel.sh</code> confirms the built wheel still validates after install</li>
+              <li><code>uv run tropical-mcp-full-validate</code> exercises the MCP-facing validation path</li>
+            </ul>
+            <div class="evidence-references">
+              <a class="evidence-reference" href="/results/ruff.txt" target="_blank" rel="noopener">Ruff log <span class="evidence-reference-arrow">&nearr;</span></a>
+              <a class="evidence-reference" href="/results/mypy.txt" target="_blank" rel="noopener">Mypy log <span class="evidence-reference-arrow">&nearr;</span></a>
+              <a class="evidence-reference" href="/results/pytest.txt" target="_blank" rel="noopener">Pytest log <span class="evidence-reference-arrow">&nearr;</span></a>
+              <a class="evidence-reference" href="/results/build.txt" target="_blank" rel="noopener">Build log <span class="evidence-reference-arrow">&nearr;</span></a>
+              <a class="evidence-reference" href="/results/installed_wheel.txt" target="_blank" rel="noopener">Installed-wheel log <span class="evidence-reference-arrow">&nearr;</span></a>
+              <a class="evidence-reference" href="/results/VALIDATION_SUMMARY.md" target="_blank" rel="noopener">Validation summary <span class="evidence-reference-arrow">&nearr;</span></a>
+              <a class="evidence-reference" href="/results/full_validation.json" target="_blank" rel="noopener">Full validation report <span class="evidence-reference-arrow">&nearr;</span></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 6. Evidence Boundaries -->
+      <section class="section fade-up" id="evidence-boundaries">
+        <span class="section-label accent">Evidence Boundaries</span>
+        <h2 class="section-intro">What the current record does and does not cover</h2>
+        <p class="evidence-intro">
+          Current evidence combines a small committed replay witness with broader paper-level studies.
+        </p>
+        <ul class="evidence-record-list">
+          <li><strong>Replay cards</strong> show exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction. They are not large-sample statistics.</li>
+          <li><strong>Paper-level results</strong> (model counts, incident rates, Wilson CIs) live in the flagship PDF and are intentionally separate from the committed witness.</li>
+          <li><strong>Transparent research snapshot</strong> &mdash; this page reports the current public record, not a finished claim of generality.</li>
+        </ul>
+      </section>
+
+      <!-- 7. Reproduction Path -->
+      <section class="section fade-up" id="reproduction">
+        <span class="section-label accent">Reproduce</span>
+        <h2 class="section-intro">Verification paths</h2>
+        <p>
+          Install and register <code>tropical-mcp</code>, then choose between the minimal smoke path and the fuller reviewer
+          workflow. The public certificate on this page is a comparison target for your local run, not a substitute
+          for the reviewer workflow itself.
+        </p>
+        <div class="card" style="margin-top: 1rem;">
+          <ol class="evidence-record-list" style="list-style: decimal; padding-left: 1.2rem;">
             <li><strong>Smoke test:</strong> confirm the runtime with <code>runtime_info()</code>, then run <code>compact_auto(...)</code> and <code>certificate(...)</code>.</li>
             <li><strong>Research workflow:</strong> run <code>diagnose(...)</code> to inspect feasible slots, capture a <code>context_anchor(...)</code>, then compare <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>.</li>
             <li>Compare the resulting certificate and replay behavior against the public artifacts on this page.</li>
-          </ul>
-          <div class="evidence-references evidence-repro-links">
-            <a class="evidence-reference" href="https://github.com/jack-chaudier/tropical-mcp#quick-start-codex" target="_blank" rel="noopener">Codex quick-start <span class="evidence-reference-arrow">&nearr;</span></a>
-            <a class="evidence-reference" href="./" target="_blank" rel="noopener">Return to overview <span class="evidence-reference-arrow">&nwarr;</span></a>
-          </div>
+          </ol>
         </div>
 
-        <div class="install-codeframe evidence-command">
+        <div class="install-codeframe evidence-command" style="margin-top: 1rem;">
           <span class="install-codeframe-label">verify</span>
           <pre class="install-pre install-pre-wrap"><code># minimal smoke path
 runtime_info()               # check your setup
@@ -271,54 +268,39 @@ certificate(                 # generate portable audit record
 )
 telemetry_summary(limit=5)   # review retention behavior</code></pre>
         </div>
+
+        <div class="evidence-references" style="margin-top: 1rem;">
+          <a class="evidence-reference" href="https://github.com/jack-chaudier/tropical-mcp#quick-start-codex" target="_blank" rel="noopener">Codex quick-start <span class="evidence-reference-arrow">&nearr;</span></a>
+          <a class="evidence-reference" href="./">Return to overview <span class="evidence-reference-arrow">&nwarr;</span></a>
+        </div>
       </section>
+
     </main>
 
-    <footer class="site-footer">
-      <p class="footer-quote"><em>The public record should be easier to inspect than the claim it supports.</em></p>
-      <p class="footer-credit">
-        Jack Chaudier Gaffney &middot; University of Michigan &middot; 2026 &middot;
-        <a class="footer-doi" href="https://doi.org/10.5281/zenodo.18794293" target="_blank" rel="noopener">DOI: 10.5281/zenodo.18794293</a>
-      </p>
+    <footer class="site-footer fade-up">
+      <p class="footer-quote"><em>The roots remember what the canopy forgets.</em></p>
+      <p class="footer-attribution">Jack Chaudier Gaffney &middot; University of Michigan &middot; DOI: 10.5281/zenodo.18794293</p>
       <div class="footer-links">
-        <a class="footer-link" href="./">Overview</a>
-        <a class="footer-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship paper</a>
-        <a class="footer-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>
-        <a class="footer-link" href="mailto:jackgaff@umich.edu">Correspondence</a>
-        <a class="footer-link" href="https://x.com/J_C_Gaffney" target="_blank" rel="noopener">X / updates</a>
+        <a href="./evidence.html">Evidence</a>
+        <a href="./papers.html">Papers</a>
+        <a href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>
+        <a href="mailto:jackgaff@umich.edu">Contact</a>
+        <a href="https://x.com/J_C_Gaffney" target="_blank" rel="noopener">X / updates</a>
       </div>
     </footer>
 
     <script>
-      (function () {
-        var themeToggle = document.getElementById('themeToggle');
-        var themeToggleValue = document.getElementById('themeToggleValue');
-        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
-
-        function setTheme(theme) {
-          document.documentElement.dataset.theme = theme;
-          localStorage.setItem('miragekit-theme', theme);
-          if (themeToggleValue) {
-            themeToggleValue.textContent = theme === 'dark' ? 'Dark' : 'Light';
-          }
-          if (themeToggle) {
-            themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-            themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-          }
-          if (themeColorMeta) {
-            themeColorMeta.setAttribute('content', theme === 'dark' ? '#0c0f14' : '#faf8f4');
-          }
-        }
-
-        setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
-
-        if (themeToggle) {
-          themeToggle.addEventListener('click', function () {
-            var nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-            setTheme(nextTheme);
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false}
+            ]
           });
         }
-      })();
+      });
     </script>
   </body>
 </html>
