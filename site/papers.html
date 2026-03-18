@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Research Papers — The Validity Mirage</title>
+    <meta name="description" content="Five research papers on the validity mirage: continuous control, absorbing states, streaming traps, the flagship compression study, and tropical algebra." />
+    <meta name="author" content="Jack Chaudier Gaffney" />
+    <meta id="themeColorMeta" name="theme-color" content="#1f3d63" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://dreams-dun.vercel.app/papers.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Validity Mirage" />
+    <meta property="og:title" content="Research Papers — The Validity Mirage" />
+    <meta property="og:description" content="Five research papers on the validity mirage: continuous control, absorbing states, streaming traps, the flagship compression study, and tropical algebra." />
+    <meta property="og:url" content="https://dreams-dun.vercel.app/papers.html" />
+    <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png" />
+    <meta property="og:image:alt" content="The Validity Mirage: research on silent task drift under AI context compression." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@J_C_Gaffney" />
+    <meta name="twitter:creator" content="@J_C_Gaffney" />
+    <meta name="twitter:title" content="Research Papers — The Validity Mirage" />
+    <meta name="twitter:description" content="Five research papers on the validity mirage: continuous control, absorbing states, streaming traps, the flagship compression study, and tropical algebra." />
+    <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png" />
+    <meta name="twitter:image:alt" content="The Validity Mirage: research on silent task drift under AI context compression." />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script>
+      (function () {
+        try {
+          var queryTheme = new URLSearchParams(window.location.search).get('theme');
+          var storedTheme = localStorage.getItem('miragekit-theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = queryTheme === 'dark' || queryTheme === 'light'
+            ? queryTheme
+            : (storedTheme === 'dark' || storedTheme === 'light'
+              ? storedTheme
+              : (prefersDark ? 'dark' : 'light'));
+          document.documentElement.dataset.theme = theme;
+          var themeColor = document.querySelector('meta[name="theme-color"]');
+          if (themeColor) {
+            themeColor.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
+          }
+        } catch (err) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="section fade-up">
+        <span class="section-label">MirageKit Research Program</span>
+        <h1>Research Papers</h1>
+        <p class="hero-subtitle">Start with the flagship paper, then follow the thread.</p>
+      </section>
+
+      <section class="section fade-up">
+        <article class="paper-card paper-card--flagship">
+          <span class="paper-number">03</span>
+          <h2>The Validity Mirage</h2>
+          <p class="hero-subtitle">Compression-induced task drift in AI agents</p>
+          <p>Context compression can look valid while the governing task has drifted. This research program studies the structural failure, proves where each layer of reasoning breaks under memory pressure, and provides a tool (<code>tropical-mcp</code>) to detect and prevent it in real AI coding agents.</p>
+          <p><strong>Key contribution:</strong> Formal definition of the validity mirage, empirical measurement across 164 degraded responses, and a tractable detection method.</p>
+          <a class="btn" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Read Paper 03 (PDF)</a>
+        </article>
+      </section>
+
+      <section class="section fade-up">
+        <span class="section-label">Supporting Papers</span>
+        <div class="card-grid card-grid--2col">
+          <article class="paper-card">
+            <span class="paper-number">00</span>
+            <h3>Continuous Control</h3>
+            <p>Establishes the continuous control framework for context window management, modeling retention as a continuous parameter rather than a binary keep/discard decision.</p>
+            <p><strong>Key contribution:</strong> Foundational retention model for context compression.</p>
+            <a class="btn btn-outline" href="/papers/paper_00_continuous_control_structural_regularization.pdf" target="_blank" rel="noopener">Read Paper 00 (PDF)</a>
+          </article>
+
+          <article class="paper-card">
+            <span class="paper-number">01</span>
+            <h3>Absorbing States</h3>
+            <p>Identifies absorbing states in context compression &mdash; configurations from which the agent cannot recover the original task, regardless of subsequent input.</p>
+            <p><strong>Key contribution:</strong> Proves irreversibility conditions for context loss.</p>
+            <a class="btn btn-outline" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">Read Paper 01 (PDF)</a>
+          </article>
+
+          <article class="paper-card">
+            <span class="paper-number">02</span>
+            <h3>Streaming Traps</h3>
+            <p>Analyzes how streaming context updates can create traps where the agent appears to maintain task fidelity while progressively losing governing constraints.</p>
+            <p><strong>Key contribution:</strong> Streaming-specific failure modes and trap detection.</p>
+            <a class="btn btn-outline" href="/papers/paper_02_streaming_oscillation_traps.pdf" target="_blank" rel="noopener">Read Paper 02 (PDF)</a>
+          </article>
+
+          <article class="paper-card">
+            <span class="paper-number">I</span>
+            <h3>Tropical Algebra</h3>
+            <p>Develops the tropical algebraic framework underpinning the L2 guarded compaction method, providing formal guarantees for pivot preservation under compression.</p>
+            <p><strong>Key contribution:</strong> Mathematical foundation for the guarded compaction algorithm.</p>
+            <a class="btn btn-outline" href="/papers/paper_i_tropical_algebra.pdf" target="_blank" rel="noopener">Read Paper I (PDF)</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reading-guide fade-up">
+        <h3>Reading Guide</h3>
+        <p>Paper 03 introduces the core problem. Paper 00 provides the mathematical model. Papers 01 and 02 explore specific failure modes. Paper I develops the algebraic theory behind the solution.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer reveal">
+      <p class="footer-quote"><em>The roots remember what the canopy forgets.</em></p>
+      <p class="footer-credit">
+        Jack Chaudier Gaffney &middot; University of Michigan &middot; 2026 &middot;
+        <a class="footer-doi" href="https://doi.org/10.5281/zenodo.18794293" target="_blank" rel="noopener">DOI: 10.5281/zenodo.18794293</a>
+      </p>
+      <div class="footer-links">
+        <a class="footer-link" href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">Repo</a>
+        <a class="footer-link" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship paper</a>
+        <a class="footer-link" href="./evidence.html">Evidence &amp; validation</a>
+        <a class="footer-link" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>
+        <a class="footer-link" href="mailto:jackgaff@umich.edu">Correspondence</a>
+        <a class="footer-link" href="https://x.com/J_C_Gaffney" target="_blank" rel="noopener">X / updates</a>
+        <a class="footer-link" href="https://github.com/jack-chaudier" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="paper-badges">
+        <a class="paper-badge paper-badge-flagship" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">03</span> Validity Mirage <span class="badge-arrow">&nearr;</span>
+        </a>
+        <a class="paper-badge" href="/papers/paper_00_continuous_control_structural_regularization.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">00</span> Continuous Control <span class="badge-arrow">&nearr;</span>
+        </a>
+        <a class="paper-badge" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">01</span> Absorbing States <span class="badge-arrow">&nearr;</span>
+        </a>
+        <a class="paper-badge" href="/papers/paper_02_streaming_oscillation_traps.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">02</span> Streaming Traps <span class="badge-arrow">&nearr;</span>
+        </a>
+        <a class="paper-badge" href="/papers/paper_i_tropical_algebra.pdf" target="_blank" rel="noopener">
+          <span class="badge-num">I</span> Tropical Algebra <span class="badge-arrow">&nearr;</span>
+        </a>
+      </div>
+    </footer>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
