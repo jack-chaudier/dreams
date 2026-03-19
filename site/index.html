@@ -38,6 +38,57 @@
     } catch(e) { document.documentElement.dataset.theme = 'light'; }
   })();
   </script>
+  <style>
+    .mirage-chart {
+      width: 100%;
+      max-width: 640px;
+      margin: 32px auto 0;
+      display: block;
+    }
+    .mirage-chart text {
+      font-family: inherit;
+      font-size: 12px;
+      fill: var(--text-secondary, #6b6b6b);
+    }
+    .mirage-chart .chart-label-line1 { fill: var(--text-secondary, #6b6b6b); }
+    .mirage-chart .chart-label-line2 { fill: #d04040; }
+    .mirage-chart .chart-label-line3 { fill: #2a7a2a; }
+    .mirage-gap-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      fill: #c03030;
+      opacity: 0.85;
+    }
+    .chart-axis { stroke: var(--border, #d4cfc8); stroke-width: 1; }
+    .chart-gridline { stroke: var(--border, #d4cfc8); stroke-width: 0.5; stroke-dasharray: 3 4; opacity: 0.6; }
+    .line-validity { stroke: var(--text-secondary, #888); stroke-width: 2; stroke-dasharray: 6 4; fill: none; }
+    .line-pivot-naive { stroke: #d04040; stroke-width: 2.5; fill: none; }
+    .line-pivot-guarded { stroke: #2a7a2a; stroke-width: 2.5; fill: none; }
+    .mirage-fill { fill: url(#mirageGradient); opacity: 0.18; }
+
+    /* Interactive demo styles */
+    .demo-slider-wrap {
+      margin-bottom: 20px;
+    }
+    .demo-slider-label {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .demo-slider-input {
+      width: 100%;
+      cursor: pointer;
+      accent-color: var(--accent, #c03030);
+    }
+    .demo-slider-steps {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+  </style>
 </head>
 <body>
 
@@ -48,6 +99,7 @@
       <a href="/" class="active">Home</a>
       <a href="/research">Research</a>
       <a href="/demo">Demo</a>
+      <a href="/topology-demo">Topology</a>
       <a href="/evidence">Evidence</a>
       <a href="/grok">Grok</a>
       <a href="/get-started">Get Started</a>
@@ -59,6 +111,7 @@
     <a href="/">Home</a>
     <a href="/research">Research</a>
     <a href="/demo">Demo</a>
+    <a href="/topology-demo">Topology</a>
     <a href="/evidence">Evidence</a>
     <a href="/grok">Grok</a>
     <a href="/get-started">Get Started</a>
@@ -100,35 +153,124 @@
 
 <hr class="section-divider">
 <section class="section reveal">
+  <div class="section-label">The Data</div>
+  <h2>The mirage gap</h2>
+  <p>As context is compressed, surface validity stays high — but pivot preservation collapses. The gap between them is the mirage: the AI sounds right while answering the wrong question.</p>
+
+  <!-- Mirage gap SVG chart -->
+  <svg class="mirage-chart" viewBox="0 0 580 300" xmlns="http://www.w3.org/2000/svg" aria-label="Mirage gap chart: surface validity stays near 100% while pivot preservation drops to 0% at 65% retention">
+    <defs>
+      <linearGradient id="mirageGradient" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#d04040" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#d04040" stop-opacity="0.05"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Chart area: left=60, right=540, top=20, bottom=240 -->
+    <!-- X positions for retention levels: 100%=60, 80%=165, 65%=270, 50%=375, 40%=480 (but we go to 540) -->
+    <!-- Actually distribute evenly: 5 points across width 60..540 = step 120 -->
+    <!-- x0=60, x1=180, x2=300, x3=420, x4=540 -->
+    <!-- Y: 0%=240, 100%=20, so y = 240 - val*2.2 -->
+
+    <!-- Grid lines -->
+    <line class="chart-gridline" x1="60" y1="20" x2="540" y2="20"/>
+    <line class="chart-gridline" x1="60" y1="75" x2="540" y2="75"/>
+    <line class="chart-gridline" x1="60" y1="130" x2="540" y2="130"/>
+    <line class="chart-gridline" x1="60" y1="185" x2="540" y2="185"/>
+    <line class="chart-gridline" x1="60" y1="240" x2="540" y2="240"/>
+
+    <!-- Axes -->
+    <line class="chart-axis" x1="60" y1="20" x2="60" y2="245"/>
+    <line class="chart-axis" x1="55" y1="240" x2="545" y2="240"/>
+
+    <!-- Y axis labels: 0%=240, 25%=185, 50%=130, 75%=75, 100%=20 -->
+    <text x="50" y="244" text-anchor="end">0%</text>
+    <text x="50" y="189" text-anchor="end">25%</text>
+    <text x="50" y="134" text-anchor="end">50%</text>
+    <text x="50" y="79" text-anchor="end">75%</text>
+    <text x="50" y="24" text-anchor="end">100%</text>
+    <text x="10" y="140" text-anchor="middle" transform="rotate(-90 10 140)" style="font-size:11px;">Rate</text>
+
+    <!-- X axis labels: retention% -->
+    <text x="60" y="258" text-anchor="middle">100%</text>
+    <text x="180" y="258" text-anchor="middle">80%</text>
+    <text x="300" y="258" text-anchor="middle">65%</text>
+    <text x="420" y="258" text-anchor="middle">50%</text>
+    <text x="540" y="258" text-anchor="middle">40%</text>
+    <text x="300" y="275" text-anchor="middle" style="font-size:11px;">Retention Budget</text>
+
+    <!--
+      Data points (recency policy):
+        100%: surface_validity(decoy_full_rate)=1.0 → y=20,  pivot_preservation=1.0 → y=20
+        80%:  surface_validity=1.0 → y=20,             pivot_preservation=0.333 → y=240-0.333*220=240-73.3=166.7
+        65%:  surface_validity=1.0 → y=20,             pivot_preservation=0.0 → y=240
+        50%:  surface_validity=1.0 → y=20,             pivot_preservation=0.0 → y=240
+        40%:  surface_validity=1.0 → y=20,             pivot_preservation=0.0 → y=240
+
+      Y formula: y = 240 - rate * 220
+
+      l2_guarded pivot_preservation = 1.0 at all levels → y=20 always
+    -->
+
+    <!-- Mirage fill polygon: top = surface validity line, bottom = pivot naive line -->
+    <!-- Surface validity points: (60,20),(180,20),(300,20),(420,20),(540,20) -->
+    <!-- Pivot naive points reversed: (540,240),(420,240),(300,240),(180,167),(60,20) -->
+    <polygon class="mirage-fill" points="60,20 180,20 300,20 420,20 540,20 540,240 420,240 300,240 180,167 60,20"/>
+
+    <!-- Line 1: Surface Validity (dashed, gray) — decoy_full_rate recency = 1.0 at all points -->
+    <polyline class="line-validity" points="60,20 180,20 300,20 420,20 540,20"/>
+
+    <!-- Line 2: Pivot Preservation Naive (solid red) — recency pivot_preservation_rate -->
+    <!-- 100%→1.0→y=20, 80%→0.333→y=167, 65%→0.0→y=240, 50%→0.0→y=240, 40%→0.0→y=240 -->
+    <polyline class="line-pivot-naive" points="60,20 180,167 300,240 420,240 540,240"/>
+
+    <!-- Line 3: Pivot Preservation Guarded (solid green) — l2_guarded = 1.0 always -->
+    <polyline class="line-pivot-guarded" points="60,20 180,20 300,20 420,20 540,20"/>
+
+    <!-- Mirage gap label with arrow pointing to the gap area around x=240, y=130 -->
+    <text class="mirage-gap-label" x="310" y="115" text-anchor="middle">THE MIRAGE GAP</text>
+    <line x1="310" y1="118" x2="270" y2="140" stroke="#c03030" stroke-width="1" opacity="0.7"/>
+
+    <!-- Legend -->
+    <line x1="62" y1="285" x2="90" y2="285" class="line-validity"/>
+    <text x="94" y="289" class="chart-label-line1">Surface Validity</text>
+    <line x1="200" y1="285" x2="228" y2="285" class="line-pivot-naive"/>
+    <text x="232" y="289" class="chart-label-line2">Pivot (Naive Recency)</text>
+    <line x1="380" y1="285" x2="408" y2="285" class="line-pivot-guarded"/>
+    <text x="412" y="289" class="chart-label-line3">Pivot (Guarded)</text>
+  </svg>
+</section>
+
+<hr class="section-divider">
+<section class="section reveal">
   <div class="section-label">Interactive Demo</div>
   <h2>Watch it break in real time</h2>
   <p>Drag the retention slider to compress a conversation. Watch how naive compression maintains surface validity while silently destroying task relevance.</p>
   <div class="demo-preview">
     <div class="demo-preview-inner">
-      <div class="slider-mock">
-        <div style="font-size: 13px; font-weight: 500; margin-bottom: 4px;">Retention Budget: 65%</div>
-        <div class="slider-track">
-          <div class="slider-fill"></div>
-          <div class="slider-thumb"></div>
-        </div>
-        <div class="slider-labels">
-          <span>40%</span>
-          <span>65%</span>
+      <div class="slider-mock demo-slider-wrap">
+        <div class="demo-slider-label" id="sliderLabel">Retention Budget: 65%</div>
+        <input class="demo-slider-input" id="retentionSlider" type="range" min="0" max="4" step="1" value="2" aria-label="Retention budget">
+        <div class="demo-slider-steps">
           <span>100%</span>
+          <span>80%</span>
+          <span>65%</span>
+          <span>50%</span>
+          <span>40%</span>
         </div>
       </div>
-      <div class="demo-result">
+      <div class="demo-result" id="demoResult">
         <div class="demo-column">
           <div class="demo-column-title">Naive Recency</div>
-          <div class="metric-row"><span>Validity</span><span class="metric-value metric-safe">98.2%</span></div>
-          <div class="metric-row"><span>Pivot kept</span><span class="metric-value metric-danger">0%</span></div>
-          <div class="metric-row"><span>Contract</span><span class="metric-value metric-danger">FAIL</span></div>
+          <div class="metric-row"><span>Validity</span><span class="metric-value" id="naiveValidity">—</span></div>
+          <div class="metric-row"><span>Pivot kept</span><span class="metric-value" id="naivePivot">—</span></div>
+          <div class="metric-row"><span>Contract</span><span class="metric-value" id="naiveContract">—</span></div>
         </div>
         <div class="demo-column">
           <div class="demo-column-title">Tropical Guarded</div>
-          <div class="metric-row"><span>Validity</span><span class="metric-value metric-safe">95.1%</span></div>
-          <div class="metric-row"><span>Pivot kept</span><span class="metric-value metric-safe">100%</span></div>
-          <div class="metric-row"><span>Contract</span><span class="metric-value metric-safe">PASS</span></div>
+          <div class="metric-row"><span>Validity</span><span class="metric-value" id="guardedValidity">—</span></div>
+          <div class="metric-row"><span>Pivot kept</span><span class="metric-value" id="guardedPivot">—</span></div>
+          <div class="metric-row"><span>Contract</span><span class="metric-value" id="guardedContract">—</span></div>
         </div>
       </div>
     </div>
@@ -140,23 +282,28 @@
 
 <hr class="section-divider">
 <section class="section reveal">
-  <div class="section-label">Research</div>
-  <h2>Read the papers</h2>
+  <div class="section-label">Explore</div>
+  <h2>Explore</h2>
   <div class="papers-grid">
     <a href="/papers/paper_03_validity_mirage_compression.pdf" class="paper-card">
       <h3>The Validity Mirage</h3>
       <div class="paper-meta">March 2025 · Flagship Paper</div>
       <p>The core paper. Defines the mirage phenomenon, proves the Ω(k) state bound, and introduces the tropical semiring guard.</p>
     </a>
-    <a href="/papers/paper_i_tropical_algebra.pdf" class="paper-card">
-      <h3>Tropical Geometry for Context Compression</h3>
-      <div class="paper-meta">March 2025 · Mathematical Framework</div>
-      <p>The mathematical framework. How min-plus algebra creates verifiable compression contracts.</p>
+    <a href="/topology-demo" class="paper-card">
+      <h3>Topology Visualization</h3>
+      <div class="paper-meta">Interactive · Real-Incident Data</div>
+      <p>See how pivot selection diverges under compression using 12 real-incident graphs from NTSB reports and the Knight Capital failure.</p>
     </a>
-    <a href="/mirage-shelf-grok-2026-03" class="paper-card">
-      <h3>Grok Experiment Report</h3>
-      <div class="paper-meta">March 2026 · Cross-Model Validation</div>
-      <p>Cross-model validation. Does the mirage phenomenon persist in xAI's Grok? (Yes.) <span style="opacity:0.6">Also at <a href="/grok" style="color:inherit;">/grok</a>.</span></p>
+    <a href="/demo" class="paper-card">
+      <h3>Compression Demo</h3>
+      <div class="paper-meta">Interactive · Live Metrics</div>
+      <p>Drag the retention slider and watch naive recency maintain surface validity while silently destroying task relevance.</p>
+    </a>
+    <a href="/grok" class="paper-card">
+      <h3>Cross-Model: Grok</h3>
+      <div class="paper-meta">March 2026 · xAI Validation</div>
+      <p>Does the mirage phenomenon persist in xAI's Grok? Yes — validated across 5 context lengths from 4K to 512K tokens.</p>
     </a>
   </div>
 </section>
@@ -210,6 +357,91 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     els.forEach(function(el){ obs.observe(el); });
   }
+})();
+</script>
+
+<script>
+(function(){
+  var retentionLevels = [1.0, 0.8, 0.65, 0.5, 0.4];
+  var retentionLabels = ['100%', '80%', '65%', '50%', '40%'];
+  var mirageData = null;
+
+  var slider = document.getElementById('retentionSlider');
+  var sliderLabel = document.getElementById('sliderLabel');
+  var naiveValidity = document.getElementById('naiveValidity');
+  var naivePivot = document.getElementById('naivePivot');
+  var naiveContract = document.getElementById('naiveContract');
+  var guardedValidity = document.getElementById('guardedValidity');
+  var guardedPivot = document.getElementById('guardedPivot');
+  var guardedContract = document.getElementById('guardedContract');
+
+  function pct(val) {
+    return Math.round(val * 100) + '%';
+  }
+
+  function setMetric(el, val, isGood) {
+    el.textContent = pct(val);
+    el.className = 'metric-value ' + (isGood ? 'metric-safe' : 'metric-danger');
+  }
+
+  function setContract(el, passed) {
+    el.textContent = passed ? 'PASS' : 'FAIL';
+    el.className = 'metric-value ' + (passed ? 'metric-safe' : 'metric-danger');
+  }
+
+  function updateDemo(idx) {
+    if (!mirageData) return;
+    var level = retentionLevels[idx];
+    var key = level.toString();
+    var recency = mirageData.policies.recency[key];
+    var guarded = mirageData.policies.l2_guarded[key];
+
+    sliderLabel.textContent = 'Retention Budget: ' + retentionLabels[idx];
+
+    setMetric(naiveValidity, recency.decoy_full_rate, recency.decoy_full_rate >= 0.9);
+    setMetric(naivePivot, recency.pivot_preservation_rate, recency.pivot_preservation_rate >= 0.9);
+    setContract(naiveContract, recency.pivot_preservation_rate >= 1.0);
+
+    setMetric(guardedValidity, guarded.decoy_full_rate, guarded.decoy_full_rate >= 0.9);
+    setMetric(guardedPivot, guarded.pivot_preservation_rate, guarded.pivot_preservation_rate >= 0.9);
+    setContract(guardedContract, guarded.pivot_preservation_rate >= 1.0);
+  }
+
+  if (slider) {
+    slider.addEventListener('input', function() {
+      updateDemo(parseInt(this.value, 10));
+    });
+  }
+
+  fetch('./data_miragekit.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      mirageData = data;
+      updateDemo(slider ? parseInt(slider.value, 10) : 2);
+    })
+    .catch(function(){
+      // Fallback: inline the known data so demo works even without fetch
+      mirageData = {
+        retention_levels: [1.0, 0.8, 0.65, 0.5, 0.4],
+        policies: {
+          recency: {
+            '1.0':  {pivot_preservation_rate: 1.0, primary_full_rate: 1.0, decoy_full_rate: 1.0},
+            '0.8':  {pivot_preservation_rate: 0.333, primary_full_rate: 0.333, decoy_full_rate: 1.0},
+            '0.65': {pivot_preservation_rate: 0.0, primary_full_rate: 0.0, decoy_full_rate: 1.0},
+            '0.5':  {pivot_preservation_rate: 0.0, primary_full_rate: 0.0, decoy_full_rate: 1.0},
+            '0.4':  {pivot_preservation_rate: 0.0, primary_full_rate: 0.0, decoy_full_rate: 1.0}
+          },
+          l2_guarded: {
+            '1.0':  {pivot_preservation_rate: 1.0, primary_full_rate: 1.0, decoy_full_rate: 1.0},
+            '0.8':  {pivot_preservation_rate: 1.0, primary_full_rate: 1.0, decoy_full_rate: 1.0},
+            '0.65': {pivot_preservation_rate: 1.0, primary_full_rate: 1.0, decoy_full_rate: 1.0},
+            '0.5':  {pivot_preservation_rate: 1.0, primary_full_rate: 1.0, decoy_full_rate: 1.0},
+            '0.4':  {pivot_preservation_rate: 1.0, primary_full_rate: 1.0, decoy_full_rate: 1.0}
+          }
+        }
+      };
+      updateDemo(slider ? parseInt(slider.value, 10) : 2);
+    });
 })();
 </script>
 
