@@ -25,6 +25,280 @@
   <meta name="twitter:image:alt" content="The Validity Mirage: evidence and validation for silent task drift under AI context compression.">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="stylesheet" href="./styles.css">
+  <style>
+    /* Evidence page additions */
+    .core-result-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      align-items: stretch;
+      margin-top: 40px;
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .core-result-side {
+      padding: 36px 32px;
+      background: var(--surface);
+    }
+    .core-result-side.side-naive {
+      border-right: 1px solid var(--rule);
+    }
+    .core-result-side.side-guarded {
+      border-left: 1px solid var(--rule);
+    }
+    .core-result-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      background: var(--bg);
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--ink-tertiary);
+      text-transform: uppercase;
+      font-weight: 500;
+      writing-mode: horizontal-tb;
+    }
+    .core-result-policy {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin-bottom: 20px;
+    }
+    .core-result-number {
+      font-family: var(--serif);
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 6px;
+    }
+    .core-result-number.danger { color: var(--danger); }
+    .core-result-number.safe { color: var(--safe); }
+    .core-result-sublabel {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      letter-spacing: 0.5px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .core-result-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-top: 1px solid var(--rule);
+      font-size: 13px;
+    }
+    .core-result-context {
+      text-align: center;
+      padding: 16px 32px 0;
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      font-style: italic;
+      letter-spacing: 0.2px;
+      grid-column: 1 / -1;
+    }
+    @media (max-width: 640px) {
+      .core-result-grid { grid-template-columns: 1fr; }
+      .core-result-side.side-naive { border-right: none; border-bottom: 1px solid var(--rule); }
+      .core-result-side.side-guarded { border-left: none; }
+      .core-result-divider { writing-mode: horizontal-tb; padding: 16px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    }
+
+    /* Mirage gap chart */
+    .chart-wrap {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 32px;
+      margin-top: 40px;
+    }
+    .chart-legend {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--ink-secondary);
+    }
+    .legend-line {
+      width: 28px;
+      height: 2px;
+      border-radius: 2px;
+    }
+    .legend-line.dashed {
+      background: repeating-linear-gradient(to right, var(--ink-tertiary) 0, var(--ink-tertiary) 4px, transparent 4px, transparent 8px);
+      height: 2px;
+    }
+    .mirage-svg { width: 100%; height: auto; display: block; }
+
+    /* Validation pipeline */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .pipeline-card {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pipeline-check {
+      font-size: 18px;
+      line-height: 1;
+    }
+    .pipeline-command {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .pipeline-desc {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      line-height: 1.5;
+    }
+    .artifact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .artifact-link {
+      font-size: 13px;
+      color: var(--ink-secondary);
+      text-decoration: none;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 7px 14px;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .artifact-link:hover {
+      border-color: var(--ink-secondary);
+      color: var(--ink);
+    }
+    .artifact-link-primary {
+      font-size: 13px;
+      color: var(--bg);
+      background: var(--ink);
+      text-decoration: none;
+      border: 1px solid var(--ink);
+      border-radius: 6px;
+      padding: 7px 14px;
+      transition: opacity 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 500;
+    }
+    .artifact-link-primary:hover { opacity: 0.82; }
+
+    /* Reproduce section two-column */
+    .reproduce-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 32px;
+      align-items: start;
+    }
+    .reproduce-path {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .reproduce-path-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+      .reproduce-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Certificate visual */
+    .cert-field-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .cert-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 14px;
+    }
+    .cert-field:last-child { border-bottom: none; }
+    .cert-field-key {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-secondary);
+      min-width: 140px;
+      padding-top: 2px;
+    }
+    .cert-field-val {
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    /* Replay table section */
+    .replay-table-wrap {
+      overflow-x: auto;
+      margin-top: 28px;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+    }
+    .replay-table-wrap .report-table {
+      margin-top: 0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .replay-table-wrap .report-table th:first-child,
+    .replay-table-wrap .report-table td:first-child { padding-left: 20px; }
+    .replay-table-wrap .report-table th:last-child,
+    .replay-table-wrap .report-table td:last-child { padding-right: 20px; }
+
+    /* Cross-model card */
+    .grok-card {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 36px 32px;
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .grok-card-body { flex: 1; }
+    .grok-card-body p { font-size: 15px; color: var(--ink-secondary); max-width: 480px; margin-top: 8px; }
+    .grok-card-actions { display: flex; gap: 12px; flex-shrink: 0; flex-wrap: wrap; }
+    @media (max-width: 640px) {
+      .grok-card { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
   <script>
   (function(){
     try {
@@ -48,6 +322,7 @@
       <a href="/">Home</a>
       <a href="/research">Research</a>
       <a href="/demo">Demo</a>
+      <a href="/topology-demo">Topology</a>
       <a href="/evidence" class="active">Evidence</a>
       <a href="/grok">Grok</a>
       <a href="/get-started">Get Started</a>
@@ -56,37 +331,204 @@
     <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
   </div>
   <div class="nav-mobile-panel" id="mobilePanel">
-    <a href="/">Home</a> <a href="/research">Research</a> <a href="/demo">Demo</a>
-    <a href="/evidence">Evidence</a> <a href="/grok">Grok</a> <a href="/get-started">Get Started</a>
+    <a href="/">Home</a>
+    <a href="/research">Research</a>
+    <a href="/demo">Demo</a>
+    <a href="/topology-demo">Topology</a>
+    <a href="/evidence">Evidence</a>
+    <a href="/grok">Grok</a>
+    <a href="/get-started">Get Started</a>
   </div>
 </nav>
 
 <section class="hero reveal">
   <div class="hero-eyebrow">Evidence</div>
   <h1>Evidence &amp; Validation</h1>
-  <p class="hero-sub">All data and validation artifacts supporting the research claims. Every number is traceable to a committed file — no claims without checkable artifacts.</p>
+  <p class="hero-sub">Every claim is backed by checkable artifacts. Every number traces to a committed file.</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-value">n=3</div><div class="stat-label">Variants per policy</div></div>
+    <div class="stat"><div class="stat-value">5</div><div class="stat-label">Retention levels tested</div></div>
+    <div class="stat"><div class="stat-value">100%</div><div class="stat-label">Guarded pivot preservation</div></div>
+    <div class="stat"><div class="stat-value">0%</div><div class="stat-label">Naive pivot at 65% retention</div></div>
+  </div>
 </section>
 
 <hr class="section-divider">
 
 <section class="section reveal">
-  <div class="section-label">Overview</div>
-  <h2>What the public record contains</h2>
-  <p>The research program lives in <strong>MirageKit</strong>, the public artifact surface lives in <strong>dreams</strong>, and the evaluation MCP implementation lives in <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener" style="color: var(--ink);">tropical-mcp</a>. The replay rates reported throughout the site are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction.</p>
+  <div class="section-label">The Core Result</div>
+  <h2>Two policies. Same surface validity. Opposite outcomes.</h2>
+  <p>At 65% retention on the deterministic witness, naive recency produces a response that looks valid while the governing pivot is absent. The guarded policy keeps the protected arc intact.</p>
 
-  <div class="papers-grid" style="margin-top: 40px;">
-    <div class="card">
-      <h3>Version Map</h3>
-      <p style="margin-top: 8px;">DOI-backed archive: <code>dreams v0.1.1</code><br>Mirrored implementation: <code>tropical-mcp v0.2.1</code></p>
+  <div class="core-result-grid">
+    <div class="core-result-side side-naive">
+      <div class="core-result-policy">Naive Recency</div>
+      <div class="core-result-number danger">0%</div>
+      <div class="core-result-sublabel">Pivot Preservation</div>
+      <div class="core-result-row">
+        <span>Surface Validity</span>
+        <span class="regime-badge safe">100%</span>
+      </div>
+      <div class="core-result-row">
+        <span>Pivot Integrity</span>
+        <span class="regime-badge danger">0%</span>
+      </div>
+      <div class="core-result-row">
+        <span>Contract</span>
+        <span class="contract-badge violated">Violated</span>
+      </div>
     </div>
-    <div class="card">
-      <h3>Strongest Claim</h3>
-      <p style="margin-top: 8px;">Naive recency preserves answerability while losing pivot integrity. The guarded policy keeps the protected arc intact on the committed witness.</p>
+    <div class="core-result-divider">vs</div>
+    <div class="core-result-side side-guarded">
+      <div class="core-result-policy">Tropical Guarded</div>
+      <div class="core-result-number safe">100%</div>
+      <div class="core-result-sublabel">Pivot Preservation</div>
+      <div class="core-result-row">
+        <span>Surface Validity</span>
+        <span class="regime-badge safe">100%</span>
+      </div>
+      <div class="core-result-row">
+        <span>Pivot Integrity</span>
+        <span class="regime-badge safe">100%</span>
+      </div>
+      <div class="core-result-row">
+        <span>Contract</span>
+        <span class="contract-badge satisfied">Satisfied</span>
+      </div>
     </div>
-    <div class="card">
-      <h3>Public Artifacts</h3>
-      <p style="margin-top: 8px;">Lint, typing, test, build, installed-wheel, functional validation, replay summaries, and a portable certificate — all published from committed files.</p>
+    <div class="core-result-context">At 65% retention · deterministic witness · n=3 per policy</div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section reveal">
+  <div class="section-label">Mirage Gap Chart</div>
+  <h2>The gap between what looks valid and what is valid</h2>
+  <p>Surface validity (dashed) stays near 100% regardless of retention. Naive recency pivot preservation (red) collapses as tokens are cut. The guarded policy (green) holds the line. The red fill is the mirage gap — the zone where the response looks fine but the task has drifted.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-legend">
+      <div class="legend-item">
+        <div class="legend-line dashed"></div>
+        <span>Surface validity (both policies)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line" style="background: var(--danger);"></div>
+        <span>Naive recency — pivot preservation</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-line" style="background: var(--safe);"></div>
+        <span>Guarded — pivot preservation</span>
+      </div>
+      <div class="legend-item">
+        <div style="width: 28px; height: 14px; background: rgba(200,85,58,0.15); border-radius: 2px; border: 1px solid rgba(200,85,58,0.3);"></div>
+        <span>Mirage gap</span>
+      </div>
     </div>
+    <!--
+      Chart data:
+      X axis: retention % = [100, 80, 65, 50, 40]
+      Surface validity     = [100, 100, 100, 100, 100]
+      Naive pivot          = [100, 33.3, 0, 0, 0]
+      Guarded pivot        = [100, 100, 100, 100, 100]
+
+      SVG coordinate space: viewBox="0 0 560 260"
+      Plot area: x: 60..520, y: 20..220 (height 200, width 460)
+      X positions for retention [100,80,65,50,40]:
+        100% -> x=60, 80% -> x=175, 65% -> x=260, 50% -> x=347, 40% -> x=460
+      Y for rate r%: y = 220 - (r/100 * 200)
+        100% -> y=20, 33.3% -> y=153.3, 0% -> y=220
+    -->
+    <svg class="mirage-svg" viewBox="0 0 560 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mirage gap chart showing pivot preservation vs surface validity across retention levels">
+
+      <!-- Grid lines -->
+      <line x1="60" y1="20" x2="520" y2="20" stroke="var(--rule)" stroke-width="1"/>
+      <line x1="60" y1="70" x2="520" y2="70" stroke="var(--rule)" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="60" y1="120" x2="520" y2="120" stroke="var(--rule)" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="60" y1="170" x2="520" y2="170" stroke="var(--rule)" stroke-width="1" stroke-dasharray="3,4"/>
+      <line x1="60" y1="220" x2="520" y2="220" stroke="var(--rule)" stroke-width="1"/>
+
+      <!-- Y axis labels -->
+      <text x="52" y="24" text-anchor="end" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">100%</text>
+      <text x="52" y="74" text-anchor="end" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">75%</text>
+      <text x="52" y="124" text-anchor="end" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">50%</text>
+      <text x="52" y="174" text-anchor="end" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">25%</text>
+      <text x="52" y="224" text-anchor="end" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">0%</text>
+
+      <!-- X axis tick marks -->
+      <line x1="60"  y1="220" x2="60"  y2="226" stroke="var(--rule)" stroke-width="1"/>
+      <line x1="175" y1="220" x2="175" y2="226" stroke="var(--rule)" stroke-width="1"/>
+      <line x1="260" y1="220" x2="260" y2="226" stroke="var(--rule)" stroke-width="1"/>
+      <line x1="347" y1="220" x2="347" y2="226" stroke="var(--rule)" stroke-width="1"/>
+      <line x1="460" y1="220" x2="460" y2="226" stroke="var(--rule)" stroke-width="1"/>
+
+      <!-- X axis labels -->
+      <text x="60"  y="242" text-anchor="middle" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">100%</text>
+      <text x="175" y="242" text-anchor="middle" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">80%</text>
+      <text x="260" y="242" text-anchor="middle" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">65%</text>
+      <text x="347" y="242" text-anchor="middle" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">50%</text>
+      <text x="460" y="242" text-anchor="middle" font-size="11" fill="var(--ink-tertiary)" font-family="var(--mono)">40%</text>
+
+      <!-- X axis title -->
+      <text x="290" y="262" text-anchor="middle" font-size="11" fill="var(--ink-tertiary)" font-family="var(--sans)" letter-spacing="1" font-weight="500">RETENTION</text>
+
+      <!-- Mirage gap fill (between surface validity line y=20 and naive pivot line) -->
+      <!-- Polygon from retention 100%→80%→65%→50%→40% along naive, then back along validity -->
+      <!-- Naive line: (60,20) -> (175,153) -> (260,220) -> (347,220) -> (460,220) -->
+      <!-- Validity line (all y=20): same X points -->
+      <polygon
+        points="60,20 175,153.3 260,220 347,220 460,220 460,20 347,20 260,20 175,20 60,20"
+        fill="rgba(200,85,58,0.13)"
+        stroke="none"/>
+
+      <!-- Surface validity line (dashed) — stays at 100% (y=20) -->
+      <line x1="60" y1="20" x2="460" y2="20"
+        stroke="var(--ink-tertiary)"
+        stroke-width="2"
+        stroke-dasharray="6,5"/>
+
+      <!-- Naive recency pivot preservation (red solid) -->
+      <!-- Points: (60,20), (175,153.3), (260,220), (347,220), (460,220) -->
+      <polyline
+        points="60,20 175,153.3 260,220 347,220 460,220"
+        fill="none"
+        stroke="var(--danger)"
+        stroke-width="2.5"
+        stroke-linejoin="round"
+        stroke-linecap="round"/>
+
+      <!-- Guarded pivot preservation (green solid) — stays at 100% (y=20) -->
+      <line x1="60" y1="20" x2="460" y2="20"
+        stroke="var(--safe)"
+        stroke-width="2.5"/>
+
+      <!-- Data point dots — surface validity (at y=20, shown as small outline circles) -->
+      <circle cx="60"  cy="20" r="3.5" fill="var(--surface)" stroke="var(--ink-tertiary)" stroke-width="1.5"/>
+      <circle cx="175" cy="20" r="3.5" fill="var(--surface)" stroke="var(--ink-tertiary)" stroke-width="1.5"/>
+      <circle cx="260" cy="20" r="3.5" fill="var(--surface)" stroke="var(--ink-tertiary)" stroke-width="1.5"/>
+      <circle cx="347" cy="20" r="3.5" fill="var(--surface)" stroke="var(--ink-tertiary)" stroke-width="1.5"/>
+      <circle cx="460" cy="20" r="3.5" fill="var(--surface)" stroke="var(--ink-tertiary)" stroke-width="1.5"/>
+
+      <!-- Data point dots — naive pivot (red) -->
+      <circle cx="60"  cy="20"    r="4" fill="var(--danger)" stroke="var(--surface)" stroke-width="1.5"/>
+      <circle cx="175" cy="153.3" r="4" fill="var(--danger)" stroke="var(--surface)" stroke-width="1.5"/>
+      <circle cx="260" cy="220"   r="4" fill="var(--danger)" stroke="var(--surface)" stroke-width="1.5"/>
+      <circle cx="347" cy="220"   r="4" fill="var(--danger)" stroke="var(--surface)" stroke-width="1.5"/>
+      <circle cx="460" cy="220"   r="4" fill="var(--danger)" stroke="var(--surface)" stroke-width="1.5"/>
+
+      <!-- Data point dots — guarded pivot (green, slightly larger to distinguish from validity dots) -->
+      <circle cx="60"  cy="20" r="5" fill="var(--safe)" stroke="var(--surface)" stroke-width="1.5"/>
+      <circle cx="175" cy="20" r="5" fill="var(--safe)" stroke="var(--surface)" stroke-width="1.5"/>
+      <circle cx="260" cy="20" r="5" fill="var(--safe)" stroke="var(--surface)" stroke-width="1.5"/>
+      <circle cx="347" cy="20" r="5" fill="var(--safe)" stroke="var(--surface)" stroke-width="1.5"/>
+      <circle cx="460" cy="20" r="5" fill="var(--safe)" stroke="var(--surface)" stroke-width="1.5"/>
+
+      <!-- Callout label at 65% showing the gap -->
+      <line x1="260" y1="48" x2="260" y2="210" stroke="rgba(200,85,58,0.35)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="264" y="62" font-size="10" fill="var(--danger)" font-family="var(--sans)" font-weight="600">65% retention</text>
+      <text x="264" y="75" font-size="10" fill="var(--danger)" font-family="var(--sans)">naive pivot → 0%</text>
+    </svg>
   </div>
 </section>
 
@@ -94,26 +536,45 @@
 
 <section class="section reveal">
   <div class="section-label">Evidence Record 01</div>
-  <h2>Implementation Checks</h2>
-  <p>The implementation repo is published with the raw outputs needed to inspect software quality and the installable wheel path — not just a summary claim.</p>
+  <h2>Validation pipeline</h2>
+  <p>The implementation repo ships with the raw outputs needed to inspect software quality — not just a summary claim. Every check passes on the committed revision.</p>
 
-  <div style="margin-top: 32px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 28px;">
-    <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
-      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><code>ruff check .</code> and <code>mypy src/tropical_mcp</code> — run on the canonical implementation repo</li>
-      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><code>pytest</code> — pass count published in the mirrored validation log</li>
-      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><code>uv build</code> — verifies wheel + sdist packaging</li>
-      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><code>./scripts/validate_installed_wheel.sh</code> — confirms the built wheel validates after install</li>
-      <li style="padding: 10px 0; font-size: 14px; color: var(--ink-secondary);"><code>uv run tropical-mcp-full-validate</code> — exercises the MCP-facing validation path</li>
-    </ul>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-      <a href="/results/ruff.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Ruff log ↗</a>
-      <a href="/results/mypy.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Mypy log ↗</a>
-      <a href="/results/pytest.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Pytest log ↗</a>
-      <a href="/results/build.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Build log ↗</a>
-      <a href="/results/installed_wheel.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Installed-wheel log ↗</a>
-      <a href="/results/VALIDATION_SUMMARY.md" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Validation summary ↗</a>
-      <a href="/results/full_validation.json" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Full validation report ↗</a>
+  <div class="pipeline-grid">
+    <div class="pipeline-card">
+      <div class="pipeline-check"><span class="status-dot safe"></span></div>
+      <div class="pipeline-command">ruff check .</div>
+      <div class="pipeline-desc">Style and lint on the canonical implementation repo</div>
     </div>
+    <div class="pipeline-card">
+      <div class="pipeline-check"><span class="status-dot safe"></span></div>
+      <div class="pipeline-command">mypy src/</div>
+      <div class="pipeline-desc">Static type checking — zero errors on committed revision</div>
+    </div>
+    <div class="pipeline-card">
+      <div class="pipeline-check"><span class="status-dot safe"></span></div>
+      <div class="pipeline-command">pytest</div>
+      <div class="pipeline-desc">Pass count published in the mirrored validation log</div>
+    </div>
+    <div class="pipeline-card">
+      <div class="pipeline-check"><span class="status-dot safe"></span></div>
+      <div class="pipeline-command">uv build</div>
+      <div class="pipeline-desc">Verifies wheel + sdist packaging succeeds cleanly</div>
+    </div>
+    <div class="pipeline-card">
+      <div class="pipeline-check"><span class="status-dot safe"></span></div>
+      <div class="pipeline-command">validate_wheel.sh</div>
+      <div class="pipeline-desc">Confirms the built wheel validates after install</div>
+    </div>
+  </div>
+
+  <div class="artifact-links">
+    <a href="/results/ruff.txt" target="_blank" rel="noopener" class="artifact-link">Ruff log ↗</a>
+    <a href="/results/mypy.txt" target="_blank" rel="noopener" class="artifact-link">Mypy log ↗</a>
+    <a href="/results/pytest.txt" target="_blank" rel="noopener" class="artifact-link">Pytest log ↗</a>
+    <a href="/results/build.txt" target="_blank" rel="noopener" class="artifact-link">Build log ↗</a>
+    <a href="/results/installed_wheel.txt" target="_blank" rel="noopener" class="artifact-link">Installed-wheel log ↗</a>
+    <a href="/results/VALIDATION_SUMMARY.md" target="_blank" rel="noopener" class="artifact-link">Validation summary ↗</a>
+    <a href="/results/full_validation.json" target="_blank" rel="noopener" class="artifact-link-primary">Full validation report ↗</a>
   </div>
 </section>
 
@@ -121,30 +582,110 @@
 
 <section class="section reveal">
   <div class="section-label">Evidence Record 02</div>
-  <h2>Replay Witnesses</h2>
-  <p>At retention fractions <code>0.65</code>, <code>0.5</code>, and <code>0.4</code>, the committed replay keeps the primary arc intact under <code>l2_guarded</code> while recency collapses it. The witness is intentionally small so every reported value remains inspectable.</p>
+  <h2>Replay witnesses</h2>
+  <p>At retention fractions 0.65, 0.5, and 0.4, the committed replay keeps the primary arc intact under <code>l2_guarded</code> while recency collapses it. The witness is intentionally small so every reported value stays inspectable.</p>
 
-  <div class="comparison-grid" style="margin-top: 32px;">
+  <div class="comparison-grid">
     <div class="card-guarded card">
       <div class="card-header">
         <span class="card-title">l2_guarded</span>
-        <span class="card-status regime-badge safe">1.0</span>
+        <span class="card-status regime-badge safe">Contract Satisfied</span>
       </div>
-      <p style="font-size: 14px; color: var(--ink-secondary);">Pivot preservation stays at 1.0 across all tested retention fractions. The protected arc is never dropped. Contract satisfaction is recorded in the portable certificate.</p>
+      <div class="metric">
+        <div class="metric-header">
+          <span class="metric-label">Pivot preservation</span>
+          <span class="metric-value metric-safe">1.0</span>
+        </div>
+        <div class="metric-bar"><div class="metric-fill" style="width:100%; background:var(--safe);"></div></div>
+        <div class="metric-note">Holds at 1.0 across all tested retention fractions</div>
+      </div>
+      <div class="metric">
+        <div class="metric-header">
+          <span class="metric-label">Surface validity</span>
+          <span class="metric-value metric-safe">1.0</span>
+        </div>
+        <div class="metric-bar"><div class="metric-fill" style="width:100%; background:var(--safe);"></div></div>
+        <div class="metric-note">Protected arc is never dropped</div>
+      </div>
     </div>
     <div class="card-naive card">
       <div class="card-header">
         <span class="card-title">recency</span>
-        <span class="card-status regime-badge danger">0.0</span>
+        <span class="card-status regime-badge danger">Contract Violated</span>
       </div>
-      <p style="font-size: 14px; color: var(--ink-secondary);">Pivot preservation falls to 0.0 at critical retention fractions. The response remains valid-looking while the governing pivot is absent — the mirage signature.</p>
+      <div class="metric">
+        <div class="metric-header">
+          <span class="metric-label">Pivot preservation at 65%</span>
+          <span class="metric-value metric-danger">0.0</span>
+        </div>
+        <div class="metric-bar"><div class="metric-fill" style="width:0%; background:var(--danger);"></div></div>
+        <div class="metric-note">Falls to 0.0 at critical retention fractions</div>
+      </div>
+      <div class="metric">
+        <div class="metric-header">
+          <span class="metric-label">Surface validity</span>
+          <span class="metric-value metric-safe">1.0</span>
+        </div>
+        <div class="metric-bar"><div class="metric-fill" style="width:100%; background:var(--safe);"></div></div>
+        <div class="metric-note">Response looks valid while pivot is absent — the mirage signature</div>
+      </div>
     </div>
   </div>
 
-  <div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px;">
-    <a href="./" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Open live witness view ↖</a>
-    <a href="/results/replay/replay_summary.csv" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Replay summary CSV ↗</a>
-    <a href="/results/replay/replay_summary.json" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Replay summary JSON ↗</a>
+  <div class="replay-table-wrap">
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>Retention</th>
+          <th>Naive pivot</th>
+          <th>Guarded pivot</th>
+          <th>Surface validity</th>
+          <th>Mirage?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>100%</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-safe">No</td>
+        </tr>
+        <tr>
+          <td>80%</td>
+          <td class="metric-warn">0.333</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-warn">Partial</td>
+        </tr>
+        <tr class="mirage-row">
+          <td>65%</td>
+          <td class="metric-danger">0.000</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-danger">Yes</td>
+        </tr>
+        <tr class="mirage-row">
+          <td>50%</td>
+          <td class="metric-danger">0.000</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-danger">Yes</td>
+        </tr>
+        <tr class="mirage-row">
+          <td>40%</td>
+          <td class="metric-danger">0.000</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-safe">1.000</td>
+          <td class="metric-danger">Yes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="artifact-links">
+    <a href="/results/replay/replay_summary.csv" target="_blank" rel="noopener" class="artifact-link">Replay summary CSV ↗</a>
+    <a href="/results/replay/replay_summary.json" target="_blank" rel="noopener" class="artifact-link-primary">Replay summary JSON ↗</a>
   </div>
 </section>
 
@@ -152,19 +693,57 @@
 
 <section class="section reveal">
   <div class="section-label">Evidence Record 03</div>
-  <h2>Portable Certificate</h2>
-  <p>The public certificate captures the recency-vs-guarded kept and dropped IDs, audit flags, and contract and protection status in a portable shape that can be compared against a local verification run.</p>
+  <h2>Portable certificate</h2>
+  <p>The public certificate captures recency-vs-guarded kept and dropped IDs, audit flags, and contract and protection status in a portable shape that can be compared against a local verification run.</p>
 
-  <div style="margin-top: 32px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 28px;">
-    <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
-      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);">Pivot and protected IDs are recorded from the full context</li>
-      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);">Each policy exposes its kept and dropped IDs separately</li>
-      <li style="padding: 10px 0; font-size: 14px; color: var(--ink-secondary);">Feasibility, breach, and contract status stay visible in the audit trail</li>
-    </ul>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-      <a href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Certificate JSON ↗</a>
-      <a href="https://github.com/jack-chaudier/tropical-mcp#minimal-smoke-test" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Verification snippet ↗</a>
+  <div class="certificate-compare" style="margin-top: 32px;">
+    <div class="certificate-policy">
+      <div class="section-label" style="margin-bottom: 12px;">l2_guarded</div>
+      <ul class="cert-field-list">
+        <li class="cert-field">
+          <span class="cert-field-key">pivot_ids</span>
+          <span class="cert-field-val">Recorded from full context — never dropped</span>
+        </li>
+        <li class="cert-field">
+          <span class="cert-field-key">protected_ids</span>
+          <span class="cert-field-val">All present in kept set across all fractions</span>
+        </li>
+        <li class="cert-field">
+          <span class="cert-field-key">dropped_ids</span>
+          <span class="cert-field-val">Non-pivot noise chunks only</span>
+        </li>
+        <li class="cert-field">
+          <span class="cert-field-key">contract_status</span>
+          <span class="cert-field-val"><span class="contract-badge satisfied">Satisfied</span></span>
+        </li>
+      </ul>
     </div>
+    <div class="certificate-policy">
+      <div class="section-label" style="margin-bottom: 12px;">recency</div>
+      <ul class="cert-field-list">
+        <li class="cert-field">
+          <span class="cert-field-key">pivot_ids</span>
+          <span class="cert-field-val">Recorded from full context</span>
+        </li>
+        <li class="cert-field">
+          <span class="cert-field-key">protected_ids</span>
+          <span class="cert-field-val">Missing from kept set at ≤65% retention</span>
+        </li>
+        <li class="cert-field">
+          <span class="cert-field-key">dropped_ids</span>
+          <span class="cert-field-val">Includes pivot chunk — silent task drift</span>
+        </li>
+        <li class="cert-field">
+          <span class="cert-field-key">contract_status</span>
+          <span class="cert-field-val"><span class="contract-badge violated">Violated</span></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="artifact-links">
+    <a href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener" class="artifact-link-primary">Certificate JSON ↗</a>
+    <a href="https://github.com/jack-chaudier/tropical-mcp#minimal-smoke-test" target="_blank" rel="noopener" class="artifact-link">Verification snippet ↗</a>
   </div>
 </section>
 
@@ -172,53 +751,48 @@
 
 <section class="section reveal">
   <div class="section-label">Reproduce</div>
-  <h2>Verification paths</h2>
-  <p>Install and register <code>tropical-mcp</code>, then choose between the minimal smoke path and the fuller reviewer workflow. The public certificate on this page is a comparison target for your local run, not a substitute for the reviewer workflow itself.</p>
+  <h2>Verify locally</h2>
+  <p>Install and register <code>tropical-mcp</code>, then choose between the minimal smoke path and the fuller reviewer workflow. The public certificate is a comparison target — not a substitute for running it yourself.</p>
 
-  <div style="margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
-    <div>
-      <ul style="list-style: none; padding: 0; margin: 0;">
-        <li style="padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><strong style="color: var(--ink);">Smoke test:</strong> confirm the runtime with <code>runtime_info()</code>, then run <code>compact_auto(...)</code> and <code>certificate(...)</code>.</li>
-        <li style="padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><strong style="color: var(--ink);">Research workflow:</strong> run <code>diagnose(...)</code> to inspect feasible slots, capture a <code>context_anchor(...)</code>, then compare <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>.</li>
-        <li style="padding: 12px 0; font-size: 14px; color: var(--ink-secondary);">Compare the resulting certificate and replay behavior against the public artifacts on this page.</li>
-      </ul>
-      <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
-        <a href="https://github.com/jack-chaudier/tropical-mcp#quick-start-codex" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Codex quick-start ↗</a>
-        <a href="./" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Return to overview ↖</a>
+  <div class="reproduce-grid">
+    <div class="reproduce-path">
+      <div class="reproduce-path-title">Smoke test — 3 steps</div>
+      <div class="code-block" style="font-size: 12px; line-height: 1.7;">
+<pre><code>runtime_info()               # check your setup
+compact_auto(
+  messages=messages,
+  token_budget=45,
+  k_target=2,
+  mode="adaptive",
+)
+certificate(                 # portable audit record
+  messages=messages,
+  token_budget=45,
+  k=2,
+)</code></pre>
       </div>
     </div>
-    <div class="code-block" style="font-size: 13px; line-height: 1.7;">
-<pre><code># minimal smoke path
-runtime_info()               # check your setup
-compact_auto(                # compress with policy selection
+    <div class="reproduce-path">
+      <div class="reproduce-path-title">Full reviewer workflow — 5 steps</div>
+      <div class="code-block" style="font-size: 12px; line-height: 1.7;">
+<pre><code>runtime_info()               # check your setup
+diagnose(messages=messages, k_max=2)
+context_anchor(messages=messages, k=2)
+compact_auto(
   messages=messages,
   token_budget=45,
   k_target=2,
   mode="adaptive",
 )
-certificate(                 # generate portable audit record
-  messages=messages,
-  token_budget=45,
-  k=2,
-)
-
-# fuller reviewer workflow
-runtime_info()               # check your setup
-diagnose(messages=messages, k_max=2)    # find compression issues
-context_anchor(messages=messages, k=2)  # mark protected messages
-compact_auto(                # compress with policy selection
-  messages=messages,
-  token_budget=45,
-  k_target=2,
-  mode="adaptive",
-)
-certificate(                 # generate portable audit record
-  messages=messages,
-  token_budget=45,
-  k=2,
-)
+certificate(messages=messages, token_budget=45, k=2)
 telemetry_summary(limit=5)   # review retention behavior</code></pre>
+      </div>
     </div>
+  </div>
+
+  <div class="artifact-links" style="margin-top: 20px;">
+    <a href="https://github.com/jack-chaudier/tropical-mcp#quick-start-codex" target="_blank" rel="noopener" class="artifact-link">Codex quick-start ↗</a>
+    <a href="/" class="artifact-link">Return to overview ↖</a>
   </div>
 </section>
 
@@ -227,10 +801,17 @@ telemetry_summary(limit=5)   # review retention behavior</code></pre>
 <section class="section reveal">
   <div class="section-label">Cross-Model Validation</div>
   <h2>Grok experiment: mirage-shelf-grok-2026-03</h2>
-  <p>The mirage phenomenon was independently validated on xAI's Grok model. Results are published at <a href="/mirage-shelf-grok-2026-03" style="color: var(--ink);">/mirage-shelf-grok-2026-03</a> with the full shelf image and per-fraction breakdown.</p>
-  <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
-    <a href="/mirage-shelf-grok-2026-03" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Grok experiment page ↗</a>
-    <a href="/results/mirage-shelf-grok-2026-03/mirage_shelf.png" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Mirage shelf image ↗</a>
+  <p>The mirage phenomenon was independently validated on xAI's Grok model.</p>
+
+  <div class="grok-card">
+    <div class="grok-card-body">
+      <div class="section-label" style="margin-bottom: 8px;">xAI Grok · March 2026</div>
+      <p>Results published at <a href="/mirage-shelf-grok-2026-03" style="color: var(--ink);">/mirage-shelf-grok-2026-03</a> with the full shelf image and per-fraction breakdown. The mirage signature — high surface validity, zero pivot preservation — replicates across model families.</p>
+    </div>
+    <div class="grok-card-actions">
+      <a href="/mirage-shelf-grok-2026-03" class="artifact-link-primary">Grok experiment ↗</a>
+      <a href="/results/mirage-shelf-grok-2026-03/mirage_shelf.png" target="_blank" rel="noopener" class="artifact-link">Mirage shelf image ↗</a>
+    </div>
   </div>
 </section>
 
