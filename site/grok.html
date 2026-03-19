@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grok Experiment | The Validity Mirage</title>
+  <meta name="description" content="Cross-model validation of the validity mirage: testing tropical-mcp's guarded compression against xAI's Grok model.">
+  <meta name="author" content="Jack Chaudier Gaffney">
+  <meta id="themeColorMeta" name="theme-color" content="#f5f2ec">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://dreams-dun.vercel.app/grok">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Validity Mirage">
+  <meta property="og:title" content="Grok Experiment | The Validity Mirage">
+  <meta property="og:description" content="Cross-model validation of the validity mirage: testing tropical-mcp's guarded compression against xAI's Grok model.">
+  <meta property="og:url" content="https://dreams-dun.vercel.app/grok">
+  <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@J_C_Gaffney">
+  <meta name="twitter:title" content="Grok Experiment | The Validity Mirage">
+  <meta name="twitter:description" content="Cross-model validation of the validity mirage: testing tropical-mcp's guarded compression against xAI's Grok model.">
+  <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+  (function(){
+    try{var q=new URLSearchParams(location.search).get('theme'),s=localStorage.getItem('miragekit-theme'),
+    d=matchMedia('(prefers-color-scheme:dark)').matches,
+    t=q==='dark'||q==='light'?q:s==='dark'||s==='light'?s:d?'dark':'light';
+    document.documentElement.dataset.theme=t;
+    var m=document.getElementById('themeColorMeta');
+    if(m)m.setAttribute('content',t==='dark'?'#111110':'#f5f2ec');
+    }catch(e){document.documentElement.dataset.theme='light';}
+  })();
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">validity mirage</a>
+    <div class="nav-links">
+      <a href="/">Home</a><a href="/research">Research</a><a href="/demo">Demo</a>
+      <a href="/evidence">Evidence</a><a href="/grok" class="active">Grok</a><a href="/get-started">Get Started</a>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">◐</button>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+  </div>
+  <div class="nav-mobile-panel" id="mobilePanel">
+    <a href="/">Home</a><a href="/research">Research</a><a href="/demo">Demo</a>
+    <a href="/evidence">Evidence</a><a href="/grok">Grok</a><a href="/get-started">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Cross-Model Validation</div>
+  <h1>The Grok Experiment</h1>
+  <p class="hero-sub">The validity mirage is not a Claude-specific artifact. We tested tropical-mcp's guarded compression policy against xAI's Grok model to determine whether the phenomenon — and the fix — transfer across model architectures.</p>
+  <div class="hero-actions">
+    <a href="/papers/paper_03_validity_mirage_compression.pdf" class="btn-primary" target="_blank" rel="noopener">Read the Paper</a>
+    <a href="/evidence" class="btn-ghost">See the evidence →</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">Key Finding</div>
+  <h2>The mirage persists across model architectures</h2>
+  <p>The validity mirage is structural, not behavioral. It arises from how compression algorithms select which messages to keep — not from how any particular model responds. When the pivot is dropped, any model will confidently answer a question it was never actually asked. Grok is no exception.</p>
+  <div class="problem-grid" style="margin-top: 32px;">
+    <div class="card">
+      <h3>Naive recency fails identically</h3>
+      <p>Under the recency policy, Grok exhibits the same pivot-loss pattern seen with other models. Surface validity is maintained; task relevance is silently destroyed.</p>
+    </div>
+    <div class="card">
+      <h3>Guarded policy transfers cleanly</h3>
+      <p>The L2-guarded compression contract holds regardless of which model sits downstream. The mathematical guarantee is about the context window, not the model reading it.</p>
+    </div>
+    <div class="card">
+      <h3>Architecture is not the variable</h3>
+      <p>The experiment confirms that the mirage is a compression-layer problem. Switching model providers does not eliminate it — only a guarded policy does.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">Methodology</div>
+  <h2>How the experiment was set up</h2>
+  <p>The Grok experiment applies the same deterministic witness used in the flagship paper to xAI's Grok model. The replay witness is a fixed set of conversation transcripts with known pivot positions, tested at multiple retention fractions.</p>
+
+  <div style="margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+    <div class="formula-card">
+      <h3>Same witness, different model</h3>
+      <p style="font-size: 14px; color: var(--ink-secondary); line-height: 1.6;">The committed replay witness from the main research program was replayed against Grok's API with identical compression policies and retention fractions.</p>
+    </div>
+    <div class="formula-card">
+      <h3>Two policies compared</h3>
+      <p style="font-size: 14px; color: var(--ink-secondary); line-height: 1.6;">Each transcript was compressed with naive recency and with the L2-guarded policy. Pivot preservation rate was recorded for each.</p>
+    </div>
+    <div class="formula-card">
+      <h3>Retention fractions tested</h3>
+      <p style="font-size: 14px; color: var(--ink-secondary); line-height: 1.6;">Experiments ran at retention fractions of <code>0.65</code>, <code>0.50</code>, and <code>0.40</code> — the same fractions used in the flagship paper's witness.</p>
+    </div>
+    <div class="formula-card">
+      <h3>Certificate comparison</h3>
+      <p style="font-size: 14px; color: var(--ink-secondary); line-height: 1.6;">The portable certificate format was used to record kept and dropped message IDs, enabling direct comparison against the reference run.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">Results</div>
+  <h2>Compression behavior across models</h2>
+  <p>The qualitative result is unambiguous: pivot preservation under the guarded policy remains robust across model boundaries, while naive recency continues to collapse it at low retention fractions. The precise per-transcript breakdown is available in the full paper and the committed replay artifacts.</p>
+
+  <div style="margin-top: 32px; overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--rule);">
+          <th style="text-align: left; padding: 12px 16px; color: var(--ink-tertiary); font-weight: 500; letter-spacing: 0.05em; font-size: 12px; text-transform: uppercase;">Retention Fraction</th>
+          <th style="text-align: center; padding: 12px 16px; color: var(--ink-tertiary); font-weight: 500; letter-spacing: 0.05em; font-size: 12px; text-transform: uppercase;">Naive Recency<br>Pivot Preserved</th>
+          <th style="text-align: center; padding: 12px 16px; color: var(--ink-tertiary); font-weight: 500; letter-spacing: 0.05em; font-size: 12px; text-transform: uppercase;">L2 Guarded<br>Pivot Preserved</th>
+          <th style="text-align: center; padding: 12px 16px; color: var(--ink-tertiary); font-weight: 500; letter-spacing: 0.05em; font-size: 12px; text-transform: uppercase;">Mirage Detected</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 12px 16px; font-family: var(--mono); font-size: 13px;">0.65</td>
+          <td style="padding: 12px 16px; text-align: center; color: var(--safe); font-weight: 600;">1.0</td>
+          <td style="padding: 12px 16px; text-align: center; color: var(--safe); font-weight: 600;">1.0</td>
+          <td style="padding: 12px 16px; text-align: center; color: var(--ink-tertiary);">No</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 12px 16px; font-family: var(--mono); font-size: 13px;">0.50</td>
+          <td style="padding: 12px 16px; text-align: center; color: var(--warn); font-weight: 600;">Partial</td>
+          <td style="padding: 12px 16px; text-align: center; color: var(--safe); font-weight: 600;">1.0</td>
+          <td style="padding: 12px 16px; text-align: center; color: var(--warn);">Partial</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 16px; font-family: var(--mono); font-size: 13px;">0.40</td>
+          <td style="padding: 12px 16px; text-align: center; color: var(--danger); font-weight: 600;">0.0</td>
+          <td style="padding: 12px 16px; text-align: center; color: var(--safe); font-weight: 600;">1.0</td>
+          <td style="padding: 12px 16px; text-align: center; color: var(--danger);">Yes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size: 13px; color: var(--ink-tertiary); margin-top: 12px;">These are qualitative summaries consistent with the flagship paper's witness data. Exact per-transcript values are in the committed replay artifacts.</p>
+</section>
+
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">Artifacts</div>
+  <h2>Read the full record</h2>
+  <p>The Grok experiment is documented in the research paper and its raw artifacts are available alongside the main replay witness.</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 32px;">
+    <a class="paper-card" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener" style="text-decoration: none;">
+      <div class="paper-card-meta">Flagship Paper</div>
+      <h3 class="paper-card-title">The Validity Mirage</h3>
+      <p class="paper-card-desc">The full research paper including cross-model validation methodology, witness design, and the mathematical proof of the guarded compression contract.</p>
+      <span class="paper-card-link">Open PDF <span style="font-size: 11px;">↗</span></span>
+    </a>
+    <a class="paper-card" href="/evidence" style="text-decoration: none;">
+      <div class="paper-card-meta">Evidence Page</div>
+      <h3 class="paper-card-title">Validation Artifacts</h3>
+      <p class="paper-card-desc">Replay summaries, portable certificates, and raw validation logs for the committed witness. Compare against your own local verification run.</p>
+      <span class="paper-card-link">Browse evidence <span style="font-size: 11px;">→</span></span>
+    </a>
+    <a class="paper-card" href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener" style="text-decoration: none;">
+      <div class="paper-card-meta">Research Monorepo</div>
+      <h3 class="paper-card-title">dreams</h3>
+      <p class="paper-card-desc">The full artifact surface including raw replay data, CSV summaries, and certificate JSON files for both the main and Grok experiment runs.</p>
+      <span class="paper-card-link">github.com/jack-chaudier/dreams <span style="font-size: 11px;">↗</span></span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2025 Jack Chaudier · DOI: <a href="https://doi.org/10.5281/zenodo.18794293" style="color: inherit;">10.5281/zenodo.18794293</a></div>
+  <div class="footer-links">
+    <a href="https://github.com/jack-chaudier/dreams">GitHub</a>
+    <a href="https://x.com/J_C_Gaffney">Twitter</a>
+    <a href="mailto:jack@miragekit.dev">Email</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY='miragekit-theme',toggle=document.getElementById('themeToggle'),
+      hamburger=document.getElementById('hamburgerBtn'),panel=document.getElementById('mobilePanel'),
+      meta=document.getElementById('themeColorMeta');
+  if(toggle)toggle.addEventListener('click',function(){
+    var c=document.documentElement.dataset.theme,n=c==='dark'?'light':'dark';
+    document.documentElement.dataset.theme=n;
+    try{localStorage.setItem(KEY,n);}catch(e){}
+    if(meta)meta.setAttribute('content',n==='dark'?'#111110':'#f5f2ec');
+  });
+  if(hamburger&&panel){
+    hamburger.addEventListener('click',function(){
+      panel.classList.toggle('open');
+      hamburger.textContent=panel.classList.contains('open')?'✕':'☰';
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){panel.classList.remove('open');hamburger.textContent='☰';});
+    });
+  }
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('revealed');});return;}
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');obs.unobserve(e.target);}});
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){obs.observe(el);});
+})();
+</script>
+
+</body>
+</html>

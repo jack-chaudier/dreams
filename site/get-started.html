@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Started | The Validity Mirage</title>
+  <meta name="description" content="Install tropical-mcp in under a minute and start detecting context compression failures in your AI workflows.">
+  <meta name="author" content="Jack Chaudier Gaffney">
+  <meta id="themeColorMeta" name="theme-color" content="#f5f2ec">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://dreams-dun.vercel.app/get-started">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Validity Mirage">
+  <meta property="og:title" content="Get Started | The Validity Mirage">
+  <meta property="og:description" content="Install tropical-mcp in under a minute and start detecting context compression failures in your AI workflows.">
+  <meta property="og:url" content="https://dreams-dun.vercel.app/get-started">
+  <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@J_C_Gaffney">
+  <meta name="twitter:title" content="Get Started | The Validity Mirage">
+  <meta name="twitter:description" content="Install tropical-mcp in under a minute and start detecting context compression failures in your AI workflows.">
+  <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+  (function(){
+    try{var q=new URLSearchParams(location.search).get('theme'),s=localStorage.getItem('miragekit-theme'),
+    d=matchMedia('(prefers-color-scheme:dark)').matches,
+    t=q==='dark'||q==='light'?q:s==='dark'||s==='light'?s:d?'dark':'light';
+    document.documentElement.dataset.theme=t;
+    var m=document.getElementById('themeColorMeta');
+    if(m)m.setAttribute('content',t==='dark'?'#111110':'#f5f2ec');
+    }catch(e){document.documentElement.dataset.theme='light';}
+  })();
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">validity mirage</a>
+    <div class="nav-links">
+      <a href="/">Home</a><a href="/research">Research</a><a href="/demo">Demo</a>
+      <a href="/evidence">Evidence</a><a href="/grok">Grok</a><a href="/get-started" class="active">Get Started</a>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">◐</button>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+  </div>
+  <div class="nav-mobile-panel" id="mobilePanel">
+    <a href="/">Home</a><a href="/research">Research</a><a href="/demo">Demo</a>
+    <a href="/evidence">Evidence</a><a href="/grok">Grok</a><a href="/get-started">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Get Started</div>
+  <h1>Try tropical-mcp</h1>
+  <p class="hero-sub">A guarded compression MCP server that protects what your AI needs to stay on task. Install in under a minute.</p>
+  <div class="hero-actions">
+    <a href="https://github.com/jack-chaudier/tropical-mcp" class="btn-primary" target="_blank" rel="noopener">View on GitHub</a>
+    <a href="/demo" class="btn-ghost">See the demo →</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">Quick Start</div>
+  <h2>Up and running in seconds</h2>
+  <p>Run tropical-mcp directly with <code>uvx</code> — no install step required.</p>
+
+  <pre class="code-block" style="margin: 24px 0;">uvx tropical-mcp</pre>
+
+  <p>To register it as an MCP server in your Claude or Codex config, add the following to your MCP configuration file:</p>
+
+  <pre class="code-block" style="margin: 24px 0;">{
+  "mcpServers": {
+    "tropical-mcp": {
+      "command": "uvx",
+      "args": ["tropical-mcp"]
+    }
+  }
+}</pre>
+
+  <p style="font-size: 14px; color: var(--ink-tertiary); margin-top: 12px;">Requires Python 3.10+ and <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener" style="color: var(--ink-secondary);">uv</a>. No other dependencies needed.</p>
+</section>
+
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">What It Does</div>
+  <h2>Guarded compression for AI context windows</h2>
+  <p>tropical-mcp is an MCP server that implements the guarded compression policy from the Validity Mirage research. It identifies the pivot message in a conversation — the instruction that defines what the task is about — and mathematically guarantees it survives compression. Standard recency-based compression treats all messages equally; tropical-mcp treats the pivot as inviolable.</p>
+  <p style="margin-top: 16px;">The server exposes tools for compression, certificate generation, telemetry, and diagnosis. Every compression decision is auditable: you can inspect which messages were kept, which were dropped, and whether the structural contract was satisfied.</p>
+  <div class="problem-grid" style="margin-top: 32px;">
+    <div class="card">
+      <h3>Context anchor</h3>
+      <p>Mark the messages your task depends on. The guarded policy will never drop them, even under aggressive compression budgets.</p>
+    </div>
+    <div class="card">
+      <h3>Portable certificate</h3>
+      <p>Every compression run emits a verifiable JSON certificate — kept IDs, dropped IDs, contract status, and audit flags in one artifact.</p>
+    </div>
+    <div class="card">
+      <h3>Adaptive policy</h3>
+      <p>The server selects the best compression mode automatically based on your token budget and conversation structure.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">Repositories</div>
+  <h2>The full research stack</h2>
+  <p>tropical-mcp is part of a larger open research program. All artifacts are public.</p>
+  <div class="repo-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 32px;">
+    <a class="paper-card" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener" style="text-decoration: none;">
+      <div class="paper-card-meta">MCP Server</div>
+      <h3 class="paper-card-title">tropical-mcp</h3>
+      <p class="paper-card-desc">The guarded compression MCP server. Implements the L2-guarded policy, certificate generation, and telemetry tools.</p>
+      <span class="paper-card-link">github.com/jack-chaudier/tropical-mcp <span style="font-size: 11px;">↗</span></span>
+    </a>
+    <a class="paper-card" href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener" style="text-decoration: none;">
+      <div class="paper-card-meta">Research Monorepo</div>
+      <h3 class="paper-card-title">dreams</h3>
+      <p class="paper-card-desc">The full research monorepo. Contains papers, replay witnesses, validation logs, and the DOI-backed archive artifacts.</p>
+      <span class="paper-card-link">github.com/jack-chaudier/dreams <span style="font-size: 11px;">↗</span></span>
+    </a>
+    <a class="paper-card" href="https://github.com/jack-chaudier/stark" target="_blank" rel="noopener" style="text-decoration: none;">
+      <div class="paper-card-meta">Supporting Library</div>
+      <h3 class="paper-card-title">stark</h3>
+      <p class="paper-card-desc">Core library implementing the tropical semiring algebra and frontier feasibility checks that underpin the guarded policy.</p>
+      <span class="paper-card-link">github.com/jack-chaudier/stark <span style="font-size: 11px;">↗</span></span>
+    </a>
+    <a class="paper-card" href="https://github.com/jack-chaudier/immortal-baby" target="_blank" rel="noopener" style="text-decoration: none;">
+      <div class="paper-card-meta">Demo / Test Harness</div>
+      <h3 class="paper-card-title">immortal-baby</h3>
+      <p class="paper-card-desc">The test harness and demo fixtures used to generate the replay witnesses and validate the compression policies end-to-end.</p>
+      <span class="paper-card-link">github.com/jack-chaudier/immortal-baby <span style="font-size: 11px;">↗</span></span>
+    </a>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">Verification</div>
+  <h2>Smoke test</h2>
+  <p>Once registered, confirm tropical-mcp is working with this minimal sequence:</p>
+  <pre class="code-block" style="margin: 24px 0;"># 1. Check your runtime
+runtime_info()
+
+# 2. Run guarded compression
+compact_auto(
+  messages=messages,
+  token_budget=45,
+  k_target=2,
+  mode="adaptive",
+)
+
+# 3. Generate a portable certificate
+certificate(
+  messages=messages,
+  token_budget=45,
+  k=2,
+)
+
+# 4. Review telemetry
+telemetry_summary(limit=5)</pre>
+  <p style="font-size: 14px; color: var(--ink-tertiary);">Compare the certificate output against the <a href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener" style="color: var(--ink-secondary);">public reference certificate</a> on the Evidence page.</p>
+  <div style="margin-top: 24px;">
+    <a href="/evidence" class="btn-ghost">View evidence artifacts →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2025 Jack Chaudier · DOI: <a href="https://doi.org/10.5281/zenodo.18794293" style="color: inherit;">10.5281/zenodo.18794293</a></div>
+  <div class="footer-links">
+    <a href="https://github.com/jack-chaudier/dreams">GitHub</a>
+    <a href="https://x.com/J_C_Gaffney">Twitter</a>
+    <a href="mailto:jack@miragekit.dev">Email</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY='miragekit-theme',toggle=document.getElementById('themeToggle'),
+      hamburger=document.getElementById('hamburgerBtn'),panel=document.getElementById('mobilePanel'),
+      meta=document.getElementById('themeColorMeta');
+  if(toggle)toggle.addEventListener('click',function(){
+    var c=document.documentElement.dataset.theme,n=c==='dark'?'light':'dark';
+    document.documentElement.dataset.theme=n;
+    try{localStorage.setItem(KEY,n);}catch(e){}
+    if(meta)meta.setAttribute('content',n==='dark'?'#111110':'#f5f2ec');
+  });
+  if(hamburger&&panel){
+    hamburger.addEventListener('click',function(){
+      panel.classList.toggle('open');
+      hamburger.textContent=panel.classList.contains('open')?'✕':'☰';
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){panel.classList.remove('open');hamburger.textContent='☰';});
+    });
+  }
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('revealed');});return;}
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');obs.unobserve(e.target);}});
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){obs.observe(el);});
+})();
+</script>
+
+</body>
+</html>
