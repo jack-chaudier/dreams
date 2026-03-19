@@ -6,7 +6,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
+          "value": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
         },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
@@ -16,13 +16,20 @@
       ]
     }
   ],
+  "redirects": [
+    { "source": "/mirage-shelf-grok-2026-03", "destination": "/grok", "statusCode": 301 }
+  ],
   "rewrites": [
+    { "source": "/", "destination": "/site/index" },
     { "source": "/papers/:path*", "destination": "/papers/:path*" },
     { "source": "/results/:path*", "destination": "/results/:path*" },
+    { "source": "/research", "destination": "/site/research" },
+    { "source": "/demo", "destination": "/site/demo" },
     { "source": "/evidence", "destination": "/site/evidence" },
+    { "source": "/grok", "destination": "/site/grok" },
+    { "source": "/get-started", "destination": "/site/get-started" },
     { "source": "/papers", "destination": "/site/papers" },
     { "source": "/topology-demo", "destination": "/site/topology-demo" },
-    { "source": "/mirage-shelf-grok-2026-03", "destination": "/site/mirage-shelf-grok-2026-03" },
     { "source": "/(.*)", "destination": "/site/$1" }
   ]
 }

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Research | The Validity Mirage</title>
+  <meta name="description" content="The mathematical research behind the validity mirage: deterministic replay witnesses, tropical algebra foundations, and the guarded compaction policy that eliminates false positives.">
+  <meta name="author" content="Jack Chaudier Gaffney">
+  <meta id="themeColorMeta" name="theme-color" content="#f5f2ec">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://dreams-dun.vercel.app/research">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Validity Mirage">
+  <meta property="og:title" content="The Research | The Validity Mirage">
+  <meta property="og:description" content="The mathematical research behind the validity mirage: deterministic replay witnesses, tropical algebra foundations, and the guarded compaction policy that eliminates false positives.">
+  <meta property="og:url" content="https://dreams-dun.vercel.app/research">
+  <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <meta property="og:image:alt" content="The Validity Mirage: AI context compression research findings.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@jackcgaffney">
+  <meta name="twitter:creator" content="@jackcgaffney">
+  <meta name="twitter:title" content="The Research | The Validity Mirage">
+  <meta name="twitter:description" content="The mathematical research behind the validity mirage: deterministic replay witnesses, tropical algebra foundations, and the guarded compaction policy.">
+  <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+  (function(){
+    try {
+      var q = new URLSearchParams(location.search).get('theme');
+      var s = localStorage.getItem('miragekit-theme');
+      var d = matchMedia('(prefers-color-scheme:dark)').matches;
+      var t = q==='dark'||q==='light' ? q : s==='dark'||s==='light' ? s : d?'dark':'light';
+      document.documentElement.dataset.theme = t;
+      var m = document.getElementById('themeColorMeta');
+      if (m) m.setAttribute('content', t === 'dark' ? '#111110' : '#f5f2ec');
+    } catch(e) { document.documentElement.dataset.theme = 'light'; }
+  })();
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">validity mirage</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/research" class="active">Research</a>
+      <a href="/demo">Demo</a>
+      <a href="/evidence">Evidence</a>
+      <a href="/grok">Grok</a>
+      <a href="/get-started">Get Started</a>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">◐</button>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+  </div>
+  <div class="nav-mobile-panel" id="mobilePanel">
+    <a href="/">Home</a> <a href="/research">Research</a> <a href="/demo">Demo</a>
+    <a href="/evidence">Evidence</a> <a href="/grok">Grok</a> <a href="/get-started">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero reveal">
+  <div class="hero-eyebrow">Research</div>
+  <h1>The Research</h1>
+  <p class="hero-sub">Naive context compression preserves answerability while silently dropping the reasoning pivot. We measured it, proved it, and built a guarded policy that eliminates the failure mode entirely.</p>
+</section>
+
+<hr class="section-divider">
+
+<section class="section reveal">
+  <div class="section-label">Key Findings</div>
+  <h2>What we found</h2>
+  <div class="papers-grid" style="margin-top: 40px;">
+    <div class="card">
+      <div class="stat-value">21.95%</div>
+      <h3 style="margin-top: 12px;">Mirage Rate</h3>
+      <p>In 1 out of every 5 compression events, naive recency scoring preserves a valid-looking response while silently losing the pivot that the answer depends on.</p>
+    </div>
+    <div class="card">
+      <div class="stat-value">0</div>
+      <h3 style="margin-top: 12px;">False Positives</h3>
+      <p>The tropical L2 guarded policy produces zero false positives on the committed witness. Every protected arc is retained at every tested retention fraction.</p>
+    </div>
+    <div class="card">
+      <div class="stat-value">54.9%</div>
+      <h3 style="margin-top: 12px;">Trap Rate</h3>
+      <p>More than half of all compression events in the danger zone result in a streaming oscillation trap — the model commits to a path it cannot correct without the dropped context.</p>
+    </div>
+    <div class="card">
+      <div class="stat-value">Ω(k)</div>
+      <h3 style="margin-top: 12px;">State Bound</h3>
+      <p>The tropical semiring formulation proves a tight Ω(k) lower bound on the number of feasible states needed to preserve k protected arcs under any lossless compaction policy.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section reveal">
+  <div class="section-label">Methodology</div>
+  <h2>How we measured it</h2>
+  <p>All reported rates are exact proportions over a deterministic replay witness with <strong>n=3 variants per policy and retention fraction</strong>. Each variant is independently seeded and replayed from committed context snapshots — no sampling, no approximation.</p>
+  <p style="margin-top: 16px;">We tested five retention levels spanning the compression pressure range where the phenomenon emerges. At each level, both the naive recency policy and the tropical L2 guarded policy are evaluated against the same committed context, producing directly comparable pivot preservation rates.</p>
+
+  <div class="comparison-grid" style="margin-top: 40px;">
+    <div class="card-naive card">
+      <div class="card-header">
+        <span class="card-title">Naive Recency</span>
+        <span class="card-status regime-badge danger">Fails</span>
+      </div>
+      <p style="font-size: 14px; color: var(--ink-secondary); margin-bottom: 16px;">Scores messages by recency alone. Preserves the most recent exchanges, which are often valid and coherent — but silently drops the governing pivot when it falls outside the retention window.</p>
+      <ul style="font-size: 13px; color: var(--ink-secondary); padding-left: 18px; line-height: 1.8;">
+        <li>Pivot preservation: <strong style="color: var(--danger);">0.0</strong> at critical retention fractions</li>
+        <li>Produces mirage: answer is valid, reasoning is lost</li>
+        <li>No contract enforcement — no awareness of protected arcs</li>
+      </ul>
+    </div>
+    <div class="card-guarded card">
+      <div class="card-header">
+        <span class="card-title">Tropical L2 Guarded</span>
+        <span class="card-status regime-badge safe">Holds</span>
+      </div>
+      <p style="font-size: 14px; color: var(--ink-secondary); margin-bottom: 16px;">Uses the tropical semiring distance d_pre(π₀, Sₖ) to identify the minimum feasible set. Enforces a contract that no protected arc may be dropped before the pivot budget is exhausted.</p>
+      <ul style="font-size: 13px; color: var(--ink-secondary); padding-left: 18px; line-height: 1.8;">
+        <li>Pivot preservation: <strong style="color: var(--safe);">1.0</strong> at all tested retention fractions</li>
+        <li>Zero false positives on the committed witness</li>
+        <li>Contract satisfaction recorded in portable certificate</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section reveal">
+  <div class="section-label">Mathematical Foundations</div>
+  <h2>The formal structure</h2>
+  <p>The validity mirage is not an empirical coincidence — it follows from the structure of greedy selection under recency scoring. The tropical semiring provides the right algebraic frame to state the guarantees precisely.</p>
+  <div class="formula-grid">
+    <div class="formula-card">
+      <h3>Core Contract</h3>
+      <div class="formula">d_pre(π₀, Sₖ) ≥ k</div>
+      <p>The tropical L2 distance from the pivot to any feasible compacted state must be at least k. This is the minimum separation that guarantees no protected arc is silently reachable by a recency-scored drop.</p>
+    </div>
+    <div class="formula-card">
+      <h3>Frontier Feasibility</h3>
+      <div class="formula">W[k] &lt; ∞</div>
+      <p>The feasibility frontier W[k] is finite for all k bounded by the context length. This ensures the guarded policy always terminates and always produces a valid compacted context.</p>
+    </div>
+    <div class="formula-card">
+      <h3>Raw Validity</h3>
+      <div class="formula">max(decoy, primary)</div>
+      <p>The validity score reported by naive policies is the max over decoy and primary arcs. When the primary is dropped, the decoy alone can sustain a high validity score — producing the mirage.</p>
+    </div>
+    <div class="formula-card">
+      <h3>Mirage Gap</h3>
+      <div class="formula">validity − pivot_rate</div>
+      <p>The mirage gap is the difference between reported validity and true pivot preservation rate. A positive gap is the signature of the phenomenon: the model appears correct while the reasoning foundation is absent.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section reveal">
+  <div class="section-label">Papers</div>
+  <h2>The full research record</h2>
+  <p>All papers are published as PDFs and archived with a DOI. The flagship paper contains the formal proofs; the supporting papers establish the components independently.</p>
+  <div class="papers-grid">
+    <a class="paper-card" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">
+      <h3>The Validity Mirage</h3>
+      <div class="paper-meta">Flagship · 2025 · Jack Chaudier Gaffney</div>
+      <p>Introduces the validity mirage: a compression failure mode where naive recency scoring preserves a coherent-looking response while silently dropping the pivot the answer depends on. Proves the Ω(k) state bound and introduces the tropical L2 guarded policy as the corrective.</p>
+    </a>
+    <a class="paper-card" href="/papers/paper_00_continuous_control_structural_regularization.pdf" target="_blank" rel="noopener">
+      <h3>Continuous Control</h3>
+      <div class="paper-meta">Paper 00 · 2025 · Jack Chaudier Gaffney</div>
+      <p>Establishes the structural regularization framework for continuous control under compression. Shows that without pivot-aware regularization, gradient-based compression degrades control quality in proportion to the mirage gap.</p>
+    </a>
+    <a class="paper-card" href="/papers/paper_01_absorbing_states_in_greedy_search.pdf" target="_blank" rel="noopener">
+      <h3>Absorbing States</h3>
+      <div class="paper-meta">Paper 01 · 2025 · Jack Chaudier Gaffney</div>
+      <p>Characterizes absorbing states in greedy search under context compression. Proves that greedy recency selection can enter an absorbing state where no subsequent compression step can recover the dropped pivot without a full context reload.</p>
+    </a>
+    <a class="paper-card" href="/papers/paper_02_streaming_oscillation_traps.pdf" target="_blank" rel="noopener">
+      <h3>Streaming Traps</h3>
+      <div class="paper-meta">Paper 02 · 2025 · Jack Chaudier Gaffney</div>
+      <p>Formalizes streaming oscillation traps: cycles in the compression state machine where the model alternates between two partially-valid states without converging. Derives the 54.9% trap rate reported in the empirical witness.</p>
+    </a>
+    <a class="paper-card" href="/papers/paper_i_tropical_algebra.pdf" target="_blank" rel="noopener">
+      <h3>Tropical Algebra</h3>
+      <div class="paper-meta">Paper i · 2025 · Jack Chaudier Gaffney</div>
+      <p>Develops the tropical semiring foundations used throughout the research program. Defines the distance function d_pre, establishes the frontier feasibility condition W[k] &lt; ∞, and proves the algebraic properties that make the guarded policy tractable.</p>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2025 Jack Chaudier · DOI: <a href="https://doi.org/10.5281/zenodo.18794293" style="color: inherit;">10.5281/zenodo.18794293</a></div>
+  <div class="footer-links">
+    <a href="https://github.com/jack-chaudier/dreams">GitHub</a>
+    <a href="https://x.com/jackcgaffney">Twitter</a>
+    <a href="mailto:jack@miragekit.dev">Email</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY='miragekit-theme', toggle=document.getElementById('themeToggle'),
+      hamburger=document.getElementById('hamburgerBtn'), panel=document.getElementById('mobilePanel'),
+      meta=document.getElementById('themeColorMeta');
+  if(toggle) toggle.addEventListener('click',function(){
+    var c=document.documentElement.dataset.theme, n=c==='dark'?'light':'dark';
+    document.documentElement.dataset.theme=n;
+    try{localStorage.setItem(KEY,n);}catch(e){}
+    if(meta) meta.setAttribute('content',n==='dark'?'#111110':'#f5f2ec');
+  });
+  if(hamburger&&panel){
+    hamburger.addEventListener('click',function(){
+      panel.classList.toggle('open');
+      hamburger.textContent=panel.classList.contains('open')?'✕':'☰';
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){panel.classList.remove('open');hamburger.textContent='☰';});
+    });
+  }
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('revealed');});return;}
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');obs.unobserve(e.target);}});
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){obs.observe(el);});
+})();
+</script>
+</body>
+</html>

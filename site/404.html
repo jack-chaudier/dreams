@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — The Validity Mirage</title>
+  <meta name="description" content="Page not found — The Validity Mirage">
+  <meta name="author" content="Jack Chaudier Gaffney">
+  <meta id="themeColorMeta" name="theme-color" content="#f5f2ec">
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Validity Mirage">
+  <meta property="og:title" content="404 — The Validity Mirage">
+  <meta property="og:description" content="Page not found.">
+  <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@jackcgaffney">
+  <meta name="twitter:title" content="404 — The Validity Mirage">
+  <meta name="twitter:description" content="Page not found.">
+  <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+  (function(){
+    try{var q=new URLSearchParams(location.search).get('theme'),s=localStorage.getItem('miragekit-theme'),
+    d=matchMedia('(prefers-color-scheme:dark)').matches,
+    t=q==='dark'||q==='light'?q:s==='dark'||s==='light'?s:d?'dark':'light';
+    document.documentElement.dataset.theme=t;
+    var m=document.getElementById('themeColorMeta');
+    if(m)m.setAttribute('content',t==='dark'?'#111110':'#f5f2ec');
+    }catch(e){document.documentElement.dataset.theme='light';}
+  })();
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">validity mirage</a>
+    <div class="nav-links">
+      <a href="/">Home</a><a href="/research">Research</a><a href="/demo">Demo</a>
+      <a href="/evidence">Evidence</a><a href="/grok">Grok</a><a href="/get-started">Get Started</a>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">◐</button>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+  </div>
+  <div class="nav-mobile-panel" id="mobilePanel">
+    <a href="/">Home</a><a href="/research">Research</a><a href="/demo">Demo</a>
+    <a href="/evidence">Evidence</a><a href="/grok">Grok</a><a href="/get-started">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero" style="min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+  <div style="font-size: clamp(60px, 10vw, 120px); font-family: var(--serif); font-weight: 700; line-height: 1; color: var(--ink-primary); margin-bottom: 24px;">404</div>
+  <p class="hero-sub" style="max-width: 420px;">This page has been compressed away.</p>
+  <div style="margin-top: 32px;">
+    <a href="/" class="btn-primary">Back to Home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2025 Jack Chaudier · DOI: <a href="https://doi.org/10.5281/zenodo.18794293" style="color: inherit;">10.5281/zenodo.18794293</a></div>
+  <div class="footer-links">
+    <a href="https://github.com/jack-chaudier/dreams">GitHub</a>
+    <a href="https://x.com/jackcgaffney">Twitter</a>
+    <a href="mailto:jack@miragekit.dev">Email</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY='miragekit-theme',toggle=document.getElementById('themeToggle'),
+      hamburger=document.getElementById('hamburgerBtn'),panel=document.getElementById('mobilePanel'),
+      meta=document.getElementById('themeColorMeta');
+  if(toggle)toggle.addEventListener('click',function(){
+    var c=document.documentElement.dataset.theme,n=c==='dark'?'light':'dark';
+    document.documentElement.dataset.theme=n;
+    try{localStorage.setItem(KEY,n);}catch(e){}
+    if(meta)meta.setAttribute('content',n==='dark'?'#111110':'#f5f2ec');
+  });
+  if(hamburger&&panel){
+    hamburger.addEventListener('click',function(){
+      panel.classList.toggle('open');
+      hamburger.textContent=panel.classList.contains('open')?'✕':'☰';
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){panel.classList.remove('open');hamburger.textContent='☰';});
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

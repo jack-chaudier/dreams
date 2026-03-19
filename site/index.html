@@ -1,196 +1,217 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Validity Mirage — AI agents silently lose their task under memory compression</title>
-    <meta name="description" content="When long conversations get compressed to save memory, AI agents silently lose track of which task they're solving — while still answering confidently. We found this happens in 1 in 5 cases." />
-    <meta name="author" content="Jack Chaudier Gaffney" />
-    <meta id="themeColorMeta" name="theme-color" content="#1f3d63" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="robots" content="index,follow" />
-    <link rel="canonical" href="https://dreams-dun.vercel.app/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="The Validity Mirage" />
-    <meta property="og:title" content="The Validity Mirage — AI agents silently lose their task under memory compression" />
-    <meta property="og:description" content="When long conversations get compressed to save memory, AI agents silently lose track of which task they're solving — while still answering confidently. We found this happens in 1 in 5 cases." />
-    <meta property="og:url" content="https://dreams-dun.vercel.app/" />
-    <meta property="og:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png" />
-    <meta property="og:image:alt" content="The Validity Mirage: research on silent task drift under AI context compression." />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@jackcgaffney" />
-    <meta name="twitter:creator" content="@jackcgaffney" />
-    <meta name="twitter:title" content="The Validity Mirage — AI agents silently lose their task under memory compression" />
-    <meta name="twitter:description" content="When long conversations get compressed to save memory, AI agents silently lose track of which task they're solving — while still answering confidently. We found this happens in 1 in 5 cases." />
-    <meta name="twitter:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png" />
-    <meta name="twitter:image:alt" content="The Validity Mirage: research on silent task drift under AI context compression." />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <script>
-      (function () {
-        try {
-          var queryTheme = new URLSearchParams(window.location.search).get('theme');
-          var storedTheme = localStorage.getItem('miragekit-theme');
-          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var theme = queryTheme === 'dark' || queryTheme === 'light'
-            ? queryTheme
-            : (storedTheme === 'dark' || storedTheme === 'light'
-              ? storedTheme
-              : (prefersDark ? 'dark' : 'light'));
-          document.documentElement.dataset.theme = theme;
-          var themeColor = document.querySelector('meta[name="theme-color"]');
-          if (themeColor) {
-            themeColor.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
-          }
-        } catch (err) {
-          document.documentElement.dataset.theme = 'light';
-        }
-      })();
-    </script>
-    <link rel="stylesheet" href="./styles.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "The Validity Mirage",
-        "url": "https://dreams-dun.vercel.app/",
-        "description": "When long conversations get compressed to save memory, AI agents silently lose track of which task they're solving — while still answering confidently. We found this happens in 1 in 5 cases.",
-        "creator": {
-          "@type": "Person",
-          "name": "Jack Chaudier Gaffney",
-          "sameAs": [
-            "https://github.com/jack-chaudier",
-            "https://x.com/jackcgaffney"
-          ]
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <header class="hero">
-      <span class="section-label accent">University of Michigan &middot; Working Paper 2026</span>
-      <h1 class="hero-title">Your AI agent is solving the wrong problem.</h1>
-      <p class="hero-subtitle">It just doesn't know it yet.</p>
-      <p class="hero-body">When long conversations get compressed to save memory, AI agents can silently lose track of <em>which task they're solving</em> &mdash; while still answering confidently. We found this happens in <strong>1 in 5</strong> cases.</p>
-      <div class="hero-cta">
-        <a class="btn" href="#demo">See it happen</a>
-        <a class="btn-outline" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Read the paper <span class="external-arrow">&nearr;</span></a>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Validity Mirage — AI Context Compression Research</title>
+  <meta name="description" content="Context compression silently drops critical information in 1 out of 5 AI conversations. We proved it mathematically and built the fix.">
+  <meta name="author" content="Jack Chaudier Gaffney">
+  <meta id="themeColorMeta" name="theme-color" content="#f5f2ec">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://dreams-dun.vercel.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Validity Mirage">
+  <meta property="og:title" content="The Validity Mirage — AI Context Compression Research">
+  <meta property="og:description" content="Context compression silently drops critical information in 1 out of 5 AI conversations. We proved it mathematically and built the fix.">
+  <meta property="og:url" content="https://dreams-dun.vercel.app/">
+  <meta property="og:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png">
+  <meta property="og:image:alt" content="The Validity Mirage: AI context compression research results showing mirage rates across models.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@jackcgaffney">
+  <meta name="twitter:creator" content="@jackcgaffney">
+  <meta name="twitter:title" content="The Validity Mirage">
+  <meta name="twitter:description" content="Context compression silently drops critical information in 1 out of 5 AI conversations.">
+  <meta name="twitter:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png">
+  <meta name="twitter:image:alt" content="The Validity Mirage: AI context compression research results showing mirage rates across models.">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+  (function(){
+    try {
+      var q = new URLSearchParams(location.search).get('theme');
+      var s = localStorage.getItem('miragekit-theme');
+      var d = matchMedia('(prefers-color-scheme:dark)').matches;
+      var t = q==='dark'||q==='light' ? q : s==='dark'||s==='light' ? s : d?'dark':'light';
+      document.documentElement.dataset.theme = t;
+      var m = document.getElementById('themeColorMeta');
+      if (m) m.setAttribute('content', t === 'dark' ? '#111110' : '#f5f2ec');
+    } catch(e) { document.documentElement.dataset.theme = 'light'; }
+  })();
+  </script>
+</head>
+<body>
 
-    <main>
-      <section class="stat-callout fade-up">
-        <span class="stat-number">21.95%</span>
-        <p class="stat-text">of responses silently drifted from their governing task (Wilson 95% CI [16.3%, 28.9%])</p>
-      </section>
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">validity mirage</a>
+    <div class="nav-links">
+      <a href="/" class="active">Home</a>
+      <a href="/research">Research</a>
+      <a href="/demo">Demo</a>
+      <a href="/evidence">Evidence</a>
+      <a href="/grok">Grok</a>
+      <a href="/get-started">Get Started</a>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">◐</button>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+  </div>
+  <div class="nav-mobile-panel" id="mobilePanel">
+    <a href="/">Home</a>
+    <a href="/research">Research</a>
+    <a href="/demo">Demo</a>
+    <a href="/evidence">Evidence</a>
+    <a href="/grok">Grok</a>
+    <a href="/get-started">Get Started</a>
+  </div>
+</nav>
 
-      <section class="section fade-up" id="demo">
-        <span class="section-label accent">Interactive Demo</span>
-        <h2 class="section-intro">Slide to compress. Watch the task disappear.</h2>
-        <p>Move the slider to simulate memory pressure. The left panel uses naive compression. The right uses our guarded approach.</p>
+<section class="hero">
+  <div class="hero-eyebrow">AI Safety Research</div>
+  <h1>Your AI forgets what matters most.</h1>
+  <p class="hero-sub">Context compression silently drops critical information in 1 out of 5 conversations. We proved it mathematically — and built the fix.</p>
+  <div class="hero-actions">
+    <a href="/papers/paper_03_validity_mirage_compression.pdf" class="btn-primary">Read the Paper</a>
+    <a href="/demo" class="btn-ghost">See it happen →</a>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-value">21.95%</div><div class="stat-label">Mirage Rate</div></div>
+    <div class="stat"><div class="stat-value">0</div><div class="stat-label">False Positives</div></div>
+    <div class="stat"><div class="stat-value">54.9%</div><div class="stat-label">Trap Rate</div></div>
+    <div class="stat"><div class="stat-value">Ω(k)</div><div class="stat-label">State Bound</div></div>
+  </div>
+</section>
 
-        <div class="demo-container">
-          <div class="demo-slider-wrap">
-            <div class="demo-slider-label">
-              <span id="retentionLabel">Retention Budget</span>
-              <span class="slider-value" id="retentionValue">100%</span>
-            </div>
-            <div class="slider-track-wrap">
-              <div class="slider-track-base" aria-hidden="true"></div>
-              <div class="slider-track-progress" id="sliderTrackProgress" aria-hidden="true"></div>
-              <div class="slider-danger-zone" aria-hidden="true"></div>
-              <input id="retentionSlider" type="range" min="0" max="4" value="4" step="1" aria-labelledby="retentionLabel" aria-describedby="sliderContext" />
-            </div>
-            <div class="demo-ticks" id="sliderTicks">
-              <span>40%</span>
-              <span>50%</span>
-              <span>65%</span>
-              <span>80%</span>
-              <span>100%</span>
-            </div>
-            <p class="slider-context" id="sliderContext">Full context retained; both policies remain aligned.</p>
-            <div class="slider-regime" id="sliderRegime">
-              <span class="slider-regime-label">Regime</span>
-              <span class="slider-regime-value" id="sliderRegimeValue">Aligned</span>
-            </div>
-          </div>
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">The Problem</div>
+  <h2>Silent task drift under context compression</h2>
+  <p>When AI conversations grow long, the context window fills up. Compression algorithms decide what to keep and what to drop. The problem: they optimize for token count, not task relevance. Critical instructions vanish while the AI confidently continues — unaware it's lost the plot.</p>
+  <div class="problem-grid">
+    <div class="card">
+      <h3>The surface looks fine</h3>
+      <p>Compressed conversations produce grammatically correct, confident responses. Standard validity checks pass. Nothing looks wrong.</p>
+    </div>
+    <div class="card">
+      <h3>The foundation is gone</h3>
+      <p>But the pivot message — the instruction that defines what the conversation is about — has been silently dropped. The AI is answering a different question than the one you asked.</p>
+    </div>
+  </div>
+</section>
 
-          <div class="demo-columns">
-            <article class="demo-policy-card" id="cardNaive">
-              <div class="demo-policy-title">
-                <h3>Naive Recency</h3>
-                <span class="card-status" id="naiveStatus"></span>
-              </div>
-              <div class="demo-metrics" id="naiveMetrics"></div>
-              <div class="demo-verdict" id="naiveContract"></div>
-            </article>
-            <article class="demo-policy-card" id="cardGuarded">
-              <div class="demo-policy-title">
-                <h3>Tropical L2 &middot; Guarded</h3>
-                <span class="card-status" id="guardedStatus"></span>
-              </div>
-              <div class="demo-metrics" id="guardedMetrics"></div>
-              <div class="demo-verdict" id="guardedContract"></div>
-            </article>
-          </div>
-
-          <div class="mirage-warning hidden" id="mirageWarning">
-            <span class="mirage-icon">&#9888;</span>
-            <div class="mirage-text">
-              <strong>VALIDITY MIRAGE DETECTED</strong>
-              <p>Raw validity still passes, but the causal anchor is gone. The model can still answer, but about the wrong thing.</p>
-            </div>
-          </div>
-
-          <p class="demo-explainer" id="explainerText"></p>
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">Interactive Demo</div>
+  <h2>Watch it break in real time</h2>
+  <p>Drag the retention slider to compress a conversation. Watch how naive compression maintains surface validity while silently destroying task relevance.</p>
+  <div class="demo-preview">
+    <div class="demo-preview-inner">
+      <div class="slider-mock">
+        <div style="font-size: 13px; font-weight: 500; margin-bottom: 4px;">Retention Budget: 65%</div>
+        <div class="slider-track">
+          <div class="slider-fill"></div>
+          <div class="slider-thumb"></div>
         </div>
-      </section>
-
-      <section class="section fade-up">
-        <span class="section-label accent">How it works</span>
-        <h2 class="section-intro">Three ideas in one sentence</h2>
-        <div class="three-col">
-          <div class="three-col-item">
-            <span class="three-col-marker">1</span>
-            <h3>Tag</h3>
-            <p>Identify which messages carry the task</p>
-          </div>
-          <div class="three-col-item">
-            <span class="three-col-marker">2</span>
-            <h3>Guard</h3>
-            <p>Protect them during compression</p>
-          </div>
-          <div class="three-col-item">
-            <span class="three-col-marker">3</span>
-            <h3>Certify</h3>
-            <p>Prove what was kept and what was lost</p>
-          </div>
+        <div class="slider-labels">
+          <span>40%</span>
+          <span>65%</span>
+          <span>100%</span>
         </div>
-        <p class="section-cta">See the mechanism in action: <a href="/topology-demo">topological replay demo</a></p>
-      </section>
-
-      <section class="section fade-up">
-        <span class="section-label accent">Try it</span>
-        <h2 class="section-intro">Three lines to verify</h2>
-        <div class="code-block"><pre><code><span class="code-prompt">$</span> pip install tropical-mcp
-<span class="code-prompt">$</span> tropical-mcp-smoke
-<span class="code-comment"># certificate shows kept/dropped message IDs</span></code></pre></div>
-        <p>Works with Claude Code, Codex, and any MCP-compatible client. <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">View on GitHub <span class="external-arrow">&nearr;</span></a></p>
-      </section>
-    </main>
-
-    <footer class="site-footer fade-up">
-      <p class="footer-quote"><em>The roots remember what the canopy forgets.</em></p>
-      <p class="footer-attribution">Jack Chaudier Gaffney &middot; University of Michigan &middot; DOI: 10.5281/zenodo.18794293</p>
-      <div class="footer-links">
-        <a href="/evidence">Evidence</a>
-        <a href="/papers">Papers</a>
-        <a href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>
-        <a href="mailto:jackgaff@umich.edu">Contact</a>
-        <a href="https://x.com/jackcgaffney" target="_blank" rel="noopener">X / updates</a>
       </div>
-    </footer>
+      <div class="demo-result">
+        <div class="demo-column">
+          <div class="demo-column-title">Naive Recency</div>
+          <div class="metric-row"><span>Validity</span><span class="metric-value metric-safe">98.2%</span></div>
+          <div class="metric-row"><span>Pivot kept</span><span class="metric-value metric-danger">0%</span></div>
+          <div class="metric-row"><span>Contract</span><span class="metric-value metric-danger">FAIL</span></div>
+        </div>
+        <div class="demo-column">
+          <div class="demo-column-title">Tropical Guarded</div>
+          <div class="metric-row"><span>Validity</span><span class="metric-value metric-safe">95.1%</span></div>
+          <div class="metric-row"><span>Pivot kept</span><span class="metric-value metric-safe">100%</span></div>
+          <div class="metric-row"><span>Contract</span><span class="metric-value metric-safe">PASS</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 16px; text-align: center;">
+    <a href="/demo" class="btn-ghost">Try the full interactive demo →</a>
+  </div>
+</section>
 
-    <script src="./app.js" defer></script>
-  </body>
+<hr class="section-divider">
+<section class="section reveal">
+  <div class="section-label">Research</div>
+  <h2>Read the papers</h2>
+  <div class="papers-grid">
+    <a href="/papers/paper_03_validity_mirage_compression.pdf" class="paper-card">
+      <h3>The Validity Mirage</h3>
+      <div class="paper-meta">March 2025 · Flagship Paper</div>
+      <p>The core paper. Defines the mirage phenomenon, proves the Ω(k) state bound, and introduces the tropical semiring guard.</p>
+    </a>
+    <a href="/papers/paper_i_tropical_algebra.pdf" class="paper-card">
+      <h3>Tropical Geometry for Context Compression</h3>
+      <div class="paper-meta">March 2025 · Mathematical Framework</div>
+      <p>The mathematical framework. How min-plus algebra creates verifiable compression contracts.</p>
+    </a>
+    <a href="/mirage-shelf-grok-2026-03" class="paper-card">
+      <h3>Grok Experiment Report</h3>
+      <div class="paper-meta">March 2026 · Cross-Model Validation</div>
+      <p>Cross-model validation. Does the mirage phenomenon persist in xAI's Grok? (Yes.) <span style="opacity:0.6">Also at <a href="/grok" style="color:inherit;">/grok</a>.</span></p>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2025 Jack Chaudier · DOI: <a href="https://doi.org/10.5281/zenodo.18794293" style="color: inherit;">10.5281/zenodo.18794293</a></div>
+  <div class="footer-links">
+    <a href="https://github.com/jack-chaudier/dreams">GitHub</a>
+    <a href="https://x.com/jackcgaffney">Twitter</a>
+    <a href="mailto:jack@miragekit.dev">Email</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY = 'miragekit-theme';
+  var toggle = document.getElementById('themeToggle');
+  var hamburger = document.getElementById('hamburgerBtn');
+  var panel = document.getElementById('mobilePanel');
+  var meta = document.getElementById('themeColorMeta');
+
+  if (toggle) {
+    toggle.addEventListener('click', function(){
+      var cur = document.documentElement.dataset.theme;
+      var next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem(KEY, next); } catch(e){}
+      if (meta) meta.setAttribute('content', next === 'dark' ? '#111110' : '#f5f2ec');
+    });
+  }
+
+  if (hamburger && panel) {
+    hamburger.addEventListener('click', function(){
+      panel.classList.toggle('open');
+      hamburger.textContent = panel.classList.contains('open') ? '✕' : '☰';
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ panel.classList.remove('open'); hamburger.textContent = '☰'; });
+    });
+  }
+
+  // Scroll reveal
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function(el){ el.classList.add('revealed'); });
+  } else {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el){ obs.observe(el); });
+  }
+})();
+</script>
+
+</body>
 </html>

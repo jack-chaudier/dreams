@@ -1,243 +1,194 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Evidence &amp; Validation | The Validity Mirage</title>
-    <meta
-      name="description"
-      content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise local reproduction path."
-    />
-    <meta name="author" content="Jack Chaudier Gaffney" />
-    <meta id="themeColorMeta" name="theme-color" content="#1f3d63" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="robots" content="index,follow" />
-    <link rel="canonical" href="https://dreams-dun.vercel.app/evidence" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="The Validity Mirage" />
-    <meta property="og:title" content="Evidence &amp; Validation | The Validity Mirage" />
-    <meta property="og:description" content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path." />
-    <meta property="og:url" content="https://dreams-dun.vercel.app/evidence" />
-    <meta property="og:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png" />
-    <meta property="og:image:alt" content="The Validity Mirage: evidence and validation for silent task drift under AI context compression." />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@jackcgaffney" />
-    <meta name="twitter:creator" content="@jackcgaffney" />
-    <meta name="twitter:title" content="Evidence &amp; Validation | The Validity Mirage" />
-    <meta name="twitter:description" content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path." />
-    <meta name="twitter:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png" />
-    <meta name="twitter:image:alt" content="The Validity Mirage: evidence and validation for silent task drift under AI context compression." />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <script>
-      (function () {
-        try {
-          var queryTheme = new URLSearchParams(window.location.search).get('theme');
-          var storedTheme = localStorage.getItem('miragekit-theme');
-          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var theme = queryTheme === 'dark' || queryTheme === 'light'
-            ? queryTheme
-            : (storedTheme === 'dark' || storedTheme === 'light'
-              ? storedTheme
-              : (prefersDark ? 'dark' : 'light'));
-          document.documentElement.dataset.theme = theme;
-          var themeColor = document.querySelector('meta[name="theme-color"]');
-          if (themeColor) {
-            themeColor.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
-          }
-        } catch (err) {
-          document.documentElement.dataset.theme = 'light';
-        }
-      })();
-    </script>
-    <link rel="stylesheet" href="./styles.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
-    <script defer src="./app.js"></script>
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence &amp; Validation | The Validity Mirage</title>
+  <meta name="description" content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise local reproduction path.">
+  <meta name="author" content="Jack Chaudier Gaffney">
+  <meta id="themeColorMeta" name="theme-color" content="#f5f2ec">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://dreams-dun.vercel.app/evidence">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Validity Mirage">
+  <meta property="og:title" content="Evidence &amp; Validation | The Validity Mirage">
+  <meta property="og:description" content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path.">
+  <meta property="og:url" content="https://dreams-dun.vercel.app/evidence">
+  <meta property="og:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png">
+  <meta property="og:image:alt" content="The Validity Mirage: evidence and validation for silent task drift under AI context compression.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@jackcgaffney">
+  <meta name="twitter:creator" content="@jackcgaffney">
+  <meta name="twitter:title" content="Evidence &amp; Validation | The Validity Mirage">
+  <meta name="twitter:description" content="Evidence for the validity mirage research: deterministic replay witness (n=3 per policy/fraction), portable certificate artifact, mirrored validation logs, and a precise reproduction path.">
+  <meta name="twitter:image" content="https://dreams-dun.vercel.app/results/mirage-shelf-grok-2026-03/mirage_shelf.png">
+  <meta name="twitter:image:alt" content="The Validity Mirage: evidence and validation for silent task drift under AI context compression.">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+  (function(){
+    try {
+      var q = new URLSearchParams(location.search).get('theme');
+      var s = localStorage.getItem('miragekit-theme');
+      var d = matchMedia('(prefers-color-scheme:dark)').matches;
+      var t = q==='dark'||q==='light' ? q : s==='dark'||s==='light' ? s : d?'dark':'light';
+      document.documentElement.dataset.theme = t;
+      var m = document.getElementById('themeColorMeta');
+      if (m) m.setAttribute('content', t === 'dark' ? '#111110' : '#f5f2ec');
+    } catch(e) { document.documentElement.dataset.theme = 'light'; }
+  })();
+  </script>
+</head>
+<body>
 
-    <main class="evidence-page">
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">validity mirage</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/research">Research</a>
+      <a href="/demo">Demo</a>
+      <a href="/evidence" class="active">Evidence</a>
+      <a href="/grok">Grok</a>
+      <a href="/get-started">Get Started</a>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">◐</button>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+  </div>
+  <div class="nav-mobile-panel" id="mobilePanel">
+    <a href="/">Home</a> <a href="/research">Research</a> <a href="/demo">Demo</a>
+    <a href="/evidence">Evidence</a> <a href="/grok">Grok</a> <a href="/get-started">Get Started</a>
+  </div>
+</nav>
 
-      <!-- 1. Page Header -->
-      <header class="hero hero-subpage">
-        <span class="section-label accent">University of Michigan &middot; Working Paper 2026</span>
-        <h1 class="hero-title">Evidence and Validation</h1>
-        <p class="hero-body">
-          All data and validation logs supporting the research claims.
-          Browse this page to see what evidence exists, verify results yourself, or inspect the raw data.
-          Everything here is committed to the public repository &mdash; no claims without checkable artifacts.
-        </p>
-        <div class="hero-cta">
-          <a class="btn-outline" href="./">Overview</a>
-          <a class="btn-outline" href="/papers/paper_03_validity_mirage_compression.pdf" target="_blank" rel="noopener">Flagship Paper <span class="external-arrow">&nearr;</span></a>
-          <a class="btn-outline" href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp Repo <span class="external-arrow">&nearr;</span></a>
-        </div>
-      </header>
+<section class="hero reveal">
+  <div class="hero-eyebrow">Evidence</div>
+  <h1>Evidence &amp; Validation</h1>
+  <p class="hero-sub">All data and validation artifacts supporting the research claims. Every number is traceable to a committed file — no claims without checkable artifacts.</p>
+</section>
 
-      <!-- 2. Replay Witness -->
-      <section class="section fade-up" id="replay-witness">
-        <span class="section-label accent">Replay Witness</span>
-        <h2 class="section-intro">Guarded compaction preserves the pivot</h2>
-        <div class="evidence-records">
-          <article class="evidence-record">
-            <div class="evidence-record-head">
-              <span class="evidence-record-index mono">01</span>
-              <div>
-                <span class="evidence-record-kicker">Deterministic replay</span>
-                <h3>Policy comparison on committed witness</h3>
-              </div>
-            </div>
-            <p>
-              At retention fractions <code>0.65</code>, <code>0.5</code>, and <code>0.4</code>, the committed replay keeps
-              the primary arc intact under <code>l2_guarded</code> while recency collapses it. Paper-level model counts and
-              incident counts live in the PDFs and are intentionally separate from this witness.
-            </p>
-            <ul class="evidence-record-list">
-              <li><code>l2_guarded</code> pivot preservation stays at <strong>1.0</strong></li>
-              <li><code>recency</code> pivot preservation falls to <strong>0.0</strong></li>
-              <li>The overview page witness cards are rendered from the same committed replay data published here</li>
-              <li>The witness is intentionally small so every reported value remains inspectable</li>
-              <li>The rendered replay rates are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction</li>
-            </ul>
-            <div class="evidence-references">
-              <a class="evidence-reference" href="./">Open live witness view <span class="evidence-reference-arrow">&nwarr;</span></a>
-              <a class="evidence-reference" href="/results/replay/replay_summary.csv" target="_blank" rel="noopener">Replay summary CSV <span class="evidence-reference-arrow">&nearr;</span></a>
-              <a class="evidence-reference" href="/results/replay/replay_summary.json" target="_blank" rel="noopener">Replay summary JSON <span class="evidence-reference-arrow">&nearr;</span></a>
-            </div>
-          </article>
-        </div>
-      </section>
+<hr class="section-divider">
 
-      <!-- 3. Certificate Viewer -->
-      <section class="section fade-up" id="certificate">
-        <span class="section-label accent">Portable Artifact</span>
-        <h2 class="section-intro">Certificate snapshot</h2>
-        <div class="evidence-records">
-          <article class="evidence-record">
-            <div class="evidence-record-head">
-              <span class="evidence-record-index mono">02</span>
-              <div>
-                <span class="evidence-record-kicker">Certificate</span>
-                <h3>Recency vs. guarded kept/dropped IDs</h3>
-              </div>
-            </div>
-            <p>
-              The public certificate captures the recency-vs-guarded kept and dropped IDs, audit flags, and
-              contract/protection status in a portable shape that can be compared against a local verification run.
-            </p>
-            <ul class="evidence-record-list">
-              <li>Pivot and protected IDs are recorded from the full context</li>
-              <li>Each policy exposes its kept and dropped IDs separately</li>
-              <li>Feasibility, breach, and contract status stay visible in the audit trail</li>
-            </ul>
-            <div class="evidence-references">
-              <a class="evidence-reference" href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener">Certificate JSON <span class="evidence-reference-arrow">&nearr;</span></a>
-              <a class="evidence-reference" href="https://github.com/jack-chaudier/tropical-mcp#minimal-smoke-test" target="_blank" rel="noopener">Verification snippet <span class="evidence-reference-arrow">&nearr;</span></a>
-            </div>
-          </article>
-        </div>
-      </section>
+<section class="section reveal">
+  <div class="section-label">Overview</div>
+  <h2>What the public record contains</h2>
+  <p>The research program lives in <strong>MirageKit</strong>, the public artifact surface lives in <strong>dreams</strong>, and the evaluation MCP implementation lives in <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener" style="color: var(--ink);">tropical-mcp</a>. The replay rates reported throughout the site are exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction.</p>
 
-      <!-- 4. Mathematical Foundations (NEW) -->
-      <section class="section fade-up" id="mathematical-foundations">
-        <span class="section-label accent">Mathematical Foundations</span>
-        <h2 class="section-intro">Core Formulas</h2>
-        <div class="math-grid">
-          <div class="math-card">
-            <h4>Core Contract</h4>
-            <div class="math-formula katex-section">$$d_{\text{pre}} \geq k$$</div>
-            <p>Guarded compaction is certified safe only when the pivot retains its required predecessor depth.</p>
-          </div>
-          <div class="math-card">
-            <h4>Frontier Feasibility</h4>
-            <div class="math-formula katex-section">$$W[k] = -\infty \implies \text{infeasible}$$</div>
-            <p>If the k-slot frontier is negative infinity, no valid completion exists for that retained context.</p>
-          </div>
-          <div class="math-card">
-            <h4>Raw Validity</h4>
-            <div class="math-formula katex-section">$$\text{raw} = \max(\text{primary\_full}, \text{decoy\_full})$$</div>
-            <p>Answerability alone can stay high even when pivot identity has silently changed.</p>
-          </div>
-          <div class="math-card">
-            <h4>Mirage Gap</h4>
-            <div class="math-formula katex-section">$$\delta = \text{raw} - \text{pivot\_preservation}$$</div>
-            <p>Large positive gap indicates a validity mirage regime rather than true semantic stability.</p>
-          </div>
-        </div>
-      </section>
+  <div class="papers-grid" style="margin-top: 40px;">
+    <div class="card">
+      <h3>Version Map</h3>
+      <p style="margin-top: 8px;">DOI-backed archive: <code>dreams v0.1.1</code><br>Mirrored implementation: <code>tropical-mcp v0.2.1</code></p>
+    </div>
+    <div class="card">
+      <h3>Strongest Claim</h3>
+      <p style="margin-top: 8px;">Naive recency preserves answerability while losing pivot integrity. The guarded policy keeps the protected arc intact on the committed witness.</p>
+    </div>
+    <div class="card">
+      <h3>Public Artifacts</h3>
+      <p style="margin-top: 8px;">Lint, typing, test, build, installed-wheel, functional validation, replay summaries, and a portable certificate — all published from committed files.</p>
+    </div>
+  </div>
+</section>
 
-      <!-- 5. Validation Pipeline -->
-      <section class="section fade-up" id="validation">
-        <span class="section-label accent">Validation Pipeline</span>
-        <h2 class="section-intro">Build, tests, and functional validation</h2>
-        <div class="evidence-records">
-          <article class="evidence-record">
-            <div class="evidence-record-head">
-              <span class="evidence-record-index mono">03</span>
-              <div>
-                <span class="evidence-record-kicker">Implementation checks</span>
-                <h3>Continuous validation surface</h3>
-              </div>
-            </div>
-            <p>
-              The implementation repo is published with the raw outputs needed to inspect software quality and the
-              installable wheel path, not just a summary claim.
-            </p>
-            <ul class="evidence-record-list">
-              <li><code>ruff check .</code> and <code>mypy src/tropical_mcp</code> run on the canonical implementation repo</li>
-              <li><code>pytest</code> publishes a pass count in the mirrored validation log</li>
-              <li><code>uv build</code> verifies wheel + sdist packaging</li>
-              <li><code>./scripts/validate_installed_wheel.sh</code> confirms the built wheel still validates after install</li>
-              <li><code>uv run tropical-mcp-full-validate</code> exercises the MCP-facing validation path</li>
-            </ul>
-            <div class="evidence-references">
-              <a class="evidence-reference" href="/results/ruff.txt" target="_blank" rel="noopener">Ruff log <span class="evidence-reference-arrow">&nearr;</span></a>
-              <a class="evidence-reference" href="/results/mypy.txt" target="_blank" rel="noopener">Mypy log <span class="evidence-reference-arrow">&nearr;</span></a>
-              <a class="evidence-reference" href="/results/pytest.txt" target="_blank" rel="noopener">Pytest log <span class="evidence-reference-arrow">&nearr;</span></a>
-              <a class="evidence-reference" href="/results/build.txt" target="_blank" rel="noopener">Build log <span class="evidence-reference-arrow">&nearr;</span></a>
-              <a class="evidence-reference" href="/results/installed_wheel.txt" target="_blank" rel="noopener">Installed-wheel log <span class="evidence-reference-arrow">&nearr;</span></a>
-              <a class="evidence-reference" href="/results/VALIDATION_SUMMARY.md" target="_blank" rel="noopener">Validation summary <span class="evidence-reference-arrow">&nearr;</span></a>
-              <a class="evidence-reference" href="/results/full_validation.json" target="_blank" rel="noopener">Full validation report <span class="evidence-reference-arrow">&nearr;</span></a>
-            </div>
-          </article>
-        </div>
-      </section>
+<hr class="section-divider">
 
-      <!-- 6. Evidence Boundaries -->
-      <section class="section fade-up" id="evidence-boundaries">
-        <span class="section-label accent">Evidence Boundaries</span>
-        <h2 class="section-intro">What the current record does and does not cover</h2>
-        <p class="evidence-intro">
-          Current evidence combines a small committed replay witness with broader paper-level studies.
-        </p>
-        <ul class="evidence-record-list">
-          <li><strong>Replay cards</strong> show exact proportions on a deterministic witness with <code>n=3</code> variants per policy and retention fraction. They are not large-sample statistics.</li>
-          <li><strong>Paper-level results</strong> (model counts, incident rates, Wilson CIs) live in the flagship PDF and are intentionally separate from the committed witness.</li>
-          <li><strong>Transparent research snapshot</strong> &mdash; this page reports the current public record, not a finished claim of generality.</li>
-        </ul>
-      </section>
+<section class="section reveal">
+  <div class="section-label">Evidence Record 01</div>
+  <h2>Implementation Checks</h2>
+  <p>The implementation repo is published with the raw outputs needed to inspect software quality and the installable wheel path — not just a summary claim.</p>
 
-      <!-- 7. Reproduction Path -->
-      <section class="section fade-up" id="reproduction">
-        <span class="section-label accent">Reproduce</span>
-        <h2 class="section-intro">Verification paths</h2>
-        <p>
-          Install and register <code>tropical-mcp</code>, then choose between the minimal smoke path and the fuller reviewer
-          workflow. The public certificate on this page is a comparison target for your local run, not a substitute
-          for the reviewer workflow itself.
-        </p>
-        <div class="card" style="margin-top: 1rem;">
-          <ol class="evidence-record-list" style="list-style: decimal; padding-left: 1.2rem;">
-            <li><strong>Smoke test:</strong> confirm the runtime with <code>runtime_info()</code>, then run <code>compact_auto(...)</code> and <code>certificate(...)</code>.</li>
-            <li><strong>Research workflow:</strong> run <code>diagnose(...)</code> to inspect feasible slots, capture a <code>context_anchor(...)</code>, then compare <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>.</li>
-            <li>Compare the resulting certificate and replay behavior against the public artifacts on this page.</li>
-          </ol>
-        </div>
+  <div style="margin-top: 32px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 28px;">
+    <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><code>ruff check .</code> and <code>mypy src/tropical_mcp</code> — run on the canonical implementation repo</li>
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><code>pytest</code> — pass count published in the mirrored validation log</li>
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><code>uv build</code> — verifies wheel + sdist packaging</li>
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><code>./scripts/validate_installed_wheel.sh</code> — confirms the built wheel validates after install</li>
+      <li style="padding: 10px 0; font-size: 14px; color: var(--ink-secondary);"><code>uv run tropical-mcp-full-validate</code> — exercises the MCP-facing validation path</li>
+    </ul>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <a href="/results/ruff.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Ruff log ↗</a>
+      <a href="/results/mypy.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Mypy log ↗</a>
+      <a href="/results/pytest.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Pytest log ↗</a>
+      <a href="/results/build.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Build log ↗</a>
+      <a href="/results/installed_wheel.txt" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Installed-wheel log ↗</a>
+      <a href="/results/VALIDATION_SUMMARY.md" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Validation summary ↗</a>
+      <a href="/results/full_validation.json" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Full validation report ↗</a>
+    </div>
+  </div>
+</section>
 
-        <div class="install-codeframe evidence-command" style="margin-top: 1rem;">
-          <span class="install-codeframe-label">verify</span>
-          <pre class="install-pre install-pre-wrap"><code># minimal smoke path
+<hr class="section-divider">
+
+<section class="section reveal">
+  <div class="section-label">Evidence Record 02</div>
+  <h2>Replay Witnesses</h2>
+  <p>At retention fractions <code>0.65</code>, <code>0.5</code>, and <code>0.4</code>, the committed replay keeps the primary arc intact under <code>l2_guarded</code> while recency collapses it. The witness is intentionally small so every reported value remains inspectable.</p>
+
+  <div class="comparison-grid" style="margin-top: 32px;">
+    <div class="card-guarded card">
+      <div class="card-header">
+        <span class="card-title">l2_guarded</span>
+        <span class="card-status regime-badge safe">1.0</span>
+      </div>
+      <p style="font-size: 14px; color: var(--ink-secondary);">Pivot preservation stays at 1.0 across all tested retention fractions. The protected arc is never dropped. Contract satisfaction is recorded in the portable certificate.</p>
+    </div>
+    <div class="card-naive card">
+      <div class="card-header">
+        <span class="card-title">recency</span>
+        <span class="card-status regime-badge danger">0.0</span>
+      </div>
+      <p style="font-size: 14px; color: var(--ink-secondary);">Pivot preservation falls to 0.0 at critical retention fractions. The response remains valid-looking while the governing pivot is absent — the mirage signature.</p>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px; display: flex; flex-wrap: wrap; gap: 10px;">
+    <a href="./" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Open live witness view ↖</a>
+    <a href="/results/replay/replay_summary.csv" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Replay summary CSV ↗</a>
+    <a href="/results/replay/replay_summary.json" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Replay summary JSON ↗</a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section reveal">
+  <div class="section-label">Evidence Record 03</div>
+  <h2>Portable Certificate</h2>
+  <p>The public certificate captures the recency-vs-guarded kept and dropped IDs, audit flags, and contract and protection status in a portable shape that can be compared against a local verification run.</p>
+
+  <div style="margin-top: 32px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 28px;">
+    <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);">Pivot and protected IDs are recorded from the full context</li>
+      <li style="padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);">Each policy exposes its kept and dropped IDs separately</li>
+      <li style="padding: 10px 0; font-size: 14px; color: var(--ink-secondary);">Feasibility, breach, and contract status stay visible in the audit trail</li>
+    </ul>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <a href="/results/certificates/memory_safety_certificate.json" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Certificate JSON ↗</a>
+      <a href="https://github.com/jack-chaudier/tropical-mcp#minimal-smoke-test" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Verification snippet ↗</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section reveal">
+  <div class="section-label">Reproduce</div>
+  <h2>Verification paths</h2>
+  <p>Install and register <code>tropical-mcp</code>, then choose between the minimal smoke path and the fuller reviewer workflow. The public certificate on this page is a comparison target for your local run, not a substitute for the reviewer workflow itself.</p>
+
+  <div style="margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+    <div>
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><strong style="color: var(--ink);">Smoke test:</strong> confirm the runtime with <code>runtime_info()</code>, then run <code>compact_auto(...)</code> and <code>certificate(...)</code>.</li>
+        <li style="padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--ink-secondary);"><strong style="color: var(--ink);">Research workflow:</strong> run <code>diagnose(...)</code> to inspect feasible slots, capture a <code>context_anchor(...)</code>, then compare <code>compact_auto(...)</code>, <code>certificate(...)</code>, and <code>telemetry_summary(...)</code>.</li>
+        <li style="padding: 12px 0; font-size: 14px; color: var(--ink-secondary);">Compare the resulting certificate and replay behavior against the public artifacts on this page.</li>
+      </ul>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+        <a href="https://github.com/jack-chaudier/tropical-mcp#quick-start-codex" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Codex quick-start ↗</a>
+        <a href="./" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Return to overview ↖</a>
+      </div>
+    </div>
+    <div class="code-block" style="font-size: 13px; line-height: 1.7;">
+<pre><code># minimal smoke path
 runtime_info()               # check your setup
 compact_auto(                # compress with policy selection
   messages=messages,
@@ -267,40 +218,58 @@ certificate(                 # generate portable audit record
   k=2,
 )
 telemetry_summary(limit=5)   # review retention behavior</code></pre>
-        </div>
+    </div>
+  </div>
+</section>
 
-        <div class="evidence-references" style="margin-top: 1rem;">
-          <a class="evidence-reference" href="https://github.com/jack-chaudier/tropical-mcp#quick-start-codex" target="_blank" rel="noopener">Codex quick-start <span class="evidence-reference-arrow">&nearr;</span></a>
-          <a class="evidence-reference" href="./">Return to overview <span class="evidence-reference-arrow">&nwarr;</span></a>
-        </div>
-      </section>
+<hr class="section-divider">
 
-    </main>
+<section class="section reveal">
+  <div class="section-label">Cross-Model Validation</div>
+  <h2>Grok experiment: mirage-shelf-grok-2026-03</h2>
+  <p>The mirage phenomenon was independently validated on xAI's Grok model. Results are published at <a href="/mirage-shelf-grok-2026-03" style="color: var(--ink);">/mirage-shelf-grok-2026-03</a> with the full shelf image and per-fraction breakdown.</p>
+  <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+    <a href="/mirage-shelf-grok-2026-03" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Grok experiment page ↗</a>
+    <a href="/results/mirage-shelf-grok-2026-03/mirage_shelf.png" target="_blank" rel="noopener" style="font-size: 13px; color: var(--ink-secondary); text-decoration: none; border: 1px solid var(--rule); border-radius: 6px; padding: 6px 12px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='var(--ink-tertiary)'" onmouseout="this.style.borderColor='var(--rule)'">Mirage shelf image ↗</a>
+  </div>
+</section>
 
-    <footer class="site-footer fade-up">
-      <p class="footer-quote"><em>The roots remember what the canopy forgets.</em></p>
-      <p class="footer-attribution">Jack Chaudier Gaffney &middot; University of Michigan &middot; DOI: 10.5281/zenodo.18794293</p>
-      <div class="footer-links">
-        <a href="/evidence">Evidence</a>
-        <a href="/papers">Papers</a>
-        <a href="https://github.com/jack-chaudier/dreams" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/jack-chaudier/tropical-mcp" target="_blank" rel="noopener">tropical-mcp</a>
-        <a href="mailto:jackgaff@umich.edu">Contact</a>
-        <a href="https://x.com/jackcgaffney" target="_blank" rel="noopener">X / updates</a>
-      </div>
-    </footer>
+<footer>
+  <div class="footer-left">© 2025 Jack Chaudier · DOI: <a href="https://doi.org/10.5281/zenodo.18794293" style="color: inherit;">10.5281/zenodo.18794293</a></div>
+  <div class="footer-links">
+    <a href="https://github.com/jack-chaudier/dreams">GitHub</a>
+    <a href="https://x.com/jackcgaffney">Twitter</a>
+    <a href="mailto:jack@miragekit.dev">Email</a>
+  </div>
+</footer>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        if (typeof renderMathInElement === 'function') {
-          renderMathInElement(document.body, {
-            delimiters: [
-              {left: '$$', right: '$$', display: true},
-              {left: '$', right: '$', display: false}
-            ]
-          });
-        }
-      });
-    </script>
-  </body>
+<script>
+(function(){
+  var KEY='miragekit-theme', toggle=document.getElementById('themeToggle'),
+      hamburger=document.getElementById('hamburgerBtn'), panel=document.getElementById('mobilePanel'),
+      meta=document.getElementById('themeColorMeta');
+  if(toggle) toggle.addEventListener('click',function(){
+    var c=document.documentElement.dataset.theme, n=c==='dark'?'light':'dark';
+    document.documentElement.dataset.theme=n;
+    try{localStorage.setItem(KEY,n);}catch(e){}
+    if(meta) meta.setAttribute('content',n==='dark'?'#111110':'#f5f2ec');
+  });
+  if(hamburger&&panel){
+    hamburger.addEventListener('click',function(){
+      panel.classList.toggle('open');
+      hamburger.textContent=panel.classList.contains('open')?'✕':'☰';
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){panel.classList.remove('open');hamburger.textContent='☰';});
+    });
+  }
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('revealed');});return;}
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');obs.unobserve(e.target);}});
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){obs.observe(el);});
+})();
+</script>
+</body>
 </html>
