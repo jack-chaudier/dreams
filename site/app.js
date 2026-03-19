@@ -13,10 +13,11 @@
   var EXPLAINER_MID = 'Degradation zone: predecessor support is thinning. Guarded retention preserves the governing pivot.';
   var EXPLAINER_LOW = 'Mirage active: naive recency still scores high on raw validity while answering for the wrong pivot.';
   var MIRAGE_NOTE = 'Still high while pivot collapses: this is the mirage.';
-  var THEME_STORAGE_KEY = 'miragekit-theme';
 
   // DOM refs
   var slider = document.getElementById('retentionSlider');
+  if (!slider) return;  // Only run on demo page
+
   var sliderTicksEl = document.getElementById('sliderTicks');
   var retentionDisplay = document.getElementById('retentionValue');
   var sliderContextEl = document.getElementById('sliderContext');
@@ -53,9 +54,6 @@
   var certificateJsonEl = document.getElementById('certificateJson');
   var semanticRegretEl = document.getElementById('semanticRegret');
   var semanticRegretValueEl = document.getElementById('semanticRegretValue');
-  var themeToggle = document.getElementById('themeToggle');
-  var themeToggleValueEl = document.getElementById('themeToggleValue');
-  var themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
   function metricColor(value) {
     if (value >= 0.8) return 'var(--safe)';
@@ -425,118 +423,7 @@
     return { label: 'Mirage Active', tone: 'danger' };
   }
 
-  function getSavedTheme() {
-    try {
-      return window.localStorage.getItem(THEME_STORAGE_KEY);
-    } catch (err) {
-      return null;
-    }
-  }
-
-  function systemTheme() {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-  }
-
-  function resolveTheme() {
-    var queryTheme = null;
-    try {
-      queryTheme = new URLSearchParams(window.location.search).get('theme');
-    } catch (err) {
-      queryTheme = null;
-    }
-    if (queryTheme === 'dark' || queryTheme === 'light') {
-      return queryTheme;
-    }
-    var savedTheme = getSavedTheme();
-    return savedTheme === 'dark' || savedTheme === 'light'
-      ? savedTheme
-      : systemTheme();
-  }
-
-  function syncTheme(theme) {
-    document.documentElement.dataset.theme = theme;
-    if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', theme === 'dark' ? '#101419' : '#f6f2ea');
-    }
-    if (themeToggle) {
-      themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-    }
-    if (themeToggleValueEl) {
-      themeToggleValueEl.textContent = theme === 'dark' ? 'Dark' : 'Light';
-    }
-  }
-
-  function initThemeToggle() {
-    var mediaQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-    syncTheme(resolveTheme());
-
-    if (themeToggle) {
-      themeToggle.addEventListener('click', function () {
-        var queryTheme = null;
-        try {
-          queryTheme = new URLSearchParams(window.location.search).get('theme');
-        } catch (err) {
-          queryTheme = null;
-        }
-        var currentTheme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-        var nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        if (queryTheme !== 'dark' && queryTheme !== 'light') {
-          try {
-            window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-          } catch (err) {
-            // Ignore storage failures and still apply the toggled theme for this session.
-          }
-        }
-        syncTheme(nextTheme);
-      });
-    }
-
-    if (!mediaQuery) return;
-
-    var syncSystemTheme = function () {
-      var savedTheme = getSavedTheme();
-      if (savedTheme !== 'dark' && savedTheme !== 'light') {
-        syncTheme(systemTheme());
-      }
-    };
-
-    if (mediaQuery.addEventListener) {
-      mediaQuery.addEventListener('change', syncSystemTheme);
-    } else if (mediaQuery.addListener) {
-      mediaQuery.addListener(syncSystemTheme);
-    }
-  }
-
-  // Scroll reveal with IntersectionObserver
-  function initScrollReveal() {
-    var revealEls = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)) {
-      // Fallback: just reveal everything
-      for (var i = 0; i < revealEls.length; i++) {
-        revealEls[i].classList.add('revealed');
-      }
-      return;
-    }
-    var observer = new IntersectionObserver(function (entries) {
-      for (var i = 0; i < entries.length; i++) {
-        if (entries[i].isIntersecting) {
-          entries[i].target.classList.add('revealed');
-          observer.unobserve(entries[i].target);
-        }
-      }
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    for (var j = 0; j < revealEls.length; j++) {
-      observer.observe(revealEls[j]);
-    }
-  }
-
   async function init() {
-    initThemeToggle();
-
     var responses = await Promise.all([
       fetch('./data_miragekit.json'),
       fetch('./data_certificate.json'),
@@ -580,6 +467,23 @@
     }
 
     renderCertificateComparison(cert);
+
+    // Wire up report
+    if (window.MirageReport) {
+      var reportRows = MirageReport.generate(mirage);
+      var reportContainer = document.getElementById('reportContainer');
+      if (reportContainer) {
+        MirageReport.render(reportContainer, reportRows);
+        var actions = document.getElementById('reportActions');
+        if (actions) actions.style.display = 'flex';
+        var btnJson = document.getElementById('exportJson');
+        var btnCsv = document.getElementById('exportCsv');
+        var btnMd = document.getElementById('exportMd');
+        if (btnJson) btnJson.addEventListener('click', function(){ MirageReport.exportJSON(reportRows); });
+        if (btnCsv) btnCsv.addEventListener('click', function(){ MirageReport.exportCSV(reportRows); });
+        if (btnMd) btnMd.addEventListener('click', function(){ MirageReport.exportMarkdown(reportRows); });
+      }
+    }
 
     var prevMirageVisible = false;
 
@@ -674,9 +578,6 @@
       toggleIcon.classList.toggle('open');
       deepToggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
     });
-
-    // Init scroll reveals
-    initScrollReveal();
   }
 
   init().catch(function (err) {

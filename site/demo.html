@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Demo | The Validity Mirage</title>
+  <meta name="description" content="Watch naive context compression maintain surface validity while silently destroying task relevance. Interactive slider demo.">
+  <meta name="author" content="Jack Chaudier Gaffney">
+  <meta id="themeColorMeta" name="theme-color" content="#f5f2ec">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://dreams-dun.vercel.app/demo">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Validity Mirage">
+  <meta property="og:title" content="Interactive Demo | The Validity Mirage">
+  <meta property="og:description" content="Watch naive context compression maintain surface validity while silently destroying task relevance.">
+  <meta property="og:url" content="https://dreams-dun.vercel.app/demo">
+  <meta property="og:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@J_C_Gaffney">
+  <meta name="twitter:creator" content="@J_C_Gaffney">
+  <meta name="twitter:title" content="Interactive Demo | The Validity Mirage">
+  <meta name="twitter:description" content="Watch naive context compression maintain surface validity while silently destroying task relevance.">
+  <meta name="twitter:image" content="https://dreams-dun.vercel.app/social-card.png">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script>
+  (function(){
+    try {
+      var q = new URLSearchParams(location.search).get('theme');
+      var s = localStorage.getItem('miragekit-theme');
+      var d = matchMedia('(prefers-color-scheme:dark)').matches;
+      var t = q==='dark'||q==='light' ? q : s==='dark'||s==='light' ? s : d?'dark':'light';
+      document.documentElement.dataset.theme = t;
+      var m = document.getElementById('themeColorMeta');
+      if (m) m.setAttribute('content', t === 'dark' ? '#111110' : '#f5f2ec');
+    } catch(e) { document.documentElement.dataset.theme = 'light'; }
+  })();
+  </script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">validity mirage</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/research">Research</a>
+      <a href="/demo" class="active">Demo</a>
+      <a href="/evidence">Evidence</a>
+      <a href="/grok">Grok</a>
+      <a href="/get-started">Get Started</a>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">◐</button>
+    </div>
+    <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+  </div>
+  <div class="nav-mobile-panel" id="mobilePanel">
+    <a href="/">Home</a>
+    <a href="/research">Research</a>
+    <a href="/demo">Demo</a>
+    <a href="/evidence">Evidence</a>
+    <a href="/grok">Grok</a>
+    <a href="/get-started">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero" style="padding-bottom: 40px;">
+  <div class="hero-eyebrow">Interactive Demo</div>
+  <h1>Watch the mirage happen</h1>
+  <p class="hero-sub">Drag the slider to compress a conversation. Watch how naive compression maintains surface validity while silently destroying task relevance.</p>
+</section>
+
+<hr class="section-divider">
+<section class="section">
+  <div class="slider-area">
+    <div class="slider-header">
+      <div>
+        <span style="font-size: 13px; color: var(--ink-tertiary);">Retention Budget</span>
+        <span id="retentionValue" style="font-size: 20px; font-weight: 600; font-family: var(--mono); margin-left: 10px;">100%</span>
+      </div>
+      <span class="regime-badge safe" id="sliderRegime">
+        <span id="sliderRegimeValue">Aligned</span>
+      </span>
+    </div>
+    <p id="sliderContext" style="font-size: 13px; color: var(--ink-tertiary); margin-bottom: 12px; min-height: 20px;"></p>
+    <input type="range" id="retentionSlider" min="0" max="4" step="1" value="4" aria-label="Retention budget">
+    <div class="slider-track-wrap">
+      <div class="slider-danger-zone"></div>
+      <div class="slider-track-progress" id="sliderTrackProgress"></div>
+    </div>
+    <div id="sliderTicks" style="display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-tertiary); margin-top: 4px;"></div>
+  </div>
+
+  <div class="comparison-grid">
+    <div class="card-naive" id="cardNaive">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Naive Recency</div>
+          <div style="font-size: 12px; color: var(--ink-tertiary); margin-top: 2px;">Keeps newest messages</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="status-dot safe" id="naiveStatusDot"></span>
+          <span class="card-status" id="naiveStatus">SAFE</span>
+        </div>
+      </div>
+      <div id="naiveMetrics"></div>
+      <div id="naiveContract" class="contract-badge not-applicable" style="margin-top: 16px;">&#9702; No contract enforced · baseline recency</div>
+    </div>
+
+    <div class="card-guarded" id="cardGuarded">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Tropical L2 Guarded</div>
+          <div style="font-size: 12px; color: var(--ink-tertiary); margin-top: 2px;">Keeps messages the current task depends on</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="status-dot safe" id="guardedStatusDot"></span>
+          <span class="card-status" id="guardedStatus">SAFE</span>
+        </div>
+      </div>
+      <div id="guardedMetrics"></div>
+      <div id="guardedContract" class="contract-badge satisfied" style="margin-top: 16px;">&#10022; Contract Satisfied · d_pre >= k</div>
+    </div>
+  </div>
+
+  <div id="mirageWarning" class="hidden" style="margin-top: 20px; background: rgba(200,85,58,0.06); border: 1px solid rgba(200,85,58,0.3); border-radius: 10px; padding: 16px 20px;">
+    <span class="mirage-icon" style="margin-right: 8px;">⚠</span>
+    <strong>Validity Mirage Detected</strong> — Naive recency scores high on raw validity but the pivot has been silently dropped. The AI appears confident but is answering the wrong question.
+  </div>
+
+  <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rule); display: flex; gap: 24px; font-size: 12px; color: var(--ink-tertiary);">
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--safe);margin-right:5px;"></span>Pivot preserved</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--danger);margin-right:5px;"></span>Pivot dropped</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--warn);margin-right:5px;"></span>Degraded</span>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section" id="mirageReport">
+  <div class="section-label">Mirage Report</div>
+  <h2>Analysis Results</h2>
+  <div id="reportContainer"></div>
+  <div class="report-actions" id="reportActions" style="display:none;">
+    <button class="btn-secondary" id="exportJson">Export JSON</button>
+    <button class="btn-secondary" id="exportCsv">Export CSV</button>
+    <button class="btn-secondary" id="exportMd">Export Markdown</button>
+  </div>
+</section>
+
+<hr class="section-divider">
+<section class="section">
+  <details class="expandable">
+    <summary>What am I seeing?</summary>
+    <div class="expandable-content">
+      <p>This demo simulates context compression at different retention levels. As you lower the slider, more of the conversation is dropped. The "naive recency" policy keeps the newest messages regardless of importance. The "tropical guarded" policy uses mathematical contracts to protect the pivot message — the instruction that defines the task.</p>
+      <p>The <strong>validity mirage</strong> occurs when naive compression produces high raw validity scores (the AI sounds confident and coherent) while silently dropping the pivot. The AI is answering fluently — but answering the wrong question.</p>
+    </div>
+  </details>
+  <details class="expandable">
+    <summary>Policy descriptions</summary>
+    <div class="expandable-content">
+      <p><strong>Naive Recency:</strong> Keeps the most recent messages, dropping older ones first. Simple and fast, but blind to task structure. When the pivot message is old enough, it gets dropped.</p>
+      <p><strong>Tropical L2 Guarded:</strong> Uses tropical semiring algebra to identify and protect structurally important messages. The pivot and its k predecessors are never dropped, even under heavy compression. Trades slightly more tokens for guaranteed task preservation.</p>
+    </div>
+  </details>
+  <details class="expandable">
+    <summary>Mathematical details</summary>
+    <div class="expandable-content">
+      <div class="formula-grid">
+        <div class="formula-card">
+          <h3>Core Contract</h3>
+          <div class="formula">d_pre(&#960;&#8320;, S&#8342;) &ge; k</div>
+          <p>The guarded policy must retain at least k predecessors of the pivot in the compressed state.</p>
+        </div>
+        <div class="formula-card">
+          <h3>Frontier Feasibility</h3>
+          <div class="formula">W[k] &lt; &infin;</div>
+          <p>A finite witness value at slot k proves the L2 frontier is feasible — a guard exists.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+</section>
+
+<hr class="section-divider">
+<section class="section">
+  <div class="section-label">Deep Analysis</div>
+  <h2>Witness &amp; Certificate</h2>
+  <p id="explainerText" style="margin-bottom: 24px; color: var(--ink-secondary); font-weight: 300;"></p>
+
+  <div style="margin-bottom: 16px;">
+    <button id="deepToggle" aria-expanded="false" style="background:none; border:1px solid var(--rule); border-radius:8px; padding:10px 18px; font-size:13px; font-weight:500; color:var(--ink-secondary); cursor:pointer; font-family:var(--sans); transition: border-color 0.2s;">
+      <span id="toggleIcon">&#9656;</span> Show witness &amp; certificate detail
+    </button>
+  </div>
+
+  <div id="deepContent" class="hidden">
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:20px; margin-bottom:32px;">
+      <div class="formula-card">
+        <h3>Witness Claim</h3>
+        <div id="witnessClaim" style="font-size:13px; color:var(--ink-secondary); line-height:1.5;"></div>
+      </div>
+      <div class="formula-card">
+        <h3>W[k] Value</h3>
+        <div class="formula" id="witnessTropical">—</div>
+        <p>Finite value confirms feasibility.</p>
+      </div>
+      <div class="formula-card">
+        <h3>Semantic Regret</h3>
+        <div class="formula" id="witnessRegret">—</div>
+        <p id="witnessRegretContextValue" style="font-size:13px; color:var(--ink-secondary);"></p>
+      </div>
+    </div>
+
+    <div id="witnessNotes" style="margin-bottom:32px; color:var(--ink-secondary); font-size:14px; line-height:1.7;"></div>
+
+    <div id="semanticRegret" class="hidden" style="margin-bottom:24px; padding:12px 16px; border-radius:8px; font-size:13px;">
+      Mirage gap: <strong><span id="semanticRegretValue">—</span></strong>
+    </div>
+
+    <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--ink-tertiary); margin-bottom:16px; font-weight:500;">Certificate Comparison</div>
+    <div id="certificateTokenSummary" style="font-size:12px; color:var(--ink-tertiary); margin-bottom:16px; font-family:var(--mono);"></div>
+
+    <div class="certificate-compare">
+      <div class="certificate-policy">
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px;">Naive Recency</div>
+        <div style="font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-tertiary); margin-bottom:8px;">Kept</div>
+        <ul class="chunk-list" id="recencyKeptList"></ul>
+        <div style="font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-tertiary); margin:12px 0 8px;">Dropped</div>
+        <ul class="chunk-list" id="recencyDroppedList"></ul>
+        <div id="recencyNote" style="font-size:12px; color:var(--ink-tertiary); margin-top:12px; line-height:1.5;"></div>
+        <div id="recencyBadge" class="certificate-badge not-applicable" style="margin-top:12px;"></div>
+      </div>
+      <div class="certificate-policy">
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px;">Tropical L2 Guarded</div>
+        <div style="font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-tertiary); margin-bottom:8px;">Kept</div>
+        <ul class="chunk-list" id="guardedKeptList"></ul>
+        <div style="font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-tertiary); margin:12px 0 8px;">Dropped</div>
+        <ul class="chunk-list" id="guardedDroppedList"></ul>
+        <div id="guardedNote" style="font-size:12px; color:var(--ink-tertiary); margin-top:12px; line-height:1.5;"></div>
+        <div id="guardedBadge" class="certificate-badge satisfied" style="margin-top:12px;"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <div style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--ink-tertiary); margin-bottom:12px; font-weight:500;">Raw Certificate JSON</div>
+      <pre class="code-block" id="certificateJson" style="overflow-x:auto; max-height:320px;"></pre>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2025 Jack Chaudier · DOI: <a href="https://doi.org/10.5281/zenodo.18794293" style="color: inherit;">10.5281/zenodo.18794293</a></div>
+  <div class="footer-links">
+    <a href="https://github.com/jack-chaudier/dreams">GitHub</a>
+    <a href="https://x.com/J_C_Gaffney">Twitter</a>
+    <a href="mailto:jack@miragekit.dev">Email</a>
+  </div>
+</footer>
+
+<script src="./report.js"></script>
+<script src="./app.js"></script>
+<script>
+(function(){
+  var KEY = 'miragekit-theme';
+  var toggle = document.getElementById('themeToggle');
+  var hamburger = document.getElementById('hamburgerBtn');
+  var panel = document.getElementById('mobilePanel');
+  var meta = document.getElementById('themeColorMeta');
+
+  if (toggle) {
+    toggle.addEventListener('click', function(){
+      var cur = document.documentElement.dataset.theme;
+      var next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem(KEY, next); } catch(e){}
+      if (meta) meta.setAttribute('content', next === 'dark' ? '#111110' : '#f5f2ec');
+    });
+  }
+
+  if (hamburger && panel) {
+    hamburger.addEventListener('click', function(){
+      panel.classList.toggle('open');
+      hamburger.textContent = panel.classList.contains('open') ? '✕' : '☰';
+    });
+    panel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ panel.classList.remove('open'); hamburger.textContent = '☰'; });
+    });
+  }
+
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function(el){ el.classList.add('revealed'); });
+  } else {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('revealed'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el){ obs.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
