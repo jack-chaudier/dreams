@@ -50,6 +50,10 @@
   const canvas = document.getElementById("mapCanvas");
   const stage = document.querySelector(".stage");
   const context = canvas.getContext("2d");
+
+  function isDark() {
+    return document.documentElement.dataset.theme === "dark";
+  }
   const slider = document.getElementById("checkpointSlider");
   const reliefSlider = document.getElementById("reliefSlider");
   const contrastSlider = document.getElementById("contrastSlider");
@@ -203,28 +207,35 @@
   }
 
   function drawBackground(width, height) {
+    const dark = isDark();
     const gradient = context.createLinearGradient(0, 0, 0, height);
-    gradient.addColorStop(0, "rgba(255,255,255,0.42)");
-    gradient.addColorStop(0.55, "rgba(248, 242, 232, 0.22)");
-    gradient.addColorStop(1, "rgba(212, 201, 184, 0.14)");
+    if (dark) {
+      gradient.addColorStop(0, "rgba(20, 24, 32, 0.95)");
+      gradient.addColorStop(0.55, "rgba(16, 20, 28, 0.85)");
+      gradient.addColorStop(1, "rgba(12, 15, 22, 0.75)");
+    } else {
+      gradient.addColorStop(0, "rgba(255,255,255,0.42)");
+      gradient.addColorStop(0.55, "rgba(248, 242, 232, 0.22)");
+      gradient.addColorStop(1, "rgba(212, 201, 184, 0.14)");
+    }
     context.fillStyle = gradient;
     context.fillRect(0, 0, width, height);
 
     context.save();
 
     const leftGlow = context.createRadialGradient(width * 0.28, height * 0.58, 0, width * 0.28, height * 0.58, width * 0.3);
-    leftGlow.addColorStop(0, "rgba(212, 108, 85, 0.12)");
+    leftGlow.addColorStop(0, dark ? "rgba(212, 108, 85, 0.08)" : "rgba(212, 108, 85, 0.12)");
     leftGlow.addColorStop(1, "rgba(212, 108, 85, 0)");
     context.fillStyle = leftGlow;
     context.fillRect(0, 0, width, height);
 
     const rightGlow = context.createRadialGradient(width * 0.72, height * 0.58, 0, width * 0.72, height * 0.58, width * 0.3);
-    rightGlow.addColorStop(0, "rgba(35, 120, 154, 0.13)");
+    rightGlow.addColorStop(0, dark ? "rgba(35, 120, 154, 0.1)" : "rgba(35, 120, 154, 0.13)");
     rightGlow.addColorStop(1, "rgba(35, 120, 154, 0)");
     context.fillStyle = rightGlow;
     context.fillRect(0, 0, width, height);
 
-    context.strokeStyle = "rgba(20, 24, 31, 0.05)";
+    context.strokeStyle = dark ? "rgba(255, 255, 255, 0.06)" : "rgba(20, 24, 31, 0.05)";
     context.lineWidth = 1;
     context.beginPath();
     context.moveTo(width / 2, height * 0.14);
@@ -791,8 +802,9 @@
     context.lineTo(boxX, boxY + radius);
     context.quadraticCurveTo(boxX, boxY, boxX + radius, boxY);
     context.closePath();
-    context.fillStyle = "rgba(250, 246, 239, 0.98)";
-    context.strokeStyle = "rgba(20, 24, 31, 0.12)";
+    const dark = isDark();
+    context.fillStyle = dark ? "rgba(20, 24, 32, 0.92)" : "rgba(250, 246, 239, 0.98)";
+    context.strokeStyle = dark ? "rgba(255, 255, 255, 0.12)" : "rgba(20, 24, 31, 0.12)";
     context.lineWidth = 1;
     context.fill();
     context.stroke();
@@ -802,7 +814,7 @@
     context.arc(boxX + padX + 3.5, labelY, 3.4, 0, Math.PI * 2);
     context.fill();
 
-    context.fillStyle = "rgba(20, 24, 31, 0.84)";
+    context.fillStyle = dark ? "rgba(240, 238, 232, 0.9)" : "rgba(20, 24, 31, 0.84)";
     context.textBaseline = "middle";
     context.fillText(text, boxX + padX + accentGap, labelY + 0.5);
 
@@ -884,8 +896,9 @@
     const axisMidX = (axisStartX + axisEndX) / 2;
     const selectedX = lerp(axisStartX, axisEndX, clamp(selectionBlend, 0, 1));
 
+    const dark = isDark();
     context.save();
-    context.strokeStyle = "rgba(20, 24, 31, 0.07)";
+    context.strokeStyle = dark ? "rgba(255, 255, 255, 0.1)" : "rgba(20, 24, 31, 0.07)";
     context.lineWidth = 1;
     context.beginPath();
     context.moveTo(axisStartX, baselineY);
@@ -895,7 +908,7 @@
     context.beginPath();
     context.arc(axisStartX, baselineY, 2.4, 0, Math.PI * 2);
     context.arc(axisEndX, baselineY, 2.4, 0, Math.PI * 2);
-    context.fillStyle = "rgba(20, 24, 31, 0.1)";
+    context.fillStyle = dark ? "rgba(255, 255, 255, 0.15)" : "rgba(20, 24, 31, 0.1)";
     context.fill();
 
     context.beginPath();
@@ -903,7 +916,7 @@
     context.arc(selectedX, baselineY, compact ? 2.8 : 3.2, 0, Math.PI * 2);
     context.fill();
 
-    context.fillStyle = "rgba(77, 86, 96, 0.9)";
+    context.fillStyle = dark ? "rgba(200, 208, 218, 0.9)" : "rgba(77, 86, 96, 0.9)";
     context.font = compact ? "600 10px Helvetica Neue, Arial, sans-serif" : "600 11px Helvetica Neue, Arial, sans-serif";
     context.textBaseline = "middle";
 
